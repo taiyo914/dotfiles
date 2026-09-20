@@ -1,4 +1,6 @@
-# ユーザー名・メールアドレスはマシンごとに違うので ~/dotfiles-local/git/gitconfig に書く
+# ユーザー名・メールアドレスは ~/dotfiles-local/git/local.config にかく
+# ~/.config/git は比較的モダンな置き場所で、もし従来の
+# ~/.gitconfig が残っていると、こちらが優先されるため注意
 
 [commit]
 	gpgsign = true
@@ -6,7 +8,7 @@
 	format = ssh
 [core]
 	editor = code -w
-    # pager = delta # 2026-07-17 deltaを使う設定
+    # pager = delta 
 	quotePath = false
 
 [alias]
@@ -29,7 +31,6 @@
 # [interactive]
 #     diffFilter = delta --color-only
 
-# # 2026-07-17 deltaを使う設定
 # [delta]
 #     navigate = true
 #     line-numbers = true
@@ -38,6 +39,5 @@
     conflictstyle = zdiff3
 
 # このマシンだけで必要な設定を読み込む
-# ファイルが無ければ無視される
 [include]
-	path = ~/dotfiles-local/git/gitconfig
+	path = ~/dotfiles-local/git/local.config

@@ -8,7 +8,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 
 ## 1. 設定ファイル一覧
 
-| 項目          | ファイル                           | リンク先                                                       |
+| 項目         | ファイル                        | リンク先                                                    |
 | ----------- | ------------------------------ | ---------------------------------------------------------- |
 | zsh         | `zsh/.zshrc`                   | `~/.zshrc`                                                 |
 |             | `zsh/.zprofile`                | `~/.zprofile`                                              |
@@ -21,7 +21,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | VS Code     | `vscode/settings.json`         | `~/Library/Application Support/Code/User/settings.json`    |
 |             | `vscode/keybindings.json`      | `~/Library/Application Support/Code/User/keybindings.json` |
 |             | `vscode/tasks.json`            | `~/Library/Application Support/Code/User/tasks.json`       |
-| Git         | `git/.gitconfig`               | `~/.gitconfig`                                             |
+| Git         | `git/`                         | `~/.config/git`                                            |
 | Ghossty     | `ghostty/config`               | `~/.config/ghostty/config`                                 |
 | Starship    | `starship/starship.toml`       | `~/.config/starship.toml`                                  |
 | HammerSpoon | `hammerspoon/`                 | `~/.hammerspoon`                                           |
@@ -42,7 +42,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 - zsh
     - `zsh/.zshrc` の一番下で `~/dotfiles-local/zsh/local.zsh` を読み込んでいる。
 - git
-    - `git/.gitconfig` の一番下で `~/dotfiles-local/git/gitconfig` を include している。
+    - `git/config` の一番下で `~/dotfiles-local/git/local.config` を include している。
 
 
 > **Claude Codeのグローバル設定について**
@@ -76,7 +76,7 @@ targets=(
   "Library/Application Support/Code/User/settings.json"
   "Library/Application Support/Code/User/keybindings.json"
   "Library/Application Support/Code/User/tasks.json"
-  .gitconfig
+  .config/git
   .config/ghostty/config
   .config/starship.toml
   .hammerspoon
@@ -112,7 +112,7 @@ BAK=~/dotfiles-bak
 
 targets=(
   # 戻したい設定ファイル/フォルダ
-  # .gitconfig
+  # .config/git
   # .zshrc
   # ...
 )
@@ -143,7 +143,7 @@ ln -s ~/dotfiles/claude/commands ~/.claude/commands
 ln -s ~/dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
 ln -s ~/dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
 ln -s ~/dotfiles/vscode/tasks.json ~/Library/Application\ Support/Code/User/tasks.json
-ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
+ln -s ~/dotfiles/git ~/.config/git
 ln -s ~/dotfiles/ghostty/config ~/.config/ghostty/config
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
