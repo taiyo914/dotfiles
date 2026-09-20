@@ -83,7 +83,6 @@ targets=(
   .config/nvim
   .config/herdr/config.toml
   .config/karabiner
-  Library/KeyBindings/DefaultKeyBinding.dict
 )
 
 for t in "${targets[@]}"; do
