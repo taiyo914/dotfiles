@@ -1,0 +1,8 @@
+{
+  "id": "github-link-paste",
+  "name": "GitHub Link Paste",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "GitHub のファイル URL を [ファイルパス#行数] のリンクにして貼り付ける（Cmd+Shift+V で URL のまま貼り付け）",
+  "author": "taiyo"
+}

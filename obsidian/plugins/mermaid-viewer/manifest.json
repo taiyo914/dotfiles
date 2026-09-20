@@ -1,0 +1,9 @@
+{
+  "id": "mermaid-viewer",
+  "name": "Mermaid Viewer",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "mermaid 図をクリックして、ピンチ・ドラッグできるビューアを開く",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}

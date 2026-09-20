@@ -1,0 +1,41 @@
+/* 編集モード: コードブロックの行を折り返さず、エディタ全体で横スクロール */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
+  white-space: pre !important;
+  word-wrap: normal !important;
+}
+
+.markdown-source-view.mod-cm6 .cm-scroller {
+  overflow-x: auto;
+}
+
+/* レンダリング済みのコードブロック（リーディングモード全般と、
+   ライブプレビューのコールアウト内）を折り返さず、ブロック単位で横スクロール
+
+   ライブプレビューのコールアウトは .cm-line ではなく .cm-callout ウィジェットで、
+   中身は通常の <pre><code> として描画される。そのため上の HyperMD-codeblock 系の
+   ルールは効かず、代わりに app.css の
+     .markdown-rendered pre { white-space: var(--code-white-space) }
+   が適用される。この変数の既定値が pre-wrap なので折り返す。
+   pre に変えると、pre 自身が持つ overflow-x: auto で横スクロールする */
+body {
+  --code-white-space: pre;
+}
+
+/* 言語指定つきコードブロック（```ruby など）は、中身が <code class="language-xxx">
+   になり、Obsidian 標準の Prism 用スタイル
+     code[class*="language-"] { white-space: pre-wrap; word-wrap: break-word; }
+   が code 要素に直接かかる。white-space は継承される性質だが、子要素への直接指定は
+   親からの継承より優先されるため、上の --code-white-space の指定だけでは効かない。
+   そのため code[class*="language-"] 自体にも pre を指定し直す */
+.markdown-rendered code[class*="language-"] {
+  white-space: pre !important;
+  word-wrap: normal !important;
+}
+
+/* 横スクロール時、右端に余白を確保 */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock::after {
+  content: "";
+  padding-right: 3em;
+  line-height: 0;
+  font-size: 0;
+}

@@ -1,0 +1,75 @@
+/* ---- 閲覧モード ---- */
+
+/* 空行でHTMLブロックが切れて折りたたみの外に飛び出した断片。宿主側で描き直すので隠す。
+   display: none は使えない。Obsidianはセクションの高さを
+     次の兄弟の offsetTop - 自分の offsetTop
+   で測っていて、display: none の要素は offsetTop が 0 になるため、
+   ひとつ前のセクションの高さが負の値として記録され、表示範囲の計算が壊れる。
+   そのため、場所は保ったまま高さだけを 0 にして隠す。 */
+.details-fold-hidden {
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+.details-fold > summary {
+  cursor: pointer;
+}
+
+.details-fold > .details-fold-body {
+  padding-left: 0.1em;
+}
+
+/* 折りたたみの中身の上下に余白が二重に付かないようにする */
+.details-fold-body > .details-fold-md > :first-child {
+  margin-top: 0.4em;
+}
+.details-fold-body > .details-fold-md > :last-child {
+  margin-bottom: 0.4em;
+}
+
+/* ---- 編集画面（Obsidianが作ったHTMLの箱の中身を差し替えたもの） ---- */
+
+/* details のタグはそのままの文字で見せる。書いた内容だとわかるよう色を落とす */
+.details-fold-box .details-fold-tag {
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  white-space: pre-wrap;
+}
+
+/* 書いたとおりの行の並びで見えるよう、空行は1行ぶんの高さを保つ */
+.details-fold-box .details-fold-blank::after {
+  content: "\200B";
+}
+
+/* 編集画面ではコードブロックのコピーボタンを出さない */
+.details-fold-box .copy-code-button {
+  display: none;
+}
+
+/* コードブロック右上の言語名。Obsidian標準の .code-block-flair と同じ見た目にする */
+.details-fold-box .details-fold-flair {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  z-index: 1;
+  display: inline-block;
+  padding: var(--size-4-1) var(--size-4-2);
+  border-radius: var(--code-radius);
+  font-family: var(--font-interface);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  user-select: none;
+}
+
+/* 空行で間隔を作るので、描いた中身の上下には余白を付けない */
+.details-fold-box > .details-fold-md > :first-child {
+  margin-top: 0;
+}
+.details-fold-box > .details-fold-md > :last-child {
+  margin-bottom: 0;
+}

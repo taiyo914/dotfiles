@@ -1,0 +1,9 @@
+{
+  "id": "moc-auto-link",
+  "name": "MOC Auto Link",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "デイリーノートを作ったとき、MOC.md の 【👇 新しく作ったノートはココに配置】 の下にそのノートへのリンクを追加する",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}

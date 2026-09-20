@@ -1,0 +1,32 @@
+/* 灰色の枠だけのシンプルなコールアウト
+   > [!memo]              … 枠 + 見出し「Memo」（型名がそのまま見出しになる）
+   > [!memo] 探索順の例外 … 見出しを上書き
+   > [!memo|notitle]      … 見出し行を消して枠だけにする
+   > [!memo|nt]           … notitle の短縮形。同じ扱い
+   型を増やすときは下のセレクタ一覧にカンマ区切りで足す                    */
+
+.callout[data-callout="memo"] {
+  --callout-border-width: 1px; /* 既定が 0px なので、ここで枠を出す */
+  border-color: var(
+    --background-modifier-border
+  ); /* テーマの罫線色。柔らかい灰色 */
+  background-color: transparent; /* 既定の rgba(var(--callout-color), 0.1) を消す */
+  mix-blend-mode: normal; /* ダークテーマでの合成を無効化 */
+}
+
+/* アイコンを消す。flex アイテムごと消えるので gap の余白も残らない */
+.callout[data-callout="memo"] .callout-icon {
+  display: none;
+}
+
+/* 既定では color: rgb(var(--callout-color)) が効くので、通常の文字色に戻す */
+.callout[data-callout="memo"] .callout-title {
+  color: var(--text-normal);
+}
+
+/* 見出しごと消したいとき用の逃げ道。
+   [!memo|notitle] や [!memo|nt] の "|" 以降が data-callout-metadata 属性として出る */
+.callout[data-callout-metadata="notitle"] > .callout-title,
+.callout[data-callout-metadata="nt"] > .callout-title {
+  display: none;
+}

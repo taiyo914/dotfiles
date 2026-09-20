@@ -1,0 +1,9 @@
+{
+  "id": "details-fold",
+  "name": "Details Fold",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "折りたたみの <details> タグを正しく表示する",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}

@@ -1,0 +1,8 @@
+{
+  "id": "sticky-quote",
+  "name": "Sticky Quote",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Enter 3 回で引用ブロックから抜けるようにする",
+  "author": "taiyo"
+}

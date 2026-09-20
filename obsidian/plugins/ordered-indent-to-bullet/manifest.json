@@ -1,0 +1,8 @@
+{
+  "id": "ordered-indent-to-bullet",
+  "name": "Ordered Indent to Bullet",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "番号付きリストをインデントしたとき箇条書きに変える",
+  "author": "taiyo"
+}

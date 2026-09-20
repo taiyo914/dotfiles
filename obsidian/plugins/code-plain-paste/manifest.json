@@ -1,0 +1,8 @@
+{
+  "id": "code-plain-paste",
+  "name": "Code Plain Paste",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "コードブロックの中では常にプレーンテキストとして貼り付け、末尾の空行も取り除く",
+  "author": "taiyo"
+}

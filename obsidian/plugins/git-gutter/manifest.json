@@ -1,0 +1,9 @@
+{
+  "id": "git-gutter",
+  "name": "Git Gutter",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "直前のコミットとの差分を行番号の左側に色付きで表示する",
+  "author": "taiyo",
+  "isDesktopOnly": true
+}

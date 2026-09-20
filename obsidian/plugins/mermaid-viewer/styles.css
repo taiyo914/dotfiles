@@ -1,0 +1,123 @@
+/* ---- ノート内の mermaid ブロック ---- */
+
+/* 図をノートの幅に収める。JS で後から大きさを書き換えると、Obsidian が
+   一度測った高さと合わなくなり、スクロール中に図が消えたり出たりする。
+   ここは CSS だけで済ませて、図の DOM には一切触らない。
+   mermaid が svg に直接 style="max-width: ..." を書き込むため、
+   それに勝つには !important が要る。 */
+body[data-mermaid-viewer-fit="css"] .mermaid svg {
+	max-width: 100% !important;
+	height: auto !important;
+}
+
+/* クリックで開ける状態のときだけ、カーソルで拡大できることを示す。
+   図の要素に class を足すと編集画面で図が作り直されてしまうので、
+   body の属性を見て CSS 側だけで切り替える。 */
+body[data-mermaid-viewer-click="always"] .mermaid,
+body[data-mermaid-viewer-click="reading"] .markdown-reading-view .mermaid {
+	cursor: zoom-in;
+}
+
+body .mermaid-viewer-modal .mermaid {
+	cursor: inherit;
+}
+
+/* 「ブロックを編集」ボタンの上ではカーソルを戻し、
+   拡大ではなく編集を押すのだと分かるようにする */
+body .edit-block-button {
+	cursor: pointer;
+}
+
+/* ---- 拡大ビューア ---- */
+
+.modal.mermaid-viewer-modal {
+	width: 92vw;
+	height: 88vh;
+	max-width: none;
+	padding: 0;
+}
+
+.mermaid-viewer-modal .modal-content {
+	position: relative;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.mermaid-viewer-stage {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	cursor: grab;
+	/* ブラウザ既定のスクロールやピンチを止めて、こちらで処理する */
+	touch-action: none;
+	overscroll-behavior: contain;
+}
+
+.mermaid-viewer-stage.is-dragging {
+	cursor: grabbing;
+}
+
+.mermaid-viewer-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform-origin: 0 0;
+	will-change: transform;
+}
+
+/* ビューア内では図の大きさをこちらで決めるので、余計な制限を外す */
+.mermaid-viewer-canvas svg {
+	display: block;
+	max-width: none;
+}
+
+.mermaid-viewer-toolbar {
+	position: absolute;
+	right: 12px;
+	bottom: 12px;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 4px 6px;
+	border-radius: 8px;
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	box-shadow: var(--shadow-s);
+}
+
+.mermaid-viewer-scale {
+	min-width: 46px;
+	margin-right: 4px;
+	text-align: right;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.mermaid-viewer-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border-radius: 5px;
+	box-shadow: none;
+	background: transparent;
+	color: var(--text-muted);
+	cursor: pointer;
+}
+
+.mermaid-viewer-btn:hover {
+	color: var(--text-normal);
+	background: var(--background-modifier-hover);
+}
+
+.mermaid-viewer-btn .svg-icon {
+	width: 16px;
+	height: 16px;
+}

@@ -1,0 +1,32 @@
+/* ノートの左右の余白を小さくする
+
+   Obsidian の左右の余白は 2 つの値でできている。
+
+   1. --file-line-width (既定 700px)
+      「読みやすい行の長さ」がオンのとき、本文の幅がこの値で頭打ちになる。
+      ウィンドウを広げても本文はそれ以上伸びず、余った分がそのまま
+      左右の空白になる。見える余白の大部分はこれが原因。
+
+   2. --file-margins-x (既定 --size-4-8 = 32px)
+      本文領域そのものの左右パディング。ウィンドウが狭くて本文が
+      --file-line-width に届かないときは、こちらだけが余白になる。
+
+   余白を変えたいときは、下の 2 行の値だけ触ればよい。            */
+
+.mod-root .markdown-preview-view,
+.mod-root .markdown-source-view.mod-cm6 .cm-scroller {
+  --file-line-width: 1100px; /* 既定 700px。大きいほど本文が横に広がる */
+  --file-margins-x: var(--size-4-8); /* 既定 --size-4-8 = 32px → 16px */
+
+  /* Obsidian は body で --file-margins: var(--file-margins-y) var(--file-margins-x)
+     と宣言している。カスタムプロパティの var() は宣言された要素の上で解決されて
+     から子へ継承されるので、body の --file-margins は「32px 32px」という
+     確定した値として降りてくる。つまり子で --file-margins-x だけ書き換えても
+     padding には反映されない。ここで --file-margins も同じ要素で宣言し直して、
+     上の --file-margins-x を使って解決させる                           */
+  --file-margins: var(--file-margins-y) var(--file-margins-x);
+}
+
+/* 補足: セレクタを .mod-root（メインのエディタ領域）に限定している。
+   サイドバーやホバーポップアップは Obsidian 側が --file-margins を
+   まとめて指定し直していて余白の設計が別なので、巻き込まないようにしている */

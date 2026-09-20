@@ -1,0 +1,9 @@
+{
+  "id": "auto-toc",
+  "name": "Auto TOC",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "%% toc-start %% と %% toc-end %% で囲まれた場所に、[[#見出し]] のリンク付き目次を自動で作り直す",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}

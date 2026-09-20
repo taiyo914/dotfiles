@@ -29,6 +29,9 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | herdr       | `herdr/config.toml`            | `~/.config/herdr/config.toml`                              |
 | Karabiner   | `karabiner/`                   | `~/.config/karabiner`                                      |
 | macOS       | `macos/DefaultKeyBinding.dict` | `~/Library/KeyBindings/DefaultKeyBinding.dict`             |
+| Obsidian    | `obsidian/plugins/*/`          | `~/vault/.obsidian/plugins/*/`                             |
+|             | `obsidian/snippets/`           | `~/vault/.obsidian/snippets`                               |
+|             | `obsidian/hotkeys.json`        | `~/vault/.obsidian/hotkeys.json`                           |
 
 ## 2. dotfiles-local 
 
@@ -149,7 +152,48 @@ ln -s ~/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
 ln -s ~/dotfiles/karabiner ~/.config/karabiner
 ```
 
-### 3-3. UI から読み込ませるもの
+### 3-3. Obsidian
+
+Obsidian の設定は各 vault の中の `.obsidian` にあるため、vault のパスを変数に入れてから貼る。
+
+プラグインの中には特定のマシンでしか使わないものもあるため、`plugins` はフォルダ丸ごとではなく、各プラグインに対して個別にリンクを貼る。
+
+```bash
+# 設定を取り込みたい vault のパス
+VAULT=~/path/to/your/vault
+
+# 既存ファイルを退避する
+# vault ごとに ~/dotfiles-bak/obsidian/{vault名}/ を作る
+BAK=~/dotfiles-bak/obsidian/$(basename "$VAULT")
+mkdir -p "$BAK"
+for t in snippets hotkeys.json; do
+  [ -e "$VAULT/.obsidian/$t" ] || continue
+  cp -RL "$VAULT/.obsidian/$t" "$BAK/" && rm -rf "$VAULT/.obsidian/$t"
+done
+
+# snippets と hotkeys.json はすべてのマシン共通なので丸ごとリンクを貼る
+ln -s ~/dotfiles/obsidian/snippets "$VAULT/.obsidian/snippets"
+ln -s ~/dotfiles/obsidian/hotkeys.json "$VAULT/.obsidian/hotkeys.json"
+
+# plugins は個別にリンクを貼る
+# 同じ名前のものがすでにあれば退避する
+mkdir -p "$VAULT/.obsidian/plugins"
+for d in ~/dotfiles/obsidian/plugins/*/; do
+  name=$(basename "${d%/}")
+  target="$VAULT/.obsidian/plugins/$name"
+  if [ -e "$target" ]; then
+    mkdir -p "$BAK/plugins"
+    rm -rf "$BAK/plugins/$name"
+    cp -RL "$target" "$BAK/plugins/$name"
+  fi
+  rm -rf "$target"
+  ln -s "${d%/}" "$target"
+done
+```
+
+リンクを貼ったあと、Obsidian を再起動して `設定 → コミュニティプラグイン` と `設定 → 外観 → CSSスニペット` から各プラグインとCSSスニペットを有効にする。
+
+### 3-4. UI から読み込ませるもの
 
 次の2つはシンボリックリンクが不要で、アプリのUI上から直接読み込ませる。
 

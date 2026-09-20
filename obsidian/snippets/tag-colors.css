@@ -1,0 +1,73 @@
+/* Reading モード */
+a.tag[href="#TODO"] {
+  background-color: rgba(224, 138, 0, 0.15) !important;
+  color: #e08a00 !important;
+}
+a.tag[href="#WIP"] {
+  background-color: rgba(220, 53, 53, 0.22) !important;
+  color: #dc3535 !important;
+  border: 1px solid rgba(220, 53, 53, 0.4) !important;
+}
+a.tag[href="#DONE"] {
+  background-color: rgba(47, 158, 68, 0.15) !important;
+  color: #37a34a !important;
+}
+a.tag[href="#WISH"] {
+  background-color: rgba(160, 130, 220, 0.18) !important;
+  color: #a082dc !important;
+}
+a.tag[href="#TIPS"] {
+  background-color: rgba(25, 113, 194, 0.15) !important;
+  color: #2b8fd6 !important;
+}
+
+/* Live Preview / 編集モード */
+.cm-tag-TODO .cm-hashtag-begin,
+.cm-tag-TODO .cm-hashtag-end,
+.cm-tag-TODO.cm-hashtag-begin,
+.cm-tag-TODO.cm-hashtag-end,
+.cm-tag-TODO.cm-hashtag {
+  background-color: rgba(224, 138, 0, 0.15) !important;
+  color: #e08a00 !important;
+}
+.cm-tag-WIP .cm-hashtag-begin,
+.cm-tag-WIP .cm-hashtag-end,
+.cm-tag-WIP.cm-hashtag-begin,
+.cm-tag-WIP.cm-hashtag-end,
+.cm-tag-WIP.cm-hashtag {
+  background-color: rgba(220, 53, 53, 0.22) !important;
+  color: #dc3535 !important;
+  border: 1px solid rgba(220, 53, 53, 0.4) !important;
+}
+.cm-tag-WIP .cm-hashtag-begin,
+.cm-tag-WIP.cm-hashtag-begin {
+  border-right: none !important;
+}
+.cm-tag-WIP .cm-hashtag-end,
+.cm-tag-WIP.cm-hashtag-end {
+  border-left: none !important;
+}
+.cm-tag-DONE .cm-hashtag-begin,
+.cm-tag-DONE .cm-hashtag-end,
+.cm-tag-DONE.cm-hashtag-begin,
+.cm-tag-DONE.cm-hashtag-end,
+.cm-tag-DONE.cm-hashtag {
+  background-color: rgba(47, 158, 68, 0.15) !important;
+  color: #37a34a !important;
+}
+.cm-tag-WISH .cm-hashtag-begin,
+.cm-tag-WISH .cm-hashtag-end,
+.cm-tag-WISH.cm-hashtag-begin,
+.cm-tag-WISH.cm-hashtag-end,
+.cm-tag-WISH.cm-hashtag {
+  background-color: rgba(160, 130, 220, 0.18) !important;
+  color: #a082dc !important;
+}
+.cm-tag-TIPS .cm-hashtag-begin,
+.cm-tag-TIPS .cm-hashtag-end,
+.cm-tag-TIPS.cm-hashtag-begin,
+.cm-tag-TIPS.cm-hashtag-end,
+.cm-tag-TIPS.cm-hashtag {
+  background-color: rgba(25, 113, 194, 0.15) !important;
+  color: #2b8fd6 !important;
+}

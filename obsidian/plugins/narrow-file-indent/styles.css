@@ -1,0 +1,6 @@
+/* ファイルエクスプローラーのコンテナ全体(右側)のパディングを狭くする。
+   ここは通常のCSSプロパティで決まっていて、JSによるインラインstyleの
+   上書きは入っていないので、普通のCSSで効く。 */
+[data-type="file-explorer"] .nav-files-container {
+  padding-right: 0px;
+}

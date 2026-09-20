@@ -1,0 +1,8 @@
+{
+  "id": "list-paste",
+  "name": "List Paste",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "箇条書きへの貼り付けを整える",
+  "author": "taiyo"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "code-dedent-paste",
+  "name": "Code Dedent Paste",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "コードブロックに貼り付けるとき、余分なインデントを取り除く",
+  "author": "taiyo"
+}

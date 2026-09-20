@@ -1,0 +1,8 @@
+{
+  "id": "narrow-file-indent",
+  "name": "Narrow File Indent",
+  "version": "1.0.0",
+  "minAppVersion": "1.7.0",
+  "description": "ファイルエクスプローラーのインデントを小さくする",
+  "author": "taiyo"
+}

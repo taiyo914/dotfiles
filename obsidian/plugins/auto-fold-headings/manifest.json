@@ -1,0 +1,8 @@
+{
+  "id": "auto-fold-headings",
+  "name": "Auto Fold Headings",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "ファイルを開いたときに見出しを自動で折りたたむ。frontmatter の fold_headings でページ全体に指定するか、見出しの先頭に -/+ を付けて個別に指定する",
+  "author": "taiyo"
+}

@@ -1,0 +1,34 @@
+/* コールアウトの上下の余白を揃える
+
+   .callout は overflow: hidden なので、本文末尾の <p> の margin-bottom
+   (--p-spacing = 1rem = 16px) が外へ抜けず、下パディング
+   (--callout-padding の --size-4-3 = 12px) に上乗せされて 28px になる。
+   一方タイトル側にはマージンが無いので上は 12px のまま。
+   両側とも「12px + --callout-edge-spacing」に揃える。
+
+   余白を変えたいときは --callout-edge-spacing だけ触ればよい          */
+
+.callout {
+  --callout-edge-spacing: calc(
+    var(--p-spacing) / 1.2
+  ); /* 約 13.3px → 上下とも約 25.3px */
+}
+
+/* 上端: タイトルに余白を足す */
+.callout .callout-title {
+  margin-top: var(--callout-edge-spacing);
+}
+
+/* 下端: 末尾の段落マージン 16px を上書きして詰める。
+   セレクタを (0,2,0) にしているのは .markdown-rendered p (0,1,1) に詳細度で勝つため */
+.callout .callout-content > :last-child {
+  margin-bottom: var(--callout-edge-spacing);
+}
+
+/* |notitle（または |nt）でタイトルが display: none のときは、本文先頭の <p> が上端に来る。
+   その margin-top 16px も同じ値に揃える（タイトルがある場合の
+   タイトル ↔ 本文の間隔 16px はそのまま残す） */
+.callout[data-callout-metadata="notitle"] .callout-content > :first-child,
+.callout[data-callout-metadata="nt"] .callout-content > :first-child {
+  margin-top: var(--callout-edge-spacing);
+}

@@ -1,0 +1,51 @@
+.cm-git-gutter {
+  width: 14px;
+}
+
+.cm-git-gutter-marker {
+  position: relative;
+  height: 100%;
+  width: 2.5px;
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+.cm-git-gutter-added {
+  background-color: var(--color-green);
+  opacity: 0.9;
+}
+
+.cm-git-gutter-modified {
+  background-color: var(--color-yellow);
+  opacity: 0.9;
+}
+
+/* 削除マーク(三角形)は絶対配置なので幅の自動計測に参加しない。
+   marker自体の幅をここで広げて、必要な分の領域をあらかじめ確保する */
+.cm-git-gutter-marker.cm-git-gutter-delete-before,
+.cm-git-gutter-marker.cm-git-gutter-delete-after {
+  width: 12px;
+}
+
+.cm-git-gutter-delete-before::before,
+.cm-git-gutter-delete-after::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--color-red);
+}
+
+.cm-git-gutter-delete-before::before {
+  top: 0;
+  transform: translateY(-50%);
+  border-width: 5px 0 5px 8px;
+}
+
+.cm-git-gutter-delete-after::after {
+  bottom: 0;
+  transform: translateY(50%);
+  border-width: 5px 0 5px 8px;
+}
