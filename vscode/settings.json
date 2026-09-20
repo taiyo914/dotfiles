@@ -1,0 +1,112 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+
+  // 対応するカッコをわかりやすくする
+  "editor.guides.bracketPairs": true,
+
+  // カーソルの点滅が滑らかになる
+  "editor.cursorBlinking": "smooth",
+
+  // フォーカスが外れたら自動保存 & 自動フォーマット
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // コード補完のプレビュー
+  "editor.suggest.preview": true,
+
+  // JS, TSのファイル移動でインポートパスを自動更新
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+
+  // ターミナルに複数行をペーストしたときの警告をオフ
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+
+  // ターミナルのスクロールバック量を増やす
+  "terminal.integrated.scrollback": 10000,
+
+  // マークダウンファイルの設定
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true
+    },
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": false
+  },
+
+  // JSONファイルの設定（保存時のprettier整形をオフにする）
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": false
+  },
+
+  // 重要! 拡張機能がアップデートされて脆弱性が侵入するのを防ぐ
+  "extensions.autoUpdate": "off",
+  "extensions.autoCheckUpdates": false,
+
+  // .git をファイルツリーに表示させる
+  "files.exclude": {
+    "**/.git": false,
+    "**/.ruby-lsp": false,
+    "**/vendor/bundle": false
+  },
+
+  "search.exclude": {
+    "**/vendor/bundle": false,
+    "**/.git": true
+  },
+
+  // diff を横並びにするか
+  "diffEditor.renderSideBySide": false,
+  "githubPullRequests.pullBranch": "never",
+
+  // push後、確認ダイアログなしで常にブラウザでPR作成ページを開く
+  "githubPullRequests.createOnPublishBranch": "never",
+
+  // ターミナルのfontを指定
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+
+  // === タブの設定 ===
+  // プレビュー機能（タブを上書きする）をON
+  "workbench.editor.enablePreview": true,
+
+  // グループを自動では閉じないようにする
+  "workbench.editor.closeEmptyGroups": false,
+
+  // タブ数に上限をつける
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 8,
+  "workbench.editor.limit.perEditorGroup": true,
+  "workbench.editor.limit.excludeDirty": true,
+
+  // タブを常に一番後ろに開く
+  // "workbench.editor.openPositioning": "last",
+
+  // ピン留めは列が分かれる
+  "workbench.editor.pinnedTabsOnSeparateRow": true,
+  "workbench.editor.highlightModifiedTabs": true,
+
+  // タブの折り返し、名前を短くする
+  "workbench.editor.wrapTabs": false,
+  "workbench.editor.labelFormat": "short",
+  // =================
+
+  // 参照を常にサイドパネルで開く（これ効いてない）
+  "references.preferredLocation": "view",
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilotcli:",
+  "claudeCode.preferredLocation": "panel",
+
+  // .config ファイルを Ruby で認識させるのを防ぐ
+  "files.associations": {
+    "config": "properties"
+  },
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "githubPullRequests.terminalLinksHandler": "github",
+
+  // 終了する前に確認する
+  "window.confirmBeforeClose": "keyboardOnly",
+}

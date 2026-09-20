@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Focus New Tab from Address Bar",
+  "version": "1.1.0",
+  "description": "バックグラウンドで開いた新しいタブに自動でフォーカスする",
+  "permissions": ["tabs", "webNavigation"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

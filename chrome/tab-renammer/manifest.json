@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Renamer",
+  "version": "1.0",
+  "description": "Control+Tでタブの名前を変更します。",
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "rename-tab": {
+      "suggested_key": {
+        "mac": "MacCtrl+T",
+        "default": "Ctrl+T"
+      },
+      "description": "現在のタブの名前を変更"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Chrome: Cmd+D to Split View",
+  "rules": [
+    {
+      "description": "Chrome で Cmd+D を新しいタブ付き分割ビュー、Cmd+Shift+D を通常の分割ビューに変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+            }
+          ],
+          "from": {
+            "key_code": "d",
+            "modifiers": {
+              "mandatory": ["command", "shift"],
+              "optional": []
+            }
+          },
+          "to": [{ "key_code": "n", "modifiers": ["command", "option"] }]
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+            }
+          ],
+          "from": {
+            "key_code": "d",
+            "modifiers": {
+              "mandatory": ["command"],
+              "optional": []
+            }
+          },
+          "to": [
+            { "key_code": "n", "modifiers": ["command", "option"] },
+            { "shell_command": "/bin/sh $HOME/dotfiles/karabiner/scripts/chrome-split-newtab.sh" }
+          ]
+        }
+      ]
+    }
+  ]
+}

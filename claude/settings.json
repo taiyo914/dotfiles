@@ -1,0 +1,114 @@
+{
+  "env": {
+    "ENABLE_TOOL_SEARCH": "true",
+    "CLAUDE_CODE_SCROLL_SPEED": "0.5"
+  },
+  "permissions": {
+    "allow": ["Read(~/vault/**)", "Edit(~/vault/**)", "Bash(*~/vault*)"],
+    "deny": [
+      "Bash(brew install:*)",
+      "Bash(npm install -g:*)",
+      "Bash(npm i -g:*)",
+      "Bash(npm install --global:*)",
+      "Bash(yarn global add:*)",
+      "Bash(pnpm add -g:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(uv pip install:*)",
+      "Bash(gem install:*)",
+      "Bash(go install:*)",
+      "Bash(cargo install:*)"
+    ]
+  },
+  "model": "sonnet[1m]",
+  "availableModels": [
+    "fable",
+    "claude-opus-5[1m]",
+    "claude-sonnet-5[1m]",
+    "claude-sonnet-4-6[1m]",
+    "claude-opus-4-8[1m]",
+    "claude-opus-4-7[1m]",
+    "claude-opus-4-6[1m]",
+    "haiku"
+  ],
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/notify.sh '.last_assistant_message' Glass"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/notify.sh '.message' Blow"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/scripts/herdr-workspace-title.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/herdr-agent-state.sh session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "enableArtifact": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/statusline.sh",
+    "padding": 2,
+    "refreshInterval": 1
+  },
+  "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    },
+    "claude-sonnet-5": {
+      "effortLevel": "high"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
+    }
+  },
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "preferredNotifChannel": "notifications_disabled",
+  "skipAutoPermissionPrompt": true,
+  "notifications": "notifications_disabled"
+}

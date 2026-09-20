@@ -1,0 +1,21 @@
+{
+  "title": "Ctrl+H to Backspace",
+  "rules": [
+    {
+      "description": "Ctrl+H を Backspace に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": ["left_control"],
+              "optional": []
+            }
+          },
+          "to": [{ "key_code": "delete_or_backspace" }]
+        }
+      ]
+    }
+  ]
+}

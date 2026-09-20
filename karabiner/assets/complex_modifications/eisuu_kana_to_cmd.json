@@ -1,0 +1,27 @@
+{
+  "title": "英数/かな to Cmd",
+  "rules": [
+    {
+      "description": "英数キーを長押しでcmdにする",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "japanese_eisuu" },
+          "to": [{ "key_code": "left_command" }],
+          "to_if_alone": [{ "key_code": "japanese_eisuu" }]
+        }
+      ]
+    },
+    {
+      "description": "かなキーを長押しでcmdにする",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "japanese_kana" },
+          "to": [{ "key_code": "right_command" }],
+          "to_if_alone": [{ "key_code": "japanese_kana" }]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+# ユーザー名・メールアドレスはマシンごとに違うので ~/dotfiles-local/git/gitconfig に書く
+
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
+[core]
+	editor = code -w
+    # pager = delta # 2026-07-17 deltaを使う設定
+	quotePath = false
+
+[alias]
+    st = status
+    aa = add .
+    ci = commit
+    br = branch
+    co = checkout
+    sw = switch
+    rs = restore
+    df = diff
+    unstage = restore --staged
+    amend = commit --amend
+    cstash = stash push -u -m
+    stls = stash list
+    lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+[url "ssh://git@github.com"]
+  insteadOf = https://github.com
+
+# [interactive]
+#     diffFilter = delta --color-only
+
+# # 2026-07-17 deltaを使う設定
+# [delta]
+#     navigate = true
+#     line-numbers = true
+
+[merge]
+    conflictstyle = zdiff3
+
+# このマシンだけで必要な設定を読み込む
+# ファイルが無ければ無視される
+[include]
+	path = ~/dotfiles-local/git/gitconfig

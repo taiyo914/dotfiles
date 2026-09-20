@@ -1,0 +1,26 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+q"
+
+# Ghostty 風のキーバインド
+split_vertical = ["prefix+v", "cmd+d"]
+split_horizontal = ["prefix+minus", "cmd+shift+d"]
+new_tab = ["prefix+c", "cmd+t"]
+new_workspace = ["prefix+shift+n", "cmd+n"]
+close_pane = ["prefix+x", "cmd+w"]
+# Ghostty 側は ctrl+tab を通すために工夫が要る（ghostty/configを参照）
+next_workspace = "ctrl+tab"
+previous_workspace = "ctrl+shift+tab"
+
+[ui.toast]
+delivery = "off"
+
+[ui]
+mouse_capture = true
+
+[ui.sound]
+enabled = false
+
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"]]

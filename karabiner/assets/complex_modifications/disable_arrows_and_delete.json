@@ -1,0 +1,111 @@
+{
+  "title": "Disable arrows and delete",
+  "rules": [
+    {
+      "description": "矢印キーとDeleteを無効化（Fnキーで有効化）",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_arrow",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "fn_pressed",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "right_arrow",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "fn_pressed",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "up_arrow",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "fn_pressed",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "down_arrow",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "fn_pressed",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "delete_or_backspace",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "fn_pressed",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "delete_forward",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "fn_pressed",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "fn",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "set_variable": { "name": "fn_pressed", "value": 1 } }],
+          "to_after_key_up": [
+            { "set_variable": { "name": "fn_pressed", "value": 0 } }
+          ]
+        }
+      ]
+    }
+  ]
+}

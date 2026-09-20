@@ -1,0 +1,52 @@
+// ユーザーレベルのタスク（Tasks: Open User Tasks で開くファイル）
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // 選択なし用。${selectedText} は選択がないと解決できずタスクごと失敗するので、こちらでは使わない
+      "label": "ghlink",
+      "detail": "カーソル行の GitHub permalink をコピーする",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${userHome}/vault/dotfiles/vscode/github-permalink.sh",
+        "${file}:${lineNumber}"
+      ],
+      "problemMatcher": [],
+      // 出力は専用ターミナルに溜める。前面には出さず、見たいときだけターミナルの一覧から開く
+      "presentation": {
+        "reveal": "never",
+        "focus": false,
+        "echo": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
+      // 選択あり用。選択テキストの行数から範囲を割り出すために ${selectedText} を渡す
+      "label": "ghlink-selection",
+      "detail": "選択範囲の GitHub permalink をコピーする",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${userHome}/vault/dotfiles/vscode/github-permalink.sh",
+        "${file}:${lineNumber}"
+      ],
+      "options": {
+        "env": {
+          "GHLINK_SELECTION": "${selectedText}"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "focus": false,
+        "echo": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "close": false
+      }
+    }
+  ]
+}

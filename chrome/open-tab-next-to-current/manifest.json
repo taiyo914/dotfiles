@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Open Tab Next to Current",
+  "version": "1.0.1",
+  "description": "新しいタブを現在のタブのすぐ右に開く",
+  "permissions": ["tabs"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

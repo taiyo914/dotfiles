@@ -1,0 +1,40 @@
+# https://starship.rs/config/#format-strings
+# 各モジュールの最後に半角スペース入ってるので注意
+format = """
+$directory$git_branch${custom.docker}
+$character
+"""
+
+[directory]
+# https://starship.rs/config/#directory
+#↓ デフォルト設定だと最後に半角スペースがあるので注意
+# format = '[$path]($style)[$read_only]($read_only_style) ' 
+read_only = " 󰌾"
+
+[git_branch]
+# https://starship.rs/config/#git-branch
+#↓ on {branch} の on が要らなかったのでカスタム
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "bold #e8a04f"
+
+[custom.docker]
+# https://starship.rs/config/#custom-commands
+shell = ["sh"]
+command = """
+if docker info > /dev/null 2>&1; then
+  echo " running"
+else
+  echo " stopped"
+fi
+"""
+#↓ ~/dev とその配下のディレクトリのみ表示
+when = """
+case "$PWD" in "$HOME"/dev|"$HOME"/dev/*)
+    true ;;
+  *)
+    false ;;
+esac
+"""
+format = "[$output]($style)"
+style = "bold blue"

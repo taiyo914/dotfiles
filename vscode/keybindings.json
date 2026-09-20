@@ -1,0 +1,63 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+[
+  {
+    "key": "ctrl+-",
+    "command": "workbench.action.openPreviousRecentlyUsedEditor"
+  },
+  {
+    "key": "cmd+;",
+    "command": "workbench.action.zoomIn"
+  },
+  {
+    "key": "cmd+shift+c",
+    "command": "copyRelativeFilePath",
+    "when": "filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "cmd+shift+c",
+    "command": "copyRelativeFilePath",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+k l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "ghlink",
+    "when": "editorTextFocus && !editorHasSelection"
+  },
+  {
+    "key": "cmd+k l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "ghlink-selection",
+    "when": "editorTextFocus && editorHasSelection"
+  },
+  {
+    "key": "cmd+alt+s",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.splitEditor",
+        "workbench.action.focusFirstEditorGroup",
+        "workbench.action.lockEditorGroup"
+      ]
+    }
+  },
+  {
+    "key": "cmd+r",
+    "command": "editor.action.goToReferences",
+    "when": "editorTextFocus"
+  },
+  // herdr に渡すために無効化する
+  { "key": "cmd+w", "command": "-workbench.action.terminal.killEditor"},
+  { "key": "cmd+w", "command": "-workbench.action.closeActiveEditor"},
+  { "key": "cmd+w", "command": "workbench.action.closeActiveEditor", "when": "!terminalFocus" },
+  { "key": "cmd+n", "command": "-workbench.action.files.newUntitledFile" },
+  { "key": "cmd+n", "command": "workbench.action.files.newUntitledFile", "when": "!terminalFocus" },
+  { "key": "cmd+t", "command": "-workbench.action.showAllSymbols" },
+  { "key": "cmd+t", "command": "workbench.action.showAllSymbols", "when": "!terminalFocus" },
+  { "key": "cmd+shift+d", "command": "-workbench.view.debug" },
+  { "key": "cmd+shift+d", "command": "workbench.view.debug", "when": "!terminalFocus" },
+  { "key": "ctrl+tab", "command": "-workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup" },
+  { "key": "ctrl+tab", "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup", "when": "!terminalFocus" },
+  { "key": "ctrl+shift+tab", "command": "-workbench.action.quickOpenLeastRecentlyUsedEditorInGroup" },
+  { "key": "ctrl+shift+tab", "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup", "when": "!terminalFocus" }
+]
