@@ -83,6 +83,28 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/scripts/herdr-workspace-title.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "resume|logout|prompt_input_exit|other",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/scripts/herdr-workspace-title.sh",
+            "timeout": 10
+          }
+        ]
       }
     ]
   },

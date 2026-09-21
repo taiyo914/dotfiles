@@ -1,8 +1,15 @@
 #!/bin/sh
 # 会話の内容から herdr のワークスペース名を自動でつける。
-# Claude Code の UserPromptSubmit フックから呼ばれる。
+# Claude Code の UserPromptSubmit フック、resume 時の SessionStart フック、
+# セッションを抜けるときの SessionEnd フックから呼ばれる。
 # セッションの最初の質問のときだけ、その質問をもとに haiku にキーワードを
 # 2〜3 個つくらせて `herdr workspace rename` に渡す。
+# セッションを resume したときは、印のファイルを消すだけして終わる。
+# そうすることで、resume 後の最初の質問がまた「最初の質問」として扱われ、
+# 手動でつけた名前があってもその質問の内容で名前がつけ直される。
+# セッションを抜けるとき（/clear は除く）は、最初にリネームする直前の
+# 名前（初期値）に戻す。ただし同じ workspace で他のセッションがまだ
+# 動いているときは、そのセッションの邪魔をしないよう何もしない。
 
 set -eu
 
@@ -20,15 +27,47 @@ command -v jq >/dev/null 2>&1 || exit 0
 command -v python3 >/dev/null 2>&1 || exit 0
 
 session_id=$(printf '%s' "$input" | jq -r '.session_id // ""')
-transcript=$(printf '%s' "$input" | jq -r '.transcript_path // ""')
-prompt=$(printf '%s' "$input" | jq -r '.prompt // ""')
+hook_event=$(printf '%s' "$input" | jq -r '.hook_event_name // ""')
 [ -n "$session_id" ] || exit 0
 
-# 名前をつけるのは、このセッションの最初の質問のときだけ。
-# 2 回目以降は、印のファイルがあるので何もしないで終わる。
 state_dir="$HOME/.claude/state/herdr-workspace-title"
 mkdir -p "$state_dir"
 done_file="$state_dir/done-$session_id"
+
+# SessionStart（resume）から呼ばれたときは、印のファイルを消すだけで終わる。
+# 実際に名前をつけ直すのは、この後 UserPromptSubmit で呼ばれたときになる。
+if [ "$hook_event" = "SessionStart" ]; then
+	rm -f "$done_file"
+	exit 0
+fi
+
+initial_file="$state_dir/initial-$HERDR_WORKSPACE_ID"
+
+# SessionEnd（clear 以外）から呼ばれたときは、名前を初期値に戻して終わる。
+if [ "$hook_event" = "SessionEnd" ]; then
+	# まだ一度も自動リネームしていない workspace なら、戻す先が無いので何もしない
+	[ -f "$initial_file" ] || exit 0
+	initial_title=$(cat "$initial_file")
+	[ -n "$initial_title" ] || exit 0
+
+	# 同じ workspace で自分以外のセッションがまだ動いているなら、何もしない
+	other_alive=$(herdr agent list 2>/dev/null | jq -r --arg ws "$HERDR_WORKSPACE_ID" --arg me "$session_id" '
+    .result.agents[]
+    | select(.workspace_id == $ws)
+    | .agent_session.value // empty
+    | select(length > 0 and . != $me)
+  ' | head -n 1)
+	[ -z "$other_alive" ] || exit 0
+
+	herdr workspace rename "$HERDR_WORKSPACE_ID" "$initial_title" >/dev/null 2>&1 || true
+	exit 0
+fi
+
+transcript=$(printf '%s' "$input" | jq -r '.transcript_path // ""')
+prompt=$(printf '%s' "$input" | jq -r '.prompt // ""')
+
+# 名前をつけるのは、このセッションの最初の質問のときだけ。
+# 2 回目以降は、印のファイルがあるので何もしないで終わる。
 [ ! -e "$done_file" ] || exit 0
 : >"$done_file"
 
@@ -48,6 +87,14 @@ if [ -n "$owner" ] && [ "$owner" != "$session_id" ]; then
 	[ -z "$owner_alive" ] || exit 0
 fi
 printf '%s' "$session_id" >"$owner_file"
+
+# この workspace で初めてリネームするときは、リネームする直前の名前を
+# 初期値として控えておく（SessionEnd で戻すときに使う）。一度控えたら
+# 上書きしない
+if [ ! -e "$initial_file" ]; then
+	current_label=$(herdr workspace get "$HERDR_WORKSPACE_ID" 2>/dev/null | jq -r '.result.workspace.label // empty')
+	[ -z "$current_label" ] || printf '%s' "$current_label" >"$initial_file"
+fi
 
 # 直近のユーザー発言を材料にする（ツールの実行結果や自動の差し込みは除く）
 material=''
