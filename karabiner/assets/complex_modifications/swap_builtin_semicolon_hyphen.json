@@ -1,0 +1,38 @@
+{
+  "title": "Swap ; and - on the built-in keyboard",
+  "rules": [
+    {
+      "description": "内蔵キーボードだけ ; と - を入れ替える",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "semicolon",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "hyphen" }],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "is_built_in_keyboard": true }]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "hyphen",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "semicolon" }],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "is_built_in_keyboard": true }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
