@@ -1,5 +1,10 @@
 {
+  // テーマ
+  "workbench.colorTheme": "Catppuccin Macchiato",
   "workbench.iconTheme": "material-icon-theme",
+
+  // ターミナルのフォント
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
 
   // 対応するカッコをわかりやすくする
   "editor.guides.bracketPairs": true,
@@ -35,28 +40,17 @@
     "editor.formatOnSave": false
   },
 
-  // JSONファイルの設定（保存時のprettier整形をオフにする）
-  "[json]": {
-    "editor.formatOnSave": false
-  },
-  "[jsonc]": {
-    "editor.formatOnSave": false
-  },
-
   // 重要! 拡張機能がアップデートされて脆弱性が侵入するのを防ぐ
   "extensions.autoUpdate": "off",
   "extensions.autoCheckUpdates": false,
 
   // .git をファイルツリーに表示させる
   "files.exclude": {
-    "**/.git": false,
-    "**/.ruby-lsp": false,
     "**/vendor/bundle": false
   },
 
   "search.exclude": {
-    "**/vendor/bundle": false,
-    "**/.git": true
+    "**/vendor/bundle": false
   },
 
   // diff を横並びにするか
@@ -65,9 +59,6 @@
 
   // push後、確認ダイアログなしで常にブラウザでPR作成ページを開く
   "githubPullRequests.createOnPublishBranch": "never",
-
-  // ターミナルのfontを指定
-  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
 
   // === タブの設定 ===
   // プレビュー機能（タブを上書きする）をON
@@ -94,19 +85,25 @@
   "workbench.editor.labelFormat": "short",
   // =================
 
-  // 参照を常にサイドパネルで開く（これ効いてない）
-  "references.preferredLocation": "view",
-  "gitlens.ai.model": "vscode",
-  "gitlens.ai.vscode.model": "copilotcli:",
-  "claudeCode.preferredLocation": "panel",
-
   // .config ファイルを Ruby で認識させるのを防ぐ
   "files.associations": {
     "config": "properties"
   },
-  "workbench.colorTheme": "Catppuccin Macchiato",
+
+  // ターミナル上の Github のリンクは常にブラウザで開く
   "githubPullRequests.terminalLinksHandler": "github",
 
   // 終了する前に確認する
   "window.confirmBeforeClose": "keyboardOnly",
+
+  // 起動時にcopilotのチャットが起動しなくなる
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+
+  // json の警告や自動整形をオフにする
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": false
+  }
 }
