@@ -15,6 +15,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | Claude Code | `claude/settings.json`         | `~/.claude/settings.json`                                  |
 |             | `claude/CLAUDE.md`             | `~/.claude/CLAUDE.md`                                      |
 |             | `claude/scripts/`              | `~/.claude/scripts`                                        |
+|             | `claude/hooks/`                | `~/.claude/hooks`                                          |
 |             | `claude/keybindings.json`      | `~/.claude/keybindings.json`                               |
 |             | `claude/skills/`               | `~/.claude/skills`                                         |
 |             | `claude/commands/`             | `~/.claude/commands`                                       |
@@ -70,6 +71,7 @@ targets=(
   .claude/settings.json
   .claude/CLAUDE.md
   .claude/scripts
+  .claude/hooks
   .claude/keybindings.json
   .claude/skills
   .claude/commands
@@ -136,6 +138,7 @@ ln -s ~/dotfiles/zsh/.zprofile ~/.zprofile
 ln -s ~/dotfiles/claude/settings.json ~/.claude/settings.json
 ln -s ~/dotfiles/claude/CLAUDE.md ~/.claude/CLAUDE.md
 ln -s ~/dotfiles/claude/scripts ~/.claude/scripts
+ln -s ~/dotfiles/claude/hooks ~/.claude/hooks
 ln -s ~/dotfiles/claude/keybindings.json ~/.claude/keybindings.json
 ln -s ~/dotfiles/claude/skills ~/.claude/skills
 ln -s ~/dotfiles/claude/commands ~/.claude/commands
