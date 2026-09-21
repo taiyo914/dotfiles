@@ -1,6 +1,6 @@
 `/note` で作ったノートについてのフィードバックを note.md に反映する。
 
-@~/vault/dotfiles/claude/commands/note.md の `## 7. フィードバック` に反映してください。
+@~/dotfiles/claude/commands/note.md の `## 7. フィードバック` に反映してください。
 
 - 個別の修正ではなく、フィードバックから一般化・抽象化した学びを抽出する
 - 短く書く。note.md はミニマルに保ちたい
