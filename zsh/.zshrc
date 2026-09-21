@@ -32,6 +32,7 @@ source $ZSH_RC/git.zsh
 source $ZSH_RC/utils.zsh
 
 # === このマシンだけで必要な設定の読み込み ===
-# 読み込むのは local.zsh だけ。そこから先の順番は local.zsh 側で決める
-# ファイルが無ければ何もしないので、私用PCでは置かなくてよい
-[ -f "$LOCAL_DOTFILES/zsh/local.zsh" ] && source "$LOCAL_DOTFILES/zsh/local.zsh"
+# ファイルが無ければ何もしない
+if [ -f "$LOCAL_DOTFILES/zsh/local.zsh" ]; then
+  source "$LOCAL_DOTFILES/zsh/local.zsh"
+fi
