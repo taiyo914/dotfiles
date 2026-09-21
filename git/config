@@ -1,11 +1,7 @@
-# ユーザー名・メールアドレスは ~/dotfiles-local/git/local.config にかく
+# ユーザー名・メールアドレス・署名設定などは ~/dotfiles-local/git/local.config にかく
 # ~/.config/git は比較的モダンな置き場所で、もし従来の
 # ~/.gitconfig が残っていると、こちらが優先されるため注意
 
-[commit]
-	gpgsign = true
-[gpg]
-	format = ssh
 [core]
 	editor = code -w
     # pager = delta 
