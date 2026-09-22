@@ -4,7 +4,7 @@ local DIM_COLOR = { red = 0, green = 0, blue = 0, alpha = 0.35 }
 local CORNER_RADIUS = 10
 
 local overlays = {}
-local enabled = true
+local enabled = false
 
 local function destroyOverlays()
   for _, overlay in ipairs(overlays) do

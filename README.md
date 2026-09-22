@@ -219,3 +219,68 @@ KEYBALL=~/path/to/keyball/repo
 ln -s ~/dotfiles/keyball/my-keymap \
   "$KEYBALL/qmk_firmware/keyboards/keyball/keyball61/keymaps/my-keymap"
 ```
+
+
+## 4. 補足: ツールのインストール
+
+この環境は次のツールをインストールすることを前提としている。
+
+### 4-1. Homebrew でインストール
+
+https://brew.sh/ja/
+
+| ツール | リンク |
+| - | - |
+| Starship | https://starship.rs/ja-jp/ |
+| Neovim | https://neovim.io/ |
+| HammerSpoon | https://www.hammerspoon.org/ |
+| GitHub CLI | https://cli.github.com/ |
+| asdf | https://asdf-vm.com/ |
+| direnv | https://direnv.net/ |
+| terminal-notifier | https://github.com/julienXX/terminal-notifier |
+| fzf | https://github.com/junegunn/fzf |
+| eza | https://github.com/eza-community/eza |
+| bat | https://github.com/sharkdp/bat |
+| fd | https://github.com/sharkdp/fd |
+| ripgrep | https://github.com/BurntSushi/ripgrep |
+| jq | https://github.com/jqlang/jq |
+| lazydocker | https://github.com/jesseduffield/lazydocker |
+| zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
+| zsh-syntax-highlighting | https://github.com/zsh-users/zsh-syntax-highlighting |
+| JetBrainsMono Nerd Font | https://www.nerdfonts.com/ |
+| BIZ UDGothic | https://fonts.google.com/specimen/BIZ+UDGothic |
+
+<br/>
+
+まとめてインストール:
+
+```bash
+brew install starship neovim gh asdf direnv terminal-notifier fzf \
+  eza bat fd ripgrep jq lazydocker zsh-autosuggestions zsh-syntax-highlighting
+brew install --cask hammerspoon font-jetbrains-mono-nerd-font font-biz-udgothic
+```
+
+### 4-2. ネイティブインストール
+
+Homebrew を使わずに直接バイナリをダウンロードするもの。
+
+| ツール | リンク |
+| - | - |
+| Claude Code| https://docs.claude.com/ja/docs/claude-code/overview |
+| QMK CLI | https://docs.qmk.fm/cli |
+
+Claude Code はネイティブインストールすることでバックグラウンドで自動更新される。
+
+QMK CLI は QMK ファームウェアをローカルでビルドするために必要なツールで、公式サイトではネイティブインストールのみ案内されている。
+
+
+### 4-3. アプリでインストール
+
+| アプリ | リンク |
+| - | - |
+| Ghostty | https://ghostty.org/ |
+| VS Code | https://code.visualstudio.com/ |
+| Obsidian | https://obsidian.md/ |
+| Karabiner-Elements | https://karabiner-elements.pqrs.org/ |
+| Raycast | https://www.raycast.com/ |
+
