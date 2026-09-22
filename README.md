@@ -30,6 +30,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | herdr       | `herdr/config.toml`            | `~/.config/herdr/config.toml`                              |
 | Karabiner   | `karabiner/`                   | `~/.config/karabiner`                                      |
 | macOS       | `macos/DefaultKeyBinding.dict` | `~/Library/KeyBindings/DefaultKeyBinding.dict`             |
+| Keyball     | `keyball/my-keymap/`           | `{keyballへのパス}/qmk_firmware/keyboards/keyball/keyball61/keymaps/my-keymap` |
 | Obsidian    | `obsidian/plugins/*/`          | `~/vault/.obsidian/plugins/*/`                             |
 |             | `obsidian/snippets/`           | `~/vault/.obsidian/snippets`                               |
 |             | `obsidian/hotkeys.json`        | `~/vault/.obsidian/hotkeys.json`                           |
@@ -203,3 +204,17 @@ done
     - `chrome://extensions` の「パッケージ化されていない拡張機能を読み込む」からフォルダを指定する。
 - Raycast スクリプト
     - `Settings → Extensions → Script Commands → Script Directories` で、`~/dotfiles/raycast/scripts` を指定する。
+
+### 3-5. Keyball
+
+Keyball のキーマップは keyball リポジトリの中に置く必要があり、置き場所がマシンによって変わる。
+
+https://github.com/Yowkees/keyball/tree/main/qmk_firmware/keyboards/keyball
+
+```bash
+# clone した keyball リポジトリのパス
+KEYBALL=~/path/to/keyball/repo
+
+ln -s ~/dotfiles/keyball/my-keymap \
+  "$KEYBALL/qmk_firmware/keyboards/keyball/keyball61/keymaps/my-keymap"
+```
