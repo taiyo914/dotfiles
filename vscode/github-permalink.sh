@@ -97,7 +97,16 @@ case "$lines" in
   ?*)  anchor="#L${lines}" ;;
 esac
 
-permalink="https://$host/$slug/blob/$sha/$rel$anchor"
+# GitHub は .md を整形して表示するので、そのままだと #L… で行をハイライトできない。
+# ?plain=1 を付けるとソースのまま表示され、行のハイライトが効く
+query=""
+if [ -n "$anchor" ]; then
+  case "$(printf '%s' "$rel" | tr '[:upper:]' '[:lower:]')" in
+    *.md|*.markdown) query="?plain=1" ;;
+  esac
+fi
+
+permalink="https://$host/$slug/blob/$sha/$rel$query$anchor"
 printf '%s' "$permalink" | pbcopy
 
 # コピーと同時にブラウザでも開く。開きたくないときは GHLINK_OPEN=0 を渡す

@@ -9,7 +9,7 @@
       "type": "shell",
       "command": "bash",
       "args": [
-        "${userHome}/vault/dotfiles/vscode/github-permalink.sh",
+        "${userHome}/dotfiles/vscode/github-permalink.sh",
         "${file}:${lineNumber}"
       ],
       "problemMatcher": [],
@@ -30,7 +30,7 @@
       "type": "shell",
       "command": "bash",
       "args": [
-        "${userHome}/vault/dotfiles/vscode/github-permalink.sh",
+        "${userHome}/dotfiles/vscode/github-permalink.sh",
         "${file}:${lineNumber}"
       ],
       "options": {
@@ -38,6 +38,26 @@
           "GHLINK_SELECTION": "${selectedText}"
         }
       },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "focus": false,
+        "echo": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
+      // 行番号なし用。ファイル全体を指すリンクを作る
+      "label": "ghlink-file",
+      "detail": "ファイル全体の GitHub permalink をコピーする",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${userHome}/dotfiles/vscode/github-permalink.sh",
+        "${file}"
+      ],
       "problemMatcher": [],
       "presentation": {
         "reveal": "never",

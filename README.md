@@ -2,50 +2,50 @@
 
 マシン共通の設定ファイルの実体をここに置き、各所からシンボリックリンクで参照する。
 
-public リポジトリなので、 **機密情報や業務に関わる情報は絶対に入れない**。 
+public リポジトリなので、 **機密情報や業務に関わる情報は絶対に入れない**。
 
 マシン依存を避けるため、ホームディレクトリのパスは直接書かず、`$HOME` や `$DOTFILES` を使う。
 
 ## 1. 設定ファイル一覧
 
-| 項目         | ファイル                        | リンク先                                                    |
-| ----------- | ------------------------------ | ---------------------------------------------------------- |
-| zsh         | `zsh/.zshrc`                   | `~/.zshrc`                                                 |
-|             | `zsh/.zprofile`                | `~/.zprofile`                                              |
-| Claude Code | `claude/settings.json`         | `~/.claude/settings.json`                                  |
-|             | `claude/CLAUDE.md`             | `~/.claude/CLAUDE.md`                                      |
-|             | `claude/scripts/`              | `~/.claude/scripts`                                        |
-|             | `claude/hooks/`                | `~/.claude/hooks`                                          |
-|             | `claude/keybindings.json`      | `~/.claude/keybindings.json`                               |
-|             | `claude/skills/`               | `~/.claude/skills`                                         |
-|             | `claude/commands/`             | `~/.claude/commands`                                       |
-| VS Code     | `vscode/settings.json`         | `~/Library/Application Support/Code/User/settings.json`    |
-|             | `vscode/keybindings.json`      | `~/Library/Application Support/Code/User/keybindings.json` |
-|             | `vscode/tasks.json`            | `~/Library/Application Support/Code/User/tasks.json`       |
-| Git         | `git/`                         | `~/.config/git`                                            |
-| Ghossty     | `ghostty/config`               | `~/.config/ghostty/config`                                 |
-| Starship    | `starship/starship.toml`       | `~/.config/starship.toml`                                  |
-| HammerSpoon | `hammerspoon/`                 | `~/.hammerspoon`                                           |
-| Neovim      | `nvim/`                        | `~/.config/nvim`                                           |
-| herdr       | `herdr/config.toml`            | `~/.config/herdr/config.toml`                              |
-| Karabiner   | `karabiner/`                   | `~/.config/karabiner`                                      |
-| macOS       | `macos/DefaultKeyBinding.dict` | `~/Library/KeyBindings/DefaultKeyBinding.dict`             |
-| Keyball     | `keyball/my-keymap/`           | `{keyballへのパス}/qmk_firmware/keyboards/keyball/keyball61/keymaps/my-keymap` |
-| Obsidian    | `obsidian/plugins/*/`          | `~/vault/.obsidian/plugins/*/`                             |
-|             | `obsidian/snippets/`           | `~/vault/.obsidian/snippets`                               |
-|             | `obsidian/hotkeys.json`        | `~/vault/.obsidian/hotkeys.json`                           |
 
-## 2. dotfiles-local 
+| 項目 | ファイル | リンク先 |
+| - | - | - | 
+| zsh | `zsh/.zshrc` | `~/.zshrc` |
+|     | `zsh/.zprofile` | `~/.zprofile` |
+| Claude Code | `claude/settings.json` | `~/.claude/settings.json` |
+|             | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
+|             | `claude/scripts/` | `~/.claude/scripts` |
+|             | `claude/hooks/` | `~/.claude/hooks` |
+|             | `claude/keybindings.json` | `~/.claude/keybindings.json` |
+|             | `claude/skills/` | `~/.claude/skills` |
+|             | `claude/commands/` | `~/.claude/commands` |
+| VS Code | `vscode/settings.json` | `~/Library/Application Support/Code/User/settings.json` |
+|         | `vscode/keybindings.json` | `~/Library/Application Support/Code/User/keybindings.json` |
+|         | `vscode/tasks.json` | `~/Library/Application Support/Code/User/tasks.json` |
+| Git | `git/` | `~/.config/git` |
+| Ghossty | `ghostty/config` | `~/.config/ghostty/config` |
+| Starship | `starship/starship.toml` | `~/.config/starship.toml` |
+| HammerSpoon | `hammerspoon/` | `~/.hammerspoon` |
+| Neovim | `nvim/` | `~/.config/nvim` |
+| Herdr | `herdr/config.toml` | `~/.config/herdr/config.toml` |
+| Karabiner | `karabiner/` | `~/.config/karabiner` |
+| macOS | `macos/DefaultKeyBinding.dict` | `~/Library/KeyBindings/DefaultKeyBinding.dict` |
+| Keyball | `keyball/my-keymap/` | `{keyballへのパス}/qmk_firmware/keyboards/keyball/keyball61/keymaps/my-keymap` |
+| Obsidian | `obsidian/plugins/*/` | `~/vault/.obsidian/plugins/*/` |
+|          | `obsidian/snippets/` | `~/vault/.obsidian/snippets` |
+|          | `obsidian/hotkeys.json` | `~/vault/.obsidian/hotkeys.json` |
+
+## 2. dotfiles-local
 
 公開できない、またはそのマシンでしか使わない設定は `~/dotfiles-local` に置く。
 
 次の2つは `~/dotfiles-local` を読み込む。
 
 - zsh
-    - `zsh/.zshrc` の一番下で `~/dotfiles-local/zsh/local.zsh` を読み込んでいる。
+  - `zsh/.zshrc` の一番下で `~/dotfiles-local/zsh/local.zsh` を読み込んでいる。
 - git
-    - `git/config` の一番下で `~/dotfiles-local/git/local.config` を include している。
-
+  - `git/config` の一番下で `~/dotfiles-local/git/local.config` を include している。
 
 > **Claude Codeのグローバル設定について**
 >
@@ -56,7 +56,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 新しいマシンで復元するときは、ホームディレクトリ直下に clone してからシンボリックリンクを貼る。
 
 ### 3-1. バックアップと既存ファイルの削除
-   
+
 同じ場所にファイルがあるとシンボリックリンクを貼れないので、既存のファイルは移動または削除する必要がある。
 
 次のコマンドは、既存ファイル/フォルダの内容をコピーして、 `~/dotfiles-bak` へ退避させる。
@@ -104,9 +104,9 @@ done
 
 <details>
 <summary><b>補足：もとに戻す方法</b></summary>
-    
+
 ---
-    
+
 もとの状態に戻したくなったら `targets` に戻したい設定ファイルを書いて次のコマンドを打つ。
 
 ```bash
@@ -127,9 +127,10 @@ for t in "${targets[@]}"; do
   echo "元の場所に戻しました: $t"
 done
 ```
----
-</details>
 
+---
+
+</details>
 
 ### 3-2. シンボリックリンクを貼る
 
@@ -201,9 +202,9 @@ done
 次の2つはシンボリックリンクが不要で、アプリのUI上から直接読み込ませる。
 
 - Chrome 拡張機能
-    - `chrome://extensions` の「パッケージ化されていない拡張機能を読み込む」からフォルダを指定する。
+  - `chrome://extensions` の「パッケージ化されていない拡張機能を読み込む」からフォルダを指定する。
 - Raycast スクリプト
-    - `Settings → Extensions → Script Commands → Script Directories` で、`~/dotfiles/raycast/scripts` を指定する。
+  - `Settings → Extensions → Script Commands → Script Directories` で、`~/dotfiles/raycast/scripts` を指定する。
 
 ### 3-5. Keyball
 

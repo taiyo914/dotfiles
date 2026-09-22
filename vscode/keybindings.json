@@ -1,13 +1,17 @@
-// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+// シンプルなショートカットの割り当て変更なら「コマンドパレット > 基本設定:キーボードショートカットを開く」の
+// UI上から変更したほうが簡単かつ安全。現在どの機能に割り当てられてるかも調べられる。
 [
+  // ctrl+- で「戻る」
   {
     "key": "ctrl+-",
     "command": "workbench.action.openPreviousRecentlyUsedEditor"
   },
+  // ctrl+;(JIS配列の+)で拡大
   {
     "key": "cmd+;",
     "command": "workbench.action.zoomIn"
   },
+  // cmd+shift+cで相対パスをコピー
   {
     "key": "cmd+shift+c",
     "command": "copyRelativeFilePath",
@@ -18,6 +22,7 @@
     "command": "copyRelativeFilePath",
     "when": "editorTextFocus"
   },
+  // cmd+k → l Githubのパーマリンクをコピー
   {
     "key": "cmd+k l",
     "command": "workbench.action.tasks.runTask",
@@ -30,6 +35,14 @@
     "args": "ghlink-selection",
     "when": "editorTextFocus && editorHasSelection"
   },
+  // cmd+k → shift+l で行番号なしのパーマリンクをコピー
+  {
+    "key": "cmd+k shift+l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "ghlink-file",
+    "when": "editorTextFocus"
+  },
+  // cmd+option+s で画面分割
   {
     "key": "cmd+alt+s",
     "command": "runCommands",
@@ -59,5 +72,55 @@
   { "key": "ctrl+tab", "command": "-workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup" },
   { "key": "ctrl+tab", "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup", "when": "!terminalFocus" },
   { "key": "ctrl+shift+tab", "command": "-workbench.action.quickOpenLeastRecentlyUsedEditorInGroup" },
-  { "key": "ctrl+shift+tab", "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup", "when": "!terminalFocus" }
+  { "key": "ctrl+shift+tab", "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup", "when": "!terminalFocus" },
+  // cmd+shift+v → cmd+e でマークダウンのプレビューを切り替える
+  // 既存の cmd+shift+v, cmd+e のショートカットを無効化
+  {
+    "key": "shift+cmd+v",
+    "command": "-markdown.togglePreview",
+    "when": "!terminalFocus && activeCustomEditorId == 'vscode.markdown.preview.editor' || editorFocus && !notebookEditorFocused && !terminalFocus && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
+  },
+  {
+    "key": "cmd+e",
+    "command": "-actions.findWithSelection"
+  },
+  {
+    "key": "cmd+e",
+    "command": "-editor.action.toggleScreenReaderAccessibilityMode",
+    "when": "accessibilityHelpIsShown"
+  },
+  // cmd+e に markdown.togglePreview を割り当て
+  {
+    "key": "cmd+e",
+    "command": "markdown.togglePreview",
+    "when": "!terminalFocus && activeCustomEditorId == 'vscode.markdown.preview.editor' || editorFocus && !notebookEditorFocused && !terminalFocus && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
+  },
+  // cmd+shift+s: 差分ビューと元のファイルを行き来する
+  // 既存のショートカットを無効化（名前をつけて保存）
+  {
+    "key": "shift+cmd+s",
+    "command": "-workbench.action.files.saveAs"
+  },
+  {
+    "key": "shift+cmd+s",
+    "command": "-workbench.action.issueReporter.captureScreenshot",
+    "when": "issueReporterOpen"
+  },
+  {
+    "key": "shift+cmd+s",
+    "command": "-workbench.action.files.saveLocalFile",
+    "when": "remoteFileDialogVisible"
+  },
+  // cmd+shift+s で git.openChange / git.openFile を割り当て
+  {
+    "key": "cmd+shift+s",
+    "command": "git.openChange",
+    "when": "!isInDiffEditor"
+  },
+  {
+    "key": "cmd+shift+s",
+    "command": "git.openFile",
+    "when": "isInDiffEditor"
+  }
 ]
+
