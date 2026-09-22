@@ -80,7 +80,54 @@ static bool swap_shift(uint8_t plain, uint16_t shifted, keyrecord_t *record) {
     return false;   // 既定の処理はさせない
 }
 
+#ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+// オートマウスレイヤーを抜けさせたくないキーを、今いくつ押しているか
+static int8_t aml_held_keys = 0;
+
+// 押している間はオートマウスレイヤーを抜けさせないキーか
+static bool is_aml_held_key(uint16_t keycode, keyrecord_t *record) {
+    // KC_BTN1 でのドラッグ、SCRL_MO でのスクロール
+    if (is_mouse_record_kb(keycode, record) || IS_MOUSEKEY(keycode)) {
+        return true;
+    }
+    // LT(2,KC_SPC) や MO(2) で、自分でレイヤーに入っているとき
+    switch (keycode) {
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+            return QK_LAYER_TAP_GET_LAYER(keycode) == AUTO_MOUSE_DEFAULT_LAYER;
+        case QK_MOMENTARY ... QK_MOMENTARY_MAX:
+            return QK_MOMENTARY_GET_LAYER(keycode) == AUTO_MOUSE_DEFAULT_LAYER;
+    }
+    return false;
+}
+
+// QMK のデフォルトでは修飾キーを押してもオートマウスレイヤーから抜けないので、装飾キーでもレイヤーから抜けるようにする
+// 装飾キー+クリックが要るときは TG(2) や LT(2,KC_SPC) で明示的にレイヤーに入る
+static void aml_exit_on_mod(uint16_t keycode, keyrecord_t *record) {
+    if (is_aml_held_key(keycode, record)) {
+        if (record->event.pressed) {
+            aml_held_keys++;
+        } else if (aml_held_keys > 0) {
+            aml_held_keys--;
+        }
+        return;
+    }
+    if (!record->event.pressed || aml_held_keys > 0) {
+        return;
+    }
+    switch (keycode) {
+        case KC_LEFT_CTRL ... KC_RIGHT_GUI:  // ctrl / shift / alt / cmd そのもの
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:  // LGUI_T(KC_LNG2) のような兼用キー
+            // TG(2) で入っているときは、この関数の中で何もしない作りになっている
+            auto_mouse_layer_off();
+            break;
+    }
+}
+#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+    aml_exit_on_mod(keycode, record);
+#endif
     switch (keycode) {
         case KC_SCLN:                                  // 単押し ':' / Shift ';'
             return swap_shift(KC_SCLN, KC_COLN, record);
