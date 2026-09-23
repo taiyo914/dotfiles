@@ -4,7 +4,11 @@
     "CLAUDE_CODE_SCROLL_SPEED": "0.5"
   },
   "permissions": {
-    "allow": ["Read(~/vault/**)", "Edit(~/vault/**)", "Bash(*~/vault*)"],
+    "allow": [
+      "Read(~/vault/**)",
+      "Edit(~/vault/**)",
+      "Bash(*~/vault*)"
+    ],
     "deny": [
       "Bash(brew install:*)",
       "Bash(npm install -g:*)",
@@ -20,17 +24,6 @@
       "Bash(cargo install:*)"
     ]
   },
-  "model": "sonnet[1m]",
-  "availableModels": [
-    "fable",
-    "claude-opus-5[1m]",
-    "claude-sonnet-5[1m]",
-    "claude-sonnet-4-6[1m]",
-    "claude-opus-4-8[1m]",
-    "claude-opus-4-7[1m]",
-    "claude-opus-4-6[1m]",
-    "haiku"
-  ],
   "hooks": {
     "Stop": [
       {
@@ -108,17 +101,26 @@
       }
     ]
   },
-  "enableArtifact": false,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/scripts/statusline.sh",
     "padding": 2,
     "refreshInterval": 1
   },
-  "effortLevel": "high",
+  "model": "opus",
+  "availableModels": [
+    "fable",
+    "claude-opus-5[1m]",
+    "claude-sonnet-5[1m]",
+    "claude-sonnet-4-6[1m]",
+    "claude-opus-4-8[1m]",
+    "claude-opus-4-7[1m]",
+    "claude-opus-4-6[1m]",
+    "haiku"
+  ],
   "modelSettings": {
     "claude-opus-5": {
-      "effortLevel": "high"
+      "effortLevel": "medium"
     },
     "claude-sonnet-5": {
       "effortLevel": "high"
@@ -127,10 +129,12 @@
       "effortLevel": "medium"
     }
   },
+  "effortLevel": "high",
   "tui": "fullscreen",
-  "skipWorkflowUsageWarning": true,
   "theme": "auto",
-  "preferredNotifChannel": "notifications_disabled",
+  "enableArtifact": false,
+  "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true,
+  "preferredNotifChannel": "notifications_disabled",
   "notifications": "notifications_disabled"
 }
