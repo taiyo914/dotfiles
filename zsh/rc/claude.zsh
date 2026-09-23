@@ -13,7 +13,12 @@ cc() {
     fable)  model="fable";        shift ;;
     *)      model="opus[1m]" ;;
   esac
-  claude --permission-mode auto --model "$model" "$@"
+  # モデル名の次に effort のレベルが書かれていたら --effort で渡す
+  local -a effort_opt
+  case "$1" in
+    low|medium|high|xhigh|max) effort_opt=(--effort "$1"); shift ;;
+  esac
+  claude --permission-mode auto --model "$model" "${effort_opt[@]}" "$@"
 }
 
 vcc() { cd ~/vault && cc "$@"; }
