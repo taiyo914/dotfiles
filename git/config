@@ -21,6 +21,8 @@
     cstash = stash push -u -m
     stls = stash list
     lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+    sweep = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d
+
 [url "ssh://git@github.com"]
   insteadOf = https://github.com
 
@@ -37,3 +39,6 @@
 # このマシンだけで必要な設定を読み込む
 [include]
 	path = ~/dotfiles-local/git/local.config
+
+[fetch]
+    prune = true
