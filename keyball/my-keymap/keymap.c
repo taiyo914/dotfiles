@@ -1,7 +1,7 @@
 /* 
 ファームウェアを書き込むコマンド
 ```
-cd /path/to/qmk
+cd ~/my-keyboards/qmk
 make keyball/keyball61:my-keymap:flash
 ```
 */
@@ -116,6 +116,7 @@ static void aml_exit_on_mod(uint16_t keycode, keyrecord_t *record) {
     }
     switch (keycode) {
         case KC_LEFT_CTRL ... KC_RIGHT_GUI:  // ctrl / shift / alt / cmd そのもの
+        case QK_MODS ... QK_MODS_MAX:        // S(KC_LEFT) のような修飾キー付きのキー
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:  // LGUI_T(KC_LNG2) のような兼用キー
             // TG(2) で入っているときは、この関数の中で何もしない作りになっている
             auto_mouse_layer_off();
