@@ -9,6 +9,7 @@ split_horizontal = ["prefix+minus", "cmd+shift+d"]
 new_tab = ["prefix+c", "cmd+t"]
 new_workspace = ["prefix+shift+n", "cmd+n"]
 close_pane = ["prefix+x", "cmd+w"]
+toggle_sidebar = ["prefix+b", "cmd+b"]
 # Ghostty 側は ctrl+tab を通すために工夫が要る（ghostty/configを参照）
 next_workspace = "ctrl+tab"
 previous_workspace = "ctrl+shift+tab"

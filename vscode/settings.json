@@ -105,5 +105,7 @@
   },
   "[jsonc]": {
     "editor.formatOnSave": false
-  }
+  },
+  // ソース管理画面をつねに「ツリーとして表示」にする
+  "scm.defaultViewMode": "tree"
 }

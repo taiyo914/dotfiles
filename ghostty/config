@@ -21,14 +21,15 @@ keybind = super+shift+t=prompt_tab_title
 # ペインの大きさを揃えるキーバインド
 keybind = cmd+ctrl+minus=equalize_splits
 
-# 下の5つは herdr 側で同じ操作に割り当てたので、Ghostty では無効にして herdr に渡す
+# 下の6つは herdr 側で同じ操作に割り当てたので、Ghostty では無効にして herdr に渡す
 # cmd+d=右にペイン / cmd+shift+d=下にペイン / cmd+t=タブ作成
-# cmd+n=space作成 / cmd+w=ペインを閉じる
+# cmd+n=space作成 / cmd+w=ペインを閉じる / cmd+b=サイドバーの開閉
 keybind = cmd+d=unbind
 keybind = cmd+shift+d=unbind
 keybind = cmd+t=unbind
 keybind = cmd+n=unbind
 keybind = cmd+w=unbind
+keybind = cmd+b=unbind
 # ctrl+tab / ctrl+shift+tab だけは unbind が効かないので工夫が必要
 # これらは macOS が「Show Next/Previous Tab」としてもっているので、 Ghostty 側で無効化しても macOS で反応してしまう
 # なので、こいつらは Ghostty で先に奪い取って、次の意味のない操作で素通りさせて herdr へ届ける
