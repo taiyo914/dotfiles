@@ -1,0 +1,348 @@
+{
+  "title": "US layout on the built-in JIS keyboard",
+  "rules": [
+    {
+      "description": "内蔵キーボードの JIS 配列を US 配列のキー位置で入力する",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "hyphen",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "equal_sign"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "equal_sign",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "open_bracket",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "quote"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "close_bracket",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "semicolon"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "international3",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "backslash"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "grave_accent_and_tilde",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "backslash"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "semicolon",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "hyphen"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "quote",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "open_bracket"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "backslash",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "close_bracket"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "non_us_pound",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "close_bracket"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "international1",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "vk_none"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "fn"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "fn",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "right_option"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
