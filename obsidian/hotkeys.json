@@ -77,15 +77,6 @@
       "key": "H"
     }
   ],
-  "editor:toggle-blockquote": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "2"
-    }
-  ],
   "editor:toggle-fold": [
     {
       "modifiers": [
@@ -200,6 +191,15 @@
         "Mod"
       ],
       "key": "0"
+    }
+  ],
+  "editor:toggle-blockquote": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "'"
     }
   ]
 }
