@@ -13,6 +13,9 @@ export EDITOR='code -w'
 # direnv
 eval "$(direnv hook zsh)"
 
+# mise
+eval "$(mise activate bash)"
+
 # starship
 eval "$(starship init zsh)"
 
