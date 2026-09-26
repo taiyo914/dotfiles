@@ -25,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // 数字と記号
   [1] = LAYOUT_universal(
     _______ , _______    , _______    , _______    , _______           , _______         ,                                  _______       , _______       , _______    , _______   , _______ , _______,
-    _______ , KC_9       , KC_8       , KC_7       , KC_6              , KC_5            ,                                  KC_LBRC       , KC_RBRC       , S(KC_9)    , S(KC_0)   , S(KC_2) , _______,
+    _______ , KC_9       , KC_8       , KC_7       , KC_6              , KC_5            ,                                  S(KC_2)       ,KC_LBRC        , KC_RBRC    , S(KC_9)   , S(KC_0) , _______,
     _______ , KC_4       , KC_3       , KC_2       , KC_1              , KC_0            ,                                  S(KC_3)       , KC_GRV        , S(KC_8)    , S(KC_DOT) , KC_MINS , _______,
     _______ , S(KC_4)    , S(KC_6)    , S(KC_7)    , S(KC_EQL)         , S(KC_5)         , _______      , _______         , KC_QUOT       , KC_SCLN       , KC_BSLS    , KC_EQL    , S(KC_1) , _______,
     _______ , _______    , _______    , _______    , _______           , _______         , _______      , _______         , _______       , XXXXXXX       , XXXXXXX    , XXXXXXX   , _______ , _______
@@ -100,9 +100,10 @@ static bool is_aml_held_key(uint16_t keycode, keyrecord_t *record) {
     return false;
 }
 
-// QMK のデフォルトでは修飾キーを押してもオートマウスレイヤーから抜けないので、装飾キーでもレイヤーから抜けるようにする
-// 装飾キー+クリックが要るときは TG(2) や LT(2,KC_SPC) で明示的にレイヤーに入る
-static void aml_exit_on_mod(uint16_t keycode, keyrecord_t *record) {
+// マウスボタン（レイヤー2の j, k, l, u, o）以外のキーを押したら、すぐにオートマウスレイヤーから抜ける。
+// QMK のデフォルトでは修飾キーや S(KC_LEFT) のようなキーを押しても抜けないので、それらでも抜けるようにしている。
+// 修飾キー+クリックが要るときは TG(2) や LT(2,KC_SPC) で明示的にレイヤーに入る
+static void aml_exit_on_other_key(uint16_t keycode, keyrecord_t *record) {
     if (is_aml_held_key(keycode, record)) {
         if (record->event.pressed) {
             aml_held_keys++;
@@ -114,20 +115,18 @@ static void aml_exit_on_mod(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed || aml_held_keys > 0) {
         return;
     }
-    switch (keycode) {
-        case KC_LEFT_CTRL ... KC_RIGHT_GUI:  // ctrl / shift / alt / cmd そのもの
-        case QK_MODS ... QK_MODS_MAX:        // S(KC_LEFT) のような修飾キー付きのキー
-        case QK_MOD_TAP ... QK_MOD_TAP_MAX:  // LGUI_T(KC_LNG2) のような兼用キー
-            // TG(2) で入っているときは、この関数の中で何もしない作りになっている
-            auto_mouse_layer_off();
-            break;
+    // TG(2) を押したときのレイヤーの切り替えは QMK に任せる
+    if (IS_QK_TOGGLE_LAYER(keycode) && QK_TOGGLE_LAYER_GET_LAYER(keycode) == AUTO_MOUSE_DEFAULT_LAYER) {
+        return;
     }
+    // TG(2) で入っているときは、この関数の中で何もしない作りになっている
+    auto_mouse_layer_off();
 }
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
-    aml_exit_on_mod(keycode, record);
+    aml_exit_on_other_key(keycode, record);
 #endif
     switch (keycode) {
         case KC_SCLN:                                  // 単押し ':' / Shift ';'
