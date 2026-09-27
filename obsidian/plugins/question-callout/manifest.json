@@ -1,0 +1,9 @@
+{
+  "id": "question-callout",
+  "name": "Question Callout",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "ショートカットで question コールアウトを挿入する",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}

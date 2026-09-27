@@ -1,0 +1,7 @@
+/* question callout の色を優しい青に変える。 */
+
+.callout[data-callout="question"] {
+  --callout-color: rgb(60, 120, 200);
+  --callout-border-width: 1px;
+  --callout-border-opacity: 0.5;
+}

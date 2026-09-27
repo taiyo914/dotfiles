@@ -201,5 +201,13 @@
       ],
       "key": "'"
     }
+  ],
+  "question-callout:insert-question-callout": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": "Q"
+    }
   ]
 }
