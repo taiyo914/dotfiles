@@ -3,6 +3,6 @@
   "name": "Folder Order",
   "version": "1.0.0",
   "minAppVersion": "1.7.0",
-  "description": "ファイルエクスプローラー のファイル/フォルダを .obsidian/folder-order.md に書いた順に並べ替える",
+  "description": "ファイルエクスプローラー のファイル/フォルダを vault 直下の folder_order.md に書いた順に並べ替える",
   "author": "taiyo"
 }

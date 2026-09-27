@@ -1,6 +1,8 @@
 const obsidian = require("obsidian");
 
-const ORDER_FILE = ".obsidian/folder-order.md";
+const ORDER_FILE = "folder_order.md";
+// 以前の置き場所。新しい場所にファイルがなければ中身を引き継ぐ
+const LEGACY_ORDER_FILE = ".obsidian/folder-order.md";
 const POLL_INTERVAL_MS = 2000;
 const ROOT = "/";
 
@@ -57,6 +59,11 @@ module.exports = class FolderOrderPlugin extends obsidian.Plugin {
     const adapter = this.app.vault.adapter;
     if (await adapter.exists(ORDER_FILE)) return;
 
+    if (await adapter.exists(LEGACY_ORDER_FILE)) {
+      await adapter.write(ORDER_FILE, await adapter.read(LEGACY_ORDER_FILE));
+      return;
+    }
+
     const folders = this.app.vault
       .getRoot()
       .children.filter((child) => child instanceof obsidian.TFolder)
@@ -67,9 +74,8 @@ module.exports = class FolderOrderPlugin extends obsidian.Plugin {
   }
 
   async openOrderFile() {
-    // .obsidian の中はノートとして開けないので、外部エディタに任せる
-    const full = this.app.vault.adapter.getFullPath(ORDER_FILE);
-    window.require("electron").shell.openPath(full);
+    await this.ensureOrderFile();
+    await this.app.workspace.openLinkText(ORDER_FILE, "", false);
   }
 
   async reloadIfChanged() {
