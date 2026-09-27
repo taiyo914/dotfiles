@@ -5,6 +5,8 @@ const ORDER_FILE = "folder_order.md";
 const LEGACY_ORDER_FILE = ".obsidian/folder-order.md";
 const POLL_INTERVAL_MS = 2000;
 const ROOT = "/";
+// Obsidian のエディタのタブ幅の初期値に合わせる
+const TAB_WIDTH = 4;
 
 const TEMPLATE = `# 表示したい順に 1 行 1 つ書く
 # インデントすると、その 1 つ上の行のフォルダの中身の順番になる
@@ -231,6 +233,17 @@ function matchSegments(pattern, segments, p = 0, s = 0) {
   return matched && matchSegments(pattern, segments, p + 1, s + 1);
 }
 
+// タブとスペースが混ざっていても深さを比べられるように、タブを TAB_WIDTH 桁として数える
+function indentWidth(line) {
+  let width = 0;
+  for (const char of line) {
+    if (char === "\t") width += TAB_WIDTH - (width % TAB_WIDTH);
+    else if (char === " ") width += 1;
+    else break;
+  }
+  return width;
+}
+
 function parseOrderFile(text) {
   const rules = []; // { pattern, direction }
   const stack = []; // { indent, path }
@@ -238,7 +251,7 @@ function parseOrderFile(text) {
   for (const raw of text.split("\n")) {
     if (!raw.trim() || raw.trim().startsWith("#")) continue;
 
-    const indent = raw.length - raw.trimStart().length;
+    const indent = indentWidth(raw);
     let name = raw.trim().replace(/^[-*]\s+/, "");
     const direction = name.match(DIRECTION_PATTERN)?.[1]?.toLowerCase();
     name = name.replace(DIRECTION_PATTERN, "").replace(/\/+$/, "");
