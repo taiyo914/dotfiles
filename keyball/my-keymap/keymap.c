@@ -25,8 +25,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // 数字と記号
   [1] = LAYOUT_universal(
     _______ , _______    , _______    , _______    , _______           , _______         ,                                  _______       , _______       , _______    , _______   , _______ , _______,
-    _______ , KC_9       , KC_8       , KC_7       , KC_6              , KC_5            ,                                  S(KC_2)       ,KC_LBRC        , KC_RBRC    , S(KC_9)   , S(KC_0) , _______,
-    _______ , KC_4       , KC_3       , KC_2       , KC_1              , KC_0            ,                                  S(KC_3)       , KC_GRV        , S(KC_8)    , S(KC_DOT) , KC_MINS , _______,
+    _______ , KC_6       , KC_7       , KC_8       , KC_9              , KC_0            ,                                  S(KC_2)       ,KC_LBRC        , KC_RBRC    , S(KC_LBRC), S(KC_RBRC), _______,
+    _______ , KC_1       , KC_2       , KC_3       , KC_4              , KC_5            ,                                  S(KC_3)       , KC_GRV        , S(KC_8)    , S(KC_DOT) , KC_MINS , _______,
     _______ , S(KC_4)    , S(KC_6)    , S(KC_7)    , S(KC_EQL)         , S(KC_5)         , _______      , _______         , KC_QUOT       , KC_SCLN       , KC_BSLS    , KC_EQL    , S(KC_1) , _______,
     _______ , _______    , _______    , _______    , _______           , _______         , _______      , _______         , _______       , XXXXXXX       , XXXXXXX    , XXXXXXX   , _______ , _______
   ),
@@ -78,6 +78,15 @@ static bool swap_shift(uint8_t plain, uint16_t shifted, keyrecord_t *record) {
         }
     }
     return false;   // 既定の処理はさせない
+}
+
+// Shift を押したときだけ、別の文字を送る共通処理
+static bool shift_to(uint16_t shifted, keyrecord_t *record) {
+    if (record->event.pressed && (get_mods() & MOD_MASK_SHIFT)) {
+        tap_code16(shifted);
+        return false;
+    }
+    return true;    // Shift なしのときは、そのままのキーを送る
 }
 
 #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
@@ -133,6 +142,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return swap_shift(KC_SCLN, KC_COLN, record);
         case KC_BSLS:                                  // 単押し '|' / Shift '\'
             return swap_shift(KC_BSLS, KC_PIPE, record);
+        case KC_EQL:                                   // 単押し '+' / Shift '='
+            return swap_shift(KC_EQL, KC_PLUS, record);
+        case KC_LBRC:                                  // 単押し '[' / Shift '('
+            return shift_to(KC_LPRN, record);
+        case KC_RBRC:                                  // 単押し ']' / Shift ')'
+            return shift_to(KC_RPRN, record);
     }
     return true;
 }
