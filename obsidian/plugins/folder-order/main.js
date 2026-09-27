@@ -10,12 +10,23 @@ const TEMPLATE = `# 表示したい順に 1 行 1 つ書く
 # インデントすると、その 1 つ上の行のフォルダの中身の順番になる
 # ここに書かなかったものは、この下に Obsidian の通常の順番で並ぶ
 # "#" で始まる行と空行は無視される
+# フォルダ名の後ろに ": asc" か ": desc" を付けると、そのフォルダの中で
+# ここに書かなかったものが名前の昇順 / 降順で並ぶ (例: "notes: desc")
+# "*" は 1 階層分の任意の名前、"**" は 0 階層以上の任意のフォルダに一致する
+# (例: "*/notes" は books/notes や tmp/notes、"**/notes" は深さを問わず notes)
+# 1 つのフォルダに複数の行が当てはまるときは、上に書いた行が優先される
 
 `;
 
+const DIRECTION_PATTERN = /\s*:\s*(asc|desc)\s*$/i;
+const nameCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: "base",
+});
+
 module.exports = class FolderOrderPlugin extends obsidian.Plugin {
-  // parentPath -> Map<childPath, index>
-  orderIndex = new Map();
+  // 並び順ファイルの 1 行ごとの規則。上に書いた行ほど前にある
+  rules = [];
   lastStamp = null;
   uninstallPatch = null;
 
@@ -96,7 +107,7 @@ module.exports = class FolderOrderPlugin extends obsidian.Plugin {
     const stat = await adapter.stat(ORDER_FILE).catch(() => null);
     this.lastStamp = stat ? `${stat.mtime}:${stat.size}` : null;
 
-    this.orderIndex = buildOrderIndex(text);
+    this.rules = parseOrderFile(text);
   }
 
   // ---- ファイルエクスプローラーへの割り込み ----
@@ -125,20 +136,32 @@ module.exports = class FolderOrderPlugin extends obsidian.Plugin {
   }
 
   applyOrder(folder, items) {
-    const index = this.orderIndex.get(folder?.path ?? ROOT);
-    if (!index || !Array.isArray(items)) return items;
+    if (!Array.isArray(items) || this.rules.length === 0) return items;
 
+    const folderSegments = splitPath(folder?.path ?? ROOT);
+    const direction = this.rules.find(
+      (rule) => rule.direction && matchSegments(rule.pattern, folderSegments)
+    )?.direction;
+
+    // 各要素に、当てはまる最初の行の番号を付ける。当てはまらなければ rest に回す
     const listed = [];
     const rest = [];
     for (const item of items) {
       const path = pathOf(item);
-      if (path != null && index.has(path)) listed.push(item);
-      else rest.push(item);
+      const segments = path == null ? null : splitPath(path);
+      const rank =
+        segments == null
+          ? -1
+          : this.rules.findIndex((rule) => matchSegments(rule.pattern, segments));
+      if (rank === -1) rest.push(item);
+      else listed.push({ item, rank });
     }
-    if (listed.length === 0) return items;
+    if (listed.length === 0 && !direction) return items;
 
-    listed.sort((a, b) => index.get(pathOf(a)) - index.get(pathOf(b)));
-    return listed.concat(rest);
+    // 同じ行に当てはまったもの同士 ("2024-*" など) は元の順番のまま並ぶ
+    listed.sort((a, b) => a.rank - b.rank);
+    if (direction) sortByName(rest, direction);
+    return listed.map(({ item }) => item).concat(rest);
   }
 
   requestSort() {
@@ -150,18 +173,75 @@ module.exports = class FolderOrderPlugin extends obsidian.Plugin {
 // getSortedFolderItems が返す要素は Obsidian のバージョンによって
 // TAbstractFile そのものだったり、それを包んだオブジェクトだったりする
 function pathOf(item) {
-  return item?.path ?? item?.file?.path ?? item?.folder?.path ?? null;
+  return fileOf(item)?.path ?? null;
 }
 
-function buildOrderIndex(text) {
-  const index = new Map();
+function fileOf(item) {
+  if (item instanceof obsidian.TAbstractFile) return item;
+  return item?.file ?? item?.folder ?? null;
+}
+
+// Obsidian の通常の並びと同じく、フォルダを先、ファイルを後にしたうえで名前順に並べる
+function sortByName(items, direction) {
+  const sign = direction === "desc" ? -1 : 1;
+  items.sort((a, b) => {
+    const fa = fileOf(a);
+    const fb = fileOf(b);
+    const folderA = fa instanceof obsidian.TFolder ? 0 : 1;
+    const folderB = fb instanceof obsidian.TFolder ? 0 : 1;
+    if (folderA !== folderB) return folderA - folderB;
+    return sign * nameCollator.compare(fa?.name ?? "", fb?.name ?? "");
+  });
+}
+
+function splitPath(path) {
+  return path === ROOT ? [] : path.split("/");
+}
+
+// "*" を含む名前は正規表現に、"**" は GLOBSTAR に変換する
+const GLOBSTAR = Symbol("globstar");
+
+function compileSegment(segment) {
+  if (segment === "**") return GLOBSTAR;
+  if (!segment.includes("*")) return segment;
+  const source = segment
+    .split("*")
+    .map((part) => part.replace(/[.+?^${}()|[\]\\]/g, "\\$&"))
+    .join("[^/]*");
+  return new RegExp(`^${source}$`);
+}
+
+function matchSegments(pattern, segments, p = 0, s = 0) {
+  if (p === pattern.length) return s === segments.length;
+
+  const segment = pattern[p];
+  if (segment === GLOBSTAR) {
+    // 0 階層から残り全部までを順に試す
+    for (let skip = s; skip <= segments.length; skip++) {
+      if (matchSegments(pattern, segments, p + 1, skip)) return true;
+    }
+    return false;
+  }
+
+  if (s === segments.length) return false;
+  const matched =
+    segment instanceof RegExp
+      ? segment.test(segments[s])
+      : segment === segments[s];
+  return matched && matchSegments(pattern, segments, p + 1, s + 1);
+}
+
+function parseOrderFile(text) {
+  const rules = []; // { pattern, direction }
   const stack = []; // { indent, path }
 
   for (const raw of text.split("\n")) {
     if (!raw.trim() || raw.trim().startsWith("#")) continue;
 
     const indent = raw.length - raw.trimStart().length;
-    let name = raw.trim().replace(/^[-*]\s+/, "").replace(/\/+$/, "");
+    let name = raw.trim().replace(/^[-*]\s+/, "");
+    const direction = name.match(DIRECTION_PATTERN)?.[1]?.toLowerCase();
+    name = name.replace(DIRECTION_PATTERN, "").replace(/\/+$/, "");
     if (!name) continue;
 
     while (stack.length && stack[stack.length - 1].indent >= indent) stack.pop();
@@ -169,19 +249,11 @@ function buildOrderIndex(text) {
     const base = stack.length ? stack[stack.length - 1].path : ROOT;
     const path = base === ROOT ? name : `${base}/${name}`;
 
-    // "Projects/Work" のようにパスを直接書いた行も正しい親にぶら下げる
-    const slash = path.lastIndexOf("/");
-    const parentPath = slash === -1 ? ROOT : path.slice(0, slash);
-
-    let siblings = index.get(parentPath);
-    if (!siblings) {
-      siblings = new Map();
-      index.set(parentPath, siblings);
-    }
-    if (!siblings.has(path)) siblings.set(path, siblings.size);
+    // "Projects/Work" のようにパスを直接書いた行も、パス全体で照らし合わせるので正しい親に効く
+    rules.push({ pattern: path.split("/").map(compileSegment), direction });
 
     stack.push({ indent, path });
   }
 
-  return index;
+  return rules;
 }
