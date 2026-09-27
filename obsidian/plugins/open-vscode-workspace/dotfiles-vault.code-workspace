@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "../../.."
+    },
+    {
+      "path": "../../../../dotfiles-local"
+    },
+    {
+      "path": "../../../../vault"
+    }
+  ],
+  "settings": {}
+}

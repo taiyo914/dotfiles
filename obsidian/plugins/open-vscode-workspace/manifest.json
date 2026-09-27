@@ -1,0 +1,9 @@
+{
+  "id": "open-vscode-workspace",
+  "name": "Open VS Code Workspace",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "dotfiles と vault を含んだ VS Code のワークスペースを開く",
+  "author": "taiyo",
+  "isDesktopOnly": true
+}
