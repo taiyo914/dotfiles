@@ -6,6 +6,10 @@ MODEL_RAW=$(echo "$input" | jq -r '.model.display_name')
 # "(1M context)" -> "(1M)" に短縮する
 MODEL=$(echo "$MODEL_RAW" | sed -E 's/\(([0-9]+[A-Za-z]*) context\)/(\1)/')
 
+EFFORT=$(echo "$input" | jq -r '.effort.level // empty')
+EFFORT_INFO=""
+[ -n "$EFFORT" ] && EFFORT_INFO=" ${EFFORT}"
+
 DIR=$(echo "$input" | jq -r '.workspace.current_dir')
 COST=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
 DURATION_MS=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
@@ -42,7 +46,7 @@ MINS=$((DURATION_MS / 60000))
 COLS=$(stty size </dev/tty 2>/dev/null | awk '{print $2}')
 COLS=${COLS:-${COLUMNS:-$(tput cols 2>/dev/null || echo 120)}}
 
-LINE1="${CYAN}[$MODEL]${RESET} | ${DIR##*/}${BRANCH_INFO}"
+LINE1="${CYAN}[$MODEL]${RESET}${EFFORT_INFO} | ${DIR##*/}${BRANCH_INFO}"
 LINE2="${BAR_COLOR}${BAR}${RESET} ${PCT}% | ${YELLOW}${COST_FMT}${RESET} | ${MINS}m"
 
 visible_len=$(echo -e "${LINE1} | ${LINE2}" | sed 's/\x1b\[[0-9;]*m//g' | tr -d '\n' | wc -m)
