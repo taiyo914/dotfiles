@@ -149,25 +149,6 @@
       "key": "T"
     }
   ],
-  "memo-callout:insert-memo-callout": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "M"
-    }
-  ],
-  "memo-callout:insert-memo-callout-nt": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift",
-        "Alt"
-      ],
-      "key": "M"
-    }
-  ],
   "window:zoom-in": [
     {
       "modifiers": [
@@ -208,6 +189,23 @@
         "Ctrl"
       ],
       "key": "Q"
+    }
+  ],
+  "memo-callout:insert-memo-callout": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": "M"
+    }
+  ],
+  "memo-callout:insert-memo-callout-nt": [
+    {
+      "modifiers": [
+        "Ctrl",
+        "Shift"
+      ],
+      "key": "M"
     }
   ]
 }
