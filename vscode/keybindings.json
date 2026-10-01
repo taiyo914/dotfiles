@@ -6,11 +6,14 @@
     "key": "ctrl+-",
     "command": "workbench.action.openPreviousRecentlyUsedEditor"
   },
-  // ctrl+;(JIS配列の+)で拡大
-  {
-    "key": "cmd+;",
-    "command": "workbench.action.zoomIn"
-  },
+  // cmd+;(JIS配列の+)で拡大
+  { "key": "cmd+;","command": "workbench.action.zoomIn" },
+  // cmd+0 でサイズをもとに戻す
+  { "key": "cmd+0", "command": "workbench.action.zoomReset" },
+  // ターミナルの拡大縮小
+  { "key": "cmd+;", "command": "workbench.action.terminal.fontZoomIn",  "when": "terminalFocus" },
+  { "key": "cmd+-", "command": "workbench.action.terminal.fontZoomOut", "when": "terminalFocus" },
+  { "key": "cmd+0", "command": "workbench.action.terminal.fontZoomReset", "when": "terminalFocus" },
   // cmd+shift+cで相対パスをコピー
   {
     "key": "cmd+shift+c",
