@@ -5,6 +5,7 @@
                 "rules": [
                     {
                         "description": "mac-remap-20260926",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1025,7 +1026,6 @@
                     },
                     {
                         "description": "内蔵キーボードで ; と - を入れ替える（JIS版）",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1126,7 +1126,6 @@
                     },
                     {
                         "description": "内蔵キーボードのみ JIS の印字どおりに記号を入力する",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
