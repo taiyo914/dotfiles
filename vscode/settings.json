@@ -85,9 +85,11 @@
   "workbench.editor.labelFormat": "short",
   // =================
 
-  // .config ファイルを Ruby で認識させるのを防ぐ
+  // マイナーな拡張子にシンタックスハイライトを適用させる
   "files.associations": {
-    "config": "properties"
+    "config": "properties",
+    "*.overlay": "dts",
+    "*.keymap": "dts"
   },
 
   // ターミナル上の Github のリンクは常にブラウザで開く
