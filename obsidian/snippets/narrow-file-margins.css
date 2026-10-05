@@ -15,7 +15,7 @@
 
 .mod-root .markdown-preview-view,
 .mod-root .markdown-source-view.mod-cm6 .cm-scroller {
-  --file-line-width: 1100px; /* 既定 700px。大きいほど本文が横に広がる */
+  --file-line-width: 2000px; /* 既定 700px。大きいほど本文が横に広がる */
   --file-margins-x: var(--size-4-8); /* 既定 --size-4-8 = 32px → 16px */
 
   /* Obsidian は body で --file-margins: var(--file-margins-y) var(--file-margins-x)
