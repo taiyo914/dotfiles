@@ -1,0 +1,14 @@
+/* > [!型|notitle]（|nt でも可）でコールアウトの見出し行を消す
+   "|" 以降は data-callout-metadata 属性に入る */
+
+.callout[data-callout-metadata="notitle"] > .callout-title,
+.callout[data-callout-metadata="nt"] > .callout-title {
+  display: none;
+}
+
+/* 見出しを消すと本文先頭の <p> が上端に来るので、その margin-top を上下の余白に揃える。
+   --callout-edge-spacing は callout-padding.css で定義している */
+.callout[data-callout-metadata="notitle"] .callout-content > :first-child,
+.callout[data-callout-metadata="nt"] .callout-content > :first-child {
+  margin-top: var(--callout-edge-spacing);
+}

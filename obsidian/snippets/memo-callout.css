@@ -1,0 +1,19 @@
+/* 灰色の枠だけのシンプルなコールアウト
+   > [!memo]              … 見出し「Memo」つき
+   > [!memo] 見出し        … 見出しを上書き
+   > [!memo|notitle]      … 見出しを消す（callout-notitle.css） */
+
+.callout[data-callout="memo"] {
+  --callout-border-width: 1px;
+  border-color: var(--background-modifier-border);
+  background-color: transparent;
+  mix-blend-mode: normal; /* ダークテーマでの色の合成を無効化 */
+}
+
+.callout[data-callout="memo"] .callout-icon {
+  display: none;
+}
+
+.callout[data-callout="memo"] .callout-title {
+  color: var(--text-normal);
+}

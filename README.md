@@ -34,6 +34,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | Keyball | `keyball/my-keymap/` | `{keyballへのパス}/qmk_firmware/keyboards/keyball/keyball61/keymaps/my-keymap` |
 | Obsidian | `obsidian/plugins/*/` | `~/vault/.obsidian/plugins/*/` |
 |          | `obsidian/snippets/` | `~/vault/.obsidian/snippets` |
+|          | `obsidian/appearance.json` | `~/vault/.obsidian/appearance.json` |
 |          | `obsidian/hotkeys.json` | `~/vault/.obsidian/hotkeys.json` |
 
 ## 2. dotfiles-local
@@ -170,14 +171,15 @@ VAULT=~/path/to/your/vault
 # vault ごとに ~/dotfiles-bak/obsidian/{vault名}/ を作る
 BAK=~/dotfiles-bak/obsidian/$(basename "$VAULT")
 mkdir -p "$BAK"
-for t in snippets hotkeys.json; do
+for t in snippets hotkeys.json appearance.json; do
   [ -e "$VAULT/.obsidian/$t" ] || continue
   cp -RL "$VAULT/.obsidian/$t" "$BAK/" && rm -rf "$VAULT/.obsidian/$t"
 done
 
-# snippets と hotkeys.json はすべてのマシン共通なので丸ごとリンクを貼る
+# snippets・hotkeys.json・appearance.json はすべてのマシン共通なので丸ごとリンクを貼る
 ln -s ~/dotfiles/obsidian/snippets "$VAULT/.obsidian/snippets"
 ln -s ~/dotfiles/obsidian/hotkeys.json "$VAULT/.obsidian/hotkeys.json"
+ln -s ~/dotfiles/obsidian/appearance.json "$VAULT/.obsidian/appearance.json"
 
 # plugins は個別にリンクを貼る
 # 同じ名前のものがすでにあれば退避する
@@ -195,7 +197,9 @@ for d in ~/dotfiles/obsidian/plugins/*/; do
 done
 ```
 
-リンクを貼ったあと、Obsidian を再起動して `設定 → コミュニティプラグイン` と `設定 → 外観 → CSSスニペット` から各プラグインとCSSスニペットを有効にする。
+リンクを貼ったあと、Obsidian を再起動して `設定 → コミュニティプラグイン` から各プラグインを有効にする。
+
+CSSスニペットのオン/オフやテーマ・フォントは `appearance.json` に保存されているので、設定し直す必要はない。ただし、フォントはマシンにインストールする必要がある。
 
 ### 3-4. UI から読み込ませるもの
 

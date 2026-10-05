@@ -1,0 +1,19 @@
+{
+  "theme": "moonstone",
+  "cssTheme": "",
+  "enabledCssSnippets": [
+    "tag-colors",
+    "wrap-file-names",
+    "wide-table",
+    "memo-callout",
+    "code-block-no-wrap",
+    "wide-page",
+    "callout-padding",
+    "callout-notitle"
+  ],
+  "showRibbon": false,
+  "showViewHeader": true,
+  "interfaceFontFamily": "JetBrainsMonoNL Nerd Font",
+  "monospaceFontFamily": "JetBrainsMonoNL Nerd Font",
+  "textFontFamily": "JetBrainsMonoNL Nerd Font"
+}

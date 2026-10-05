@@ -1,0 +1,31 @@
+/* 編集モード: コードブロックを折り返さず、エディタ全体で横スクロール */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
+  white-space: pre !important;
+  word-wrap: normal !important;
+}
+
+.markdown-source-view.mod-cm6 .cm-scroller {
+  overflow-x: auto;
+}
+
+/* リーディングモードと、ライブプレビューのコールアウト内:
+   コードブロックを折り返さず、ブロックごとに横スクロール。
+   ここは .markdown-rendered pre の white-space（既定 pre-wrap）で決まる */
+body {
+  --code-white-space: pre;
+}
+
+/* 言語指定つき（```ruby など）は Prism のスタイルが code に直接
+   pre-wrap を指定するので、上の変数だけでは効かない。code にも指定し直す */
+.markdown-rendered code[class*="language-"] {
+  white-space: pre !important;
+  word-wrap: normal !important;
+}
+
+/* 横スクロール時、右端に余白を確保 */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock::after {
+  content: "";
+  padding-right: 3em;
+  line-height: 0;
+  font-size: 0;
+}

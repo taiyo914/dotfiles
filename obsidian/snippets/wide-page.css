@@ -1,25 +1,14 @@
-/* cm-scroller を基準にしてテーブルがコンテンツ領域いっぱいに広がるようにする */
-/* frontmatter に cssclasses: [wide-table] を指定したノートのみ有効 */
+/* ノートの左右の余白を小さくする
+   - --file-line-width: 「読みやすい行の長さ」がオンのときの本文の最大幅（既定 700px）
+   - --file-margins-x:  本文領域の左右パディング（既定 32px）
+   サイドバーやホバーポップアップは余白の設計が別なので、.mod-root に限定する */
 
-/* Live Preview */
-.wide-table .cm-scroller {
-  container-type: inline-size !important;
-}
+.mod-root .markdown-preview-view,
+.mod-root .markdown-source-view.mod-cm6 .cm-scroller {
+  --file-line-width: 2000px;
+  --file-margins-x: var(--size-4-8);
 
-.wide-table .cm-embed-block.cm-table-widget {
-  overflow-x: auto !important;
-  width: 105cqi !important;
-  max-width: 105cqi !important;
-  padding-right: 30px !important;
-}
-
-/* Reading View: wide-table は .markdown-preview-view に付くので、その親をコンテナにする */
-.markdown-reading-view:has(.wide-table) {
-  container-type: inline-size !important;
-}
-
-.wide-table .el-table {
-  width: 97cqi !important;
-  max-width: 97cqi !important;
-  padding-right: 30px !important;
+  /* body の --file-margins は body 上で値が確定してから継承される。
+     --file-margins-x の変更を反映させるため、ここで宣言し直す */
+  --file-margins: var(--file-margins-y) var(--file-margins-x);
 }
