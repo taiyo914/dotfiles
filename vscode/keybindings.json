@@ -14,7 +14,7 @@
   { "key": "cmd+;", "command": "workbench.action.terminal.fontZoomIn",  "when": "terminalFocus" },
   { "key": "cmd+-", "command": "workbench.action.terminal.fontZoomOut", "when": "terminalFocus" },
   { "key": "cmd+0", "command": "workbench.action.terminal.fontZoomReset", "when": "terminalFocus" },
-  // cmd+shift+cで相対パスをコピー
+  // cmd+shift+cで相対パスをコピー。エディタではカーソル行の行番号も付ける
   {
     "key": "cmd+shift+c",
     "command": "copyRelativeFilePath",
@@ -22,7 +22,8 @@
   },
   {
     "key": "cmd+shift+c",
-    "command": "copyRelativeFilePath",
+    "command": "workbench.action.tasks.runTask",
+    "args": "copy-path-with-line",
     "when": "editorTextFocus"
   },
   // cmd+k → l Githubのパーマリンクをコピー

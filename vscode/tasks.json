@@ -69,6 +69,28 @@
       }
     },
     {
+      // 「~/ から始まるパス:行番号」をコピーする。パスに記号が入っていても壊れないよう、環境変数で渡す
+      "label": "copy-path-with-line",
+      "detail": "カーソル行の ~/パス:行番号 をコピーする",
+      "type": "shell",
+      "command": "p=\"$COPY_FILE\"; case \"$p\" in \"$HOME\"/*) p=\"~${p#\"$HOME\"}\" ;; esac; printf '%s:%s' \"$p\" \"$COPY_LINE\" | pbcopy",
+      "options": {
+        "env": {
+          "COPY_FILE": "${file}",
+          "COPY_LINE": "${lineNumber}"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "focus": false,
+        "echo": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
       // ghlink と同じリンクをコピーし、ブラウザでも開く
       "label": "ghlink-open",
       "detail": "カーソル行の GitHub permalink をコピーしてブラウザで開く",
