@@ -1,0 +1,21 @@
+{
+  "title": "Disable Ctrl+H",
+  "rules": [
+    {
+      "description": "Ctrl+H を無効化",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "mandatory": ["control"],
+              "optional": []
+            }
+          },
+          "to": [{ "key_code": "vk_none" }]
+        }
+      ]
+    }
+  ]
+}

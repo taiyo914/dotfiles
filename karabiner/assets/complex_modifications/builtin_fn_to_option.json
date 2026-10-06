@@ -1,0 +1,24 @@
+{
+  "title": "Builtin Fn to Option",
+  "rules": [
+    {
+      "description": "内蔵キー: fn/地球儀キーを Option に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "fn",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "right_option" }],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "is_built_in_keyboard": true }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Space Layer H to Backspace on Builtin",
+  "rules": [
+    {
+      "description": "内蔵キーボードで Space レイヤーの H を Backspace に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [
+            { "set_variable": { "name": "space_used", "value": 1 } },
+            { "key_code": "delete_or_backspace" }
+          ],
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "space_layer",
+              "value": 1
+            },
+            {
+              "type": "expression_if",
+              "expression": "system.now.milliseconds - space_down_ms >= 150"
+            },
+            {
+              "type": "device_if",
+              "identifiers": [{ "is_built_in_keyboard": true }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

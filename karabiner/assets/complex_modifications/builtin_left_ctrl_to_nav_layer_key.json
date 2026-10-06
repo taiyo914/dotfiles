@@ -1,0 +1,41 @@
+{
+  "title": "Builtin Left Ctrl to Nav Layer Key",
+  "rules": [
+    {
+      "description": "内蔵キー: 左 Ctrl を矢印レイヤーに、Caps Lock を左 Ctrl に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_control",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "set_variable": { "name": "nav_layer", "value": 1 } }],
+          "to_after_key_up": [
+            { "set_variable": { "name": "nav_layer", "value": 0 } }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "is_built_in_keyboard": true }]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "left_control" }],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "is_built_in_keyboard": true }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

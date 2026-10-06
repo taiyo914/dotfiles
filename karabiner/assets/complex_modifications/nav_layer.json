@@ -1,0 +1,178 @@
+{
+  "title": "Nav Layer",
+  "rules": [
+    {
+      "description": "矢印レイヤー: カーソル移動と削除",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "h",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "delete_or_backspace" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "left_arrow" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "k",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "down_arrow" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "l",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "right_arrow" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "i",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "up_arrow" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "y",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "left_arrow", "modifiers": ["left_command"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "u",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "left_arrow", "modifiers": ["left_option"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "o",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "right_arrow", "modifiers": ["left_option"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "p",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "right_arrow", "modifiers": ["left_command"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "hyphen",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "delete_forward" }],
+          "conditions": [
+            { "type": "variable_if", "name": "nav_layer", "value": 1 },
+            { "type": "device_unless", "identifiers": [{ "is_built_in_keyboard": true }] }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "semicolon",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "delete_forward" }],
+          "conditions": [
+            { "type": "variable_if", "name": "nav_layer", "value": 1 },
+            { "type": "device_if", "identifiers": [{ "is_built_in_keyboard": true }] }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "n",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "delete_or_backspace", "modifiers": ["left_command"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "m",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "delete_or_backspace", "modifiers": ["left_option"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "period",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "delete_forward", "modifiers": ["left_option"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "slash",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "delete_forward", "modifiers": ["left_command"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "a",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "2", "modifiers": ["left_command", "left_shift"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "s",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "4", "modifiers": ["left_command", "left_shift", "left_control"] }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "d",
+            "modifiers": { "optional": ["any"] }
+          },
+          "conditions": [{ "type": "variable_if", "name": "nav_layer", "value": 1 }],
+          "to": [{ "key_code": "i", "modifiers": ["left_command", "left_option"] }]
+        }
+      ]
+    }
+  ]
+}
