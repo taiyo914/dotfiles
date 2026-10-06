@@ -36,6 +36,7 @@ ls-tree() { eza --icons=always -T -L 2 "$@"; }
 alias v='cd ~/vault'
 alias dev='cd ~/dev'
 alias dot='cd ~/dotfiles'
+alias key='cd ~/keyboards'
 
 # zshの設定ファイルはよく開くのでエイリアスを設定
 alias e-zsh='code "$DOTFILES/zsh/.zshrc"'
