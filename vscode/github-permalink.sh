@@ -1,16 +1,16 @@
 #!/bin/bash
 #
 # ファイルパスと行番号を、ローカルにある origin のデフォルトブランチ最新コミットの
-# GitHub permalink に変換し、クリップボードにコピーしたうえでブラウザで開く。
+# GitHub permalink に変換し、クリップボードにコピーする。GHLINK_OPEN=1 のときはブラウザでも開く。
 # リンク自体はローカルの git の情報だけで組み立てるので、GitHub には問い合わせない。
 #
 # 使い方:
 #   github-permalink.sh app/models/foo.rb:42
 #   github-permalink.sh /path/to/file.rb:10-20
 #   GHLINK_SELECTION="$(選択したテキスト)" github-permalink.sh /path/to/file.rb:42
-#   GHLINK_OPEN=0 github-permalink.sh /path/to/file.rb:42   # ブラウザを開かずコピーだけする
+#   GHLINK_OPEN=1 github-permalink.sh /path/to/file.rb:42   # コピーに加えてブラウザでも開く
 #
-# VS Code のユーザータスク ghlink / ghlink-selection（dotfiles/vscode/tasks.json）から呼ばれる。
+# VS Code のユーザータスク ghlink / ghlink-selection / ghlink-open など（dotfiles/vscode/tasks.json）から呼ばれる。
 
 set -euo pipefail
 
@@ -109,8 +109,8 @@ fi
 permalink="https://$host/$slug/blob/$sha/$rel$query$anchor"
 printf '%s' "$permalink" | pbcopy
 
-# コピーと同時にブラウザでも開く。開きたくないときは GHLINK_OPEN=0 を渡す
-if [ "${GHLINK_OPEN:-1}" != "0" ]; then
+# GHLINK_OPEN=1 のときだけ、コピーと同時にブラウザでも開く
+if [ "${GHLINK_OPEN:-0}" = "1" ]; then
   open "$permalink"
 fi
 

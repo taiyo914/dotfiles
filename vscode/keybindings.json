@@ -45,6 +45,20 @@
     "args": "ghlink-file",
     "when": "editorTextFocus"
   },
+  // cmd+k → o → l でパーマリンクをコピーしてブラウザで開く
+  // 標準の cmd+k o（今のファイルを新しいウィンドウで開く）はこれで使えなくなる
+  {
+    "key": "cmd+k o l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "ghlink-open",
+    "when": "editorTextFocus && !editorHasSelection"
+  },
+  {
+    "key": "cmd+k o l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "ghlink-selection-open",
+    "when": "editorTextFocus && editorHasSelection"
+  },
   // cmd+option+s で画面分割
   {
     "key": "cmd+alt+s",

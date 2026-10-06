@@ -67,6 +67,57 @@
         "showReuseMessage": false,
         "close": false
       }
+    },
+    {
+      // ghlink と同じリンクをコピーし、ブラウザでも開く
+      "label": "ghlink-open",
+      "detail": "カーソル行の GitHub permalink をコピーしてブラウザで開く",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${userHome}/dotfiles/vscode/github-permalink.sh",
+        "${file}:${lineNumber}"
+      ],
+      "options": {
+        "env": {
+          "GHLINK_OPEN": "1"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "focus": false,
+        "echo": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "close": false
+      }
+    },
+    {
+      // ghlink-selection と同じリンクをコピーし、ブラウザでも開く
+      "label": "ghlink-selection-open",
+      "detail": "選択範囲の GitHub permalink をコピーしてブラウザで開く",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${userHome}/dotfiles/vscode/github-permalink.sh",
+        "${file}:${lineNumber}"
+      ],
+      "options": {
+        "env": {
+          "GHLINK_SELECTION": "${selectedText}",
+          "GHLINK_OPEN": "1"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "focus": false,
+        "echo": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "close": false
+      }
     }
   ]
 }
