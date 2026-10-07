@@ -1,7 +1,6 @@
 {
   "env": {
-    "ENABLE_TOOL_SEARCH": "true",
-    "CLAUDE_CODE_SCROLL_SPEED": "0.5"
+    "ENABLE_TOOL_SEARCH": "true"
   },
   "permissions": {
     "allow": [
