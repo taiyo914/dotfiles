@@ -386,6 +386,29 @@
                         ]
                     },
                     {
+                        "description": "Shift 単押しで次の 1 キーだけ Shift 付きにする",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "left_shift",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "left_shift" }],
+                                "to_if_alone": [{ "sticky_modifier": { "left_shift": "toggle" } }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "right_shift",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "right_shift" }],
+                                "to_if_alone": [{ "sticky_modifier": { "right_shift": "toggle" } }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "内蔵キー: fn/地球儀キーを Option に変換",
                         "manipulators": [
                             {
