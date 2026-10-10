@@ -43,3 +43,9 @@ macos-titlebar-style = native
 
 # もしかしたらこれで「の」が楷書になる現象が直るかも
 font-codepoint-map = U+3000-U+30FF,U+4E00-U+9FFF=BIZ UDGothic
+
+# スクロールしたときの動く量を何倍にするか
+# precison （精密さ） はトラックパッドなど連続的なスクロール - デフォルト値は 1
+# discrete (離散的な) はマウスなどの離散的なスクロール - デフォルト値は 3 
+# 既定値の 3 だと分割キーボードでスクロールが大きくなりすぎるので半分の 1.5 にする
+mouse-scroll-multiplier = discrete:1.5
