@@ -1,0 +1,68 @@
+/* callout の中にカーソルがあるとき、Obsidian は callout を引用の行（"> ..."）として表示する。
+   このプラグインはその各行に .callout と .cm-callout-edit を付ける。
+   .callout が付くので、種類ごとの色（--callout-color など）は本体と CSS スニペットの定義をそのまま使える。
+   ここでは 1 行ずつ別の箱に見えないように、.callout 由来の枠・背景・余白を消す。
+   枠と背景は下の ::before で描く */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit {
+  overflow: visible;
+  border: none;
+  border-radius: 0;
+  background: none;
+  mix-blend-mode: normal;
+  font-style: normal;
+  /* ::before を文字の後ろ（z-index: -1）に置くために必要 */
+  isolation: isolate;
+  padding-block: 0;
+  padding-inline-end: var(--size-4-3);
+  /* Obsidian が行に直接書き込む字下げ（隠した "> " の幅の分）を上書きするので !important が必要。
+     --callout-edit-indent はリスト記号などの幅で、折り返した 2 行目以降をその分だけ下げる */
+  padding-inline-start: calc(var(--size-4-6) + var(--callout-edit-indent, 0px)) !important;
+  text-indent: calc(-1 * var(--callout-edit-indent, 0px)) !important;
+}
+
+/* callout の枠と背景。本体が引用の左線を描くのに使っている ::before を上書きする */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: auto;
+  z-index: -1;
+  pointer-events: none;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: color-mix(in oklch, var(--callout-color) calc(var(--callout-border-opacity) * 100%), transparent);
+  border-width: 0 var(--callout-border-width);
+  background-color: color-mix(in oklch, var(--callout-color) 10%, transparent);
+}
+
+/* 1 行目と最終行。表示用の callout には上下に 1em の余白があるので、
+   編集中も同じだけ空けて、カーソルを出し入れしたときに前後の行が動く量を減らす。
+   --callout-edge-spacing は callout-padding.css で定義している（なければ本体の初期値に合わせる） */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit-first {
+  padding-top: calc(var(--font-text-size) + var(--size-4-3) + var(--callout-edge-spacing, 0px));
+}
+
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit-first::before {
+  top: var(--font-text-size);
+  border-top-width: var(--callout-border-width);
+  border-top-left-radius: var(--callout-radius);
+  border-top-right-radius: var(--callout-radius);
+}
+
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit-last {
+  padding-bottom: calc(var(--font-text-size) + var(--size-4-3) + var(--callout-edge-spacing, var(--p-spacing)));
+}
+
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit-last::before {
+  bottom: var(--font-text-size);
+  border-bottom-width: var(--callout-border-width);
+  border-bottom-left-radius: var(--callout-radius);
+  border-bottom-right-radius: var(--callout-radius);
+}
+
+/* タイトル行 */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit-title {
+  color: var(--callout-color);
+  font-weight: var(--callout-title-weight);
+}

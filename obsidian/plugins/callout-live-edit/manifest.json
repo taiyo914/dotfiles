@@ -1,0 +1,9 @@
+{
+  "id": "callout-live-edit",
+  "name": "Callout Live Edit",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Live Preview で callout の中にカーソルがあるときも、callout の枠を表示したまま編集できるようにする",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}
