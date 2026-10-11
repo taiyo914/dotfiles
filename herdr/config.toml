@@ -3,16 +3,42 @@ onboarding = false
 [keys]
 prefix = "ctrl+q"
 
-# Ghostty 風のキーバインド
+# Ghostty と同じキーで操作できるようにする
+# Ghostty 側ではこれらのキーを無効にしている（ghostty/config を参照）
+
+# ペイン
 split_vertical = ["prefix+v", "cmd+d"]
 split_horizontal = ["prefix+minus", "cmd+shift+d"]
-new_tab = ["prefix+c", "cmd+t"]
-new_workspace = ["prefix+shift+n", "cmd+n"]
 close_pane = ["prefix+x", "cmd+w"]
+cycle_pane_next = ["prefix+tab", "cmd+]"]
+cycle_pane_previous = ["prefix+shift+tab", "cmd+["]
+focus_pane_left = ["prefix+h", "cmd+alt+left"]
+focus_pane_down = ["prefix+j", "cmd+alt+down"]
+focus_pane_up = ["prefix+k", "cmd+alt+up"]
+focus_pane_right = ["prefix+l", "cmd+alt+right"]
+resize_pane_left = "cmd+ctrl+left"
+resize_pane_down = "cmd+ctrl+down"
+resize_pane_up = "cmd+ctrl+up"
+resize_pane_right = "cmd+ctrl+right"
+zoom = ["prefix+z", "cmd+shift+enter"]
+
+# タブ
+new_tab = ["prefix+c", "cmd+t"]
+next_tab = ["prefix+n", "ctrl+tab", "cmd+shift+]"]
+previous_tab = ["prefix+p", "ctrl+shift+tab", "cmd+shift+["]
+switch_tab = "cmd+1..9"
+close_tab = ["prefix+shift+x", "cmd+alt+w"]
+rename_tab = ["prefix+shift+t", "cmd+shift+t"]
+
+# space
+# hint: Ghostty の window 用のキーを space の操作に使う
+new_workspace = ["prefix+shift+n", "cmd+n"]
+close_workspace = ["prefix+shift+d", "cmd+shift+w"]
+next_workspace = "cmd+backtick"
+previous_workspace = "cmd+shift+backtick"
+switch_workspace = "ctrl+1..9"
+rename_workspace = ["prefix+shift+w", "cmd+shift+n"]
 toggle_sidebar = ["prefix+b", "cmd+b"]
-# Ghostty 側は ctrl+tab を通すために工夫が要る（ghostty/configを参照）
-next_workspace = "ctrl+tab"
-previous_workspace = "ctrl+shift+tab"
 
 [ui.toast]
 delivery = "off"
