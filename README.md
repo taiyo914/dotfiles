@@ -28,6 +28,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | Starship | `starship/starship.toml` | `~/.config/starship.toml` |
 | HammerSpoon | `hammerspoon/` | `~/.hammerspoon` |
 | Neovim | `nvim/` | `~/.config/nvim` |
+| Lazygit | `lazygit/config.yml` | `~/Library/Application Support/lazygit/config.yml` |
 | Herdr | `herdr/config.toml` | `~/.config/herdr/config.toml` |
 | Karabiner | `karabiner/` | `~/.config/karabiner` |
 | macOS | `macos/DefaultKeyBinding.dict` | `~/Library/KeyBindings/DefaultKeyBinding.dict` |
@@ -84,6 +85,7 @@ targets=(
   .config/starship.toml
   .hammerspoon
   .config/nvim
+  "Library/Application Support/lazygit/config.yml"
   .config/herdr/config.toml
   .config/karabiner
 )
@@ -152,6 +154,7 @@ ln -s ~/dotfiles/ghostty/config ~/.config/ghostty/config
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 ln -s ~/dotfiles/nvim ~/.config/nvim
+ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
 ln -s ~/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
 ln -s ~/dotfiles/karabiner ~/.config/karabiner
 ```
@@ -232,6 +235,7 @@ https://brew.sh/ja/
 | fd | https://github.com/sharkdp/fd |
 | ripgrep | https://github.com/BurntSushi/ripgrep |
 | jq | https://github.com/jqlang/jq |
+| lazygit | https://github.com/jesseduffield/lazygit |
 | lazydocker | https://github.com/jesseduffield/lazydocker |
 | zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
 | zsh-syntax-highlighting | https://github.com/zsh-users/zsh-syntax-highlighting |
@@ -244,7 +248,7 @@ https://brew.sh/ja/
 
 ```bash
 brew install starship neovim gh asdf direnv terminal-notifier fzf \
-  eza bat fd ripgrep jq lazydocker zsh-autosuggestions zsh-syntax-highlighting
+  eza bat fd ripgrep jq lazygit lazydocker zsh-autosuggestions zsh-syntax-highlighting
 brew install --cask hammerspoon font-jetbrains-mono-nerd-font font-biz-udgothic
 ```
 

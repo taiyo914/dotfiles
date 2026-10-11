@@ -1,0 +1,2 @@
+# esc で戻れるものがないときに esc を押すと、lazygit を終了する
+quitOnTopLevelReturn: true
