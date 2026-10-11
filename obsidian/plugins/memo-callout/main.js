@@ -13,7 +13,8 @@ function insertMemoCallout(editor, header) {
   }
 
   const cursor = editor.getCursor();
-  editor.replaceRange(`${header}\n> `, cursor);
+  // callout の直後に空行を1行入れる
+  editor.replaceRange(`${header}\n> \n`, cursor);
   editor.setCursor({ line: cursor.line + 1, ch: 2 });
 }
 
