@@ -45,6 +45,8 @@ delivery = "off"
 
 [ui]
 mouse_capture = true
+# space を新しく作るときに、名前を入力するモーダルを開く
+prompt_new_workspace_name = true
 
 [ui.sound]
 enabled = false

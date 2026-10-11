@@ -54,17 +54,6 @@
         ]
       }
     ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/scripts/herdr-workspace-title.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "matcher": "^(startup|resume|clear|compact|fork)$",
@@ -72,28 +61,6 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/herdr-agent-state.sh session",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "resume",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/scripts/herdr-workspace-title.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "resume|logout|prompt_input_exit|other",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/scripts/herdr-workspace-title.sh",
             "timeout": 10
           }
         ]
