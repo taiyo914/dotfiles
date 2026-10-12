@@ -16,6 +16,28 @@
           },
           "to": [
             {
+              "key_code": "spacebar"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "expression_if",
+              "expression": "system.now.milliseconds - space_tap_ms < 200"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "spacebar",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
               "set_variable": {
                 "name": "space_layer",
                 "value": 1
@@ -43,6 +65,19 @@
             },
             {
               "key_code": "spacebar",
+              "conditions": [
+                {
+                  "type": "variable_if",
+                  "name": "space_used",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "set_variable": {
+                "name": "space_tap_ms",
+                "expression": "system.now.milliseconds"
+              },
               "conditions": [
                 {
                   "type": "variable_if",

@@ -7,6 +7,20 @@
                         "description": "Space 長押しで矢印レイヤー",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "expression": "system.now.milliseconds - space_tap_ms < 200",
+                                        "type": "expression_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "spacebar" }],
+                                "type": "basic"
+                            },
+                            {
                                 "from": {
                                     "key_code": "spacebar",
                                     "modifiers": { "optional": ["any"] }
@@ -47,6 +61,19 @@
                                             }
                                         ],
                                         "key_code": "spacebar"
+                                    },
+                                    {
+                                        "conditions": [
+                                            {
+                                                "name": "space_used",
+                                                "type": "variable_if",
+                                                "value": 0
+                                            }
+                                        ],
+                                        "set_variable": {
+                                            "expression": "system.now.milliseconds",
+                                            "name": "space_tap_ms"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
