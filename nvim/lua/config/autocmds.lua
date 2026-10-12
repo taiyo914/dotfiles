@@ -46,3 +46,12 @@ vim.api.nvim_create_autocmd("FocusGained", {
     end
   end,
 })
+
+-- Markdown ではスペルチェックをオフにする
+-- 必要なときは <leader>us でオンにできる
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
