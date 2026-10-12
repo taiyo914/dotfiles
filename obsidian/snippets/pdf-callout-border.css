@@ -1,0 +1,13 @@
+/* PDF++ の色指定のない callout（> [!PDF|] ...）に灰色の枠線をつける
+   色指定のある callout（> [!PDF|yellow] ... など）は背景色で見分けられるので対象にしない
+   "|" 以降は data-callout-metadata 属性に入り、色指定がないときは空文字になる */
+
+.callout[data-callout="pdf" i][data-callout-metadata=""] {
+  --callout-border-width: 1px;
+  border-color: var(--background-modifier-border);
+}
+
+/* callout の中を編集しているとき（callout-live-edit プラグイン）も同じ枠線にする */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.cm-callout-edit[data-callout="pdf" i][data-callout-metadata=""]::before {
+  border-color: var(--background-modifier-border);
+}
