@@ -1,0 +1,21 @@
+{
+  "title": "Shift+Backspace to Delete",
+  "rules": [
+    {
+      "description": "Shift+Backspace を Delete に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "delete_or_backspace",
+            "modifiers": {
+              "mandatory": ["shift"],
+              "optional": ["caps_lock"]
+            }
+          },
+          "to": [{ "key_code": "delete_forward" }]
+        }
+      ]
+    }
+  ]
+}

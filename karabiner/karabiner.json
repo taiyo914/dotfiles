@@ -1063,6 +1063,22 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "description": "Shift+Backspace を Delete に変換",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_or_backspace",
+                                    "modifiers": {
+                                        "mandatory": ["shift"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "delete_forward" }],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
