@@ -19,3 +19,30 @@ if vim.v.vim_did_enter == 1 then
 else
   vim.api.nvim_create_autocmd("VimEnter", { callback = open_explorer })
 end
+
+-- macOS の入力ソースを英数（Google 日本語入力の英数モード）に切り替える
+-- nvim からは入力ソースを直接変えられないので、Hammerspoon の hs コマンドに頼む
+-- Hammerspoon が動いていないと hs コマンドが終わらないので、1秒で打ち切る
+local function switch_to_eisuu()
+  if vim.fn.executable("hs") ~= 1 then
+    return
+  end
+  vim.system({ "hs", "-c", 'hs.keycodes.currentSourceID("com.google.inputmethod.Japanese.Roman")' }, { timeout = 1000 })
+end
+
+-- ノーマルモードでは日本語入力だとキー操作が効かないので、次の3つのタイミングで英数にする
+-- 1. nvim を起動したとき（このファイルは起動時に1回読み込まれる）
+switch_to_eisuu()
+
+-- 2. インサートモードを抜けたとき
+vim.api.nvim_create_autocmd("InsertLeave", { callback = switch_to_eisuu })
+
+-- 3. 別のアプリから nvim の画面に戻ってきたとき
+-- インサートモードで日本語を書いている途中なら、日本語入力のままにする
+vim.api.nvim_create_autocmd("FocusGained", {
+  callback = function()
+    if vim.api.nvim_get_mode().mode == "n" then
+      switch_to_eisuu()
+    end
+  end,
+})
