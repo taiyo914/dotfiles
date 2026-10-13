@@ -149,14 +149,6 @@
       "key": "T"
     }
   ],
-  "window:zoom-in": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": ";"
-    }
-  ],
   "markdown:add-metadata-property": [],
   "window:zoom-out": [
     {
@@ -214,6 +206,15 @@
         "Ctrl"
       ],
       "key": "L"
+    }
+  ],
+  "window:zoom-in": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "-"
     }
   ]
 }
