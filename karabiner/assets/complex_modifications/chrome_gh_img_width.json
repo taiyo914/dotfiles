@@ -1,0 +1,34 @@
+{
+  "title": "Chrome: Cmd+Option+W to set <img> width to 800",
+  "rules": [
+    {
+      "description": "Chrome で Cmd+Option+W を押すと、選択中の <img> タグの width を 800 にそろえる",
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+            }
+          ],
+          "from": {
+            "key_code": "w",
+            "modifiers": {
+              "mandatory": ["command", "option"],
+              "optional": []
+            }
+          },
+          "to": [
+            { "key_code": "c", "modifiers": ["command"] },
+            { "shell_command": "sleep 0.1; /bin/sh $HOME/dotfiles/karabiner/scripts/gh-img-width.sh" }
+          ],
+          "to_delayed_action": {
+            "to_if_invoked": [{ "key_code": "v", "modifiers": ["command"] }]
+          },
+          "parameters": { "basic.to_delayed_action_delay_milliseconds": 300 }
+        }
+      ]
+    }
+  ]
+}

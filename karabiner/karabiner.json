@@ -502,6 +502,45 @@
                         ]
                     },
                     {
+                        "description": "Chrome で Cmd+Option+W を押すと、選択中の <img> タグの width を 800 にそろえる",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.google\\.Chrome$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "w",
+                                    "modifiers": {
+                                        "mandatory": ["command", "option"],
+                                        "optional": []
+                                    }
+                                },
+                                "parameters": { "basic.to_delayed_action_delay_milliseconds": 300 },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": ["command"]
+                                    },
+                                    { "shell_command": "sleep 0.1; /bin/sh $HOME/dotfiles/karabiner/scripts/gh-img-width.sh" }
+                                ],
+                                "to_delayed_action": {
+                                    "to_if_invoked": [
+                                        {
+                                            "key_code": "v",
+                                            "modifiers": ["command"]
+                                        }
+                                    ]
+                                },
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "内蔵キーボードで ; と - を入れ替える（JIS版）",
                         "manipulators": [
                             {
