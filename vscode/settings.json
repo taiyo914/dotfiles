@@ -110,5 +110,8 @@
   },
   // ソース管理画面をつねに「ツリーとして表示」にする
   "scm.defaultViewMode": "tree",
-  "terminal.integrated.fontSize": 13
+  "terminal.integrated.fontSize": 13,
+  
+  // タブを閉じたあとに隣のタブにフォーカスする
+  "workbench.editor.focusRecentEditorAfterClose": false
 }

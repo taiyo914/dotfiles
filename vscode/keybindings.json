@@ -1,11 +1,6 @@
 // シンプルなショートカットの割り当て変更なら「コマンドパレット > 基本設定:キーボードショートカットを開く」の
 // UI上から変更したほうが簡単かつ安全。現在どの機能に割り当てられてるかも調べられる。
 [
-  // ctrl+- で「戻る」
-  {
-    "key": "ctrl+-",
-    "command": "workbench.action.openPreviousRecentlyUsedEditor"
-  },
   // cmd+;(JIS配列の+)で拡大
   { "key": "cmd+;","command": "workbench.action.zoomIn" },
   // cmd+0 でサイズをもとに戻す
@@ -72,6 +67,20 @@
       ]
     }
   },
+  // cmd+g で定義へ移動。定義の上で押すと参照一覧が出る
+  {
+    "key": "cmd+g",
+    "command": "editor.action.revealDefinition",
+    "when": "editorHasDefinitionProvider && editorTextFocus"
+  },
+  // ctrl+: で「進む」（「戻る」はデフォルトの ctrl+-）
+  // 内蔵キーボードは入力ソースが英語配列なので、: キーの位置を物理キー [Quote] で指定する
+  {
+    "key": "ctrl+[Quote]",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  // cmd+r で参照へ移動
   {
     "key": "cmd+r",
     "command": "editor.action.goToReferences",
