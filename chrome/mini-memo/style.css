@@ -1,0 +1,127 @@
+/* メモ全体の枠組み */
+#my-floating-memo {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 250px;
+  height: 300px;
+  margin: 0px;
+  /* メモ: */
+  /* marginを0にするのは、コンテナの位置を正確に反映させるため */
+  /* leftやtopはマージンも含めた要素の大きさで計算される */
+  
+  background-color: #fffde7;
+  
+  /* ボーダーはなし */
+  border: none !important;
+  
+  /* 影だけつける */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  
+  z-index: 2147483647;
+  display: none;
+  flex-direction: column;
+  
+  /* 全体の角丸 */
+  border-radius: 12px;
+  overflow: hidden; 
+  
+  font-family: sans-serif;
+  min-width: 200px;
+  min-height: 150px;
+  box-sizing: border-box;
+}
+
+#my-memo-header {
+  background-color: #4a90e2;
+  color: white;
+  padding: 8px 12px;
+  cursor: grab;
+  font-size: 12px;
+  font-weight: bold;
+  user-select: none;
+  flex-shrink: 0;
+  
+  /* ボーダーなし */
+  border: none !important;
+}
+
+#my-memo-text {
+  flex: 1;
+  width: 100%;
+  
+  background-color: transparent !important;
+  
+  /* 【重要】ChatGPTなどの干渉を防ぐための鉄壁ガード */
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  appearance: none !important; /* ブラウザ標準の見た目も消す */
+  
+  padding: 15px;
+  resize: none;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  margin: 0;
+  line-height: 1.6; 
+
+  overscroll-behavior: contain;
+}
+
+/* ホバーやフォーカス時もサイト側のCSSに負けないように !important で上書き */
+#my-memo-text:focus,
+#my-memo-text:hover,
+#my-memo-text:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+/* --- リサイズ用のつまみ --- */
+.memo-resize-handle {
+  position: absolute;
+  bottom: 0;
+  width: 15px;
+  height: 15px;
+  z-index: 10;
+  opacity: 0.3;
+  transition: opacity 0.2s;
+  pointer-events: auto; 
+}
+.memo-resize-handle:hover {
+  opacity: 1;
+  background-color: rgba(0,0,0,0.05);
+}
+
+.memo-resize-se {
+  right: 0;
+  cursor: se-resize;
+}
+
+.memo-resize-sw {
+  left: 0;
+  cursor: sw-resize;
+}
+
+.memo-resize-handle::after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-color: #888 transparent transparent transparent;
+}
+.memo-resize-se::after {
+  bottom: 5px;
+  right: 5px;
+  border-width: 4px 4px 0 0;
+  border-color: transparent transparent #888 transparent;
+  transform: rotate(45deg);
+}
+.memo-resize-sw::after {
+  bottom: 5px;
+  left: 5px;
+  border-width: 4px 4px 0 0;
+  border-color: transparent transparent #888 transparent;
+  transform: rotate(-45deg);
+}

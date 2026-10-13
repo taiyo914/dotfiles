@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "My Tab Renamer",
+  "version": "1.0",
+  "description": "ショートカットキーでタブ名を変更します。",
+  "permissions": [
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "rename-tab": {
+      "suggested_key": {
+        "default": "Alt+T",
+        "mac": "MacCtrl+T"
+      },
+      "description": "タブの名前を変更"
+    }
+  }
+}

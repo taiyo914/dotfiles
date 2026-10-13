@@ -1,0 +1,15 @@
+/* コメント欄を画面に固定して、コメント欄だけを単独でスクロールさせる。
+   これをしないと、動画の下の関連動画を見ようとしてページをスクロールしたときに、
+   コメント欄がページと一緒に上へ流れて画面から消えてしまう。 */
+#secondary {
+    position: sticky !important;
+    top: 56px !important;        /* YouTube のヘッダーの高さ */
+    height: calc(100vh - 68px);  /* ヘッダー 56px + 下の余白 12px */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+}
+
+#secondary::-webkit-scrollbar {
+    display: none;
+}

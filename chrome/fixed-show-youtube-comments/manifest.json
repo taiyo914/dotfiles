@@ -1,0 +1,39 @@
+{
+   "action": {
+      "default_icons": {
+         "128": "128.png"
+      },
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "detectPageChange.js"
+   },
+   "content_scripts": [
+      {
+         "css": [
+            "showYoutubeComments.css"
+         ],
+         "js": [
+            "showYoutubeComments.js"
+         ],
+         "matches": [
+            "https://www.youtube.com/watch*"
+         ]
+      }
+   ],
+   "description": "Show YouTube comments on the right of the video. Read comments while you watch!",
+   "host_permissions": [
+      "https://www.youtube.com/watch*"
+   ],
+   "icons": {
+      "128": "128.png"
+   },
+   "manifest_version": 3,
+   "name": "Fixed - show youtube comment while watching",
+   "permissions": [
+      "scripting",
+      "webNavigation",
+      "storage"
+   ],
+   "version": "1.0.5.1"
+}

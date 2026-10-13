@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "My Mini Memo",
+  "version": "1.1",
+  "description": "サイト内部で使える一時的なフローティングメモ",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ]
+}

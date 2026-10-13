@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Amazon Tab Title Cleaner",
+  "version": "1.0",
+  "description": "Amazon.co.jpのタブ名から接頭辞を削除します",
+  "content_scripts": [
+    {
+      "matches": ["https://www.amazon.co.jp/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
