@@ -405,6 +405,26 @@
                         ]
                     },
                     {
+                        "description": "内蔵キー: 左 Ctrl を単押ししたときは Esc に変換",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [{ "is_built_in_keyboard": true }],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_control",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "left_control" }],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Chrome で Cmd+D を新しいタブ付き分割ビュー、Cmd+Shift+D を通常の分割ビューに変換",
                         "manipulators": [
                             {

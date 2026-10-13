@@ -1,0 +1,25 @@
+{
+  "title": "Builtin Left Ctrl Tap to Esc",
+  "rules": [
+    {
+      "description": "内蔵キー: 左 Ctrl を単押ししたときは Esc に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_control",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "left_control" }],
+          "to_if_alone": [{ "key_code": "escape" }],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "is_built_in_keyboard": true }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
