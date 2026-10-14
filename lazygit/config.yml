@@ -1,2 +1,13 @@
 # esc で戻れるものがないときに esc を押すと、lazygit を終了する
 quitOnTopLevelReturn: true
+
+git:
+  # SSH 署名つきコミットのとき、lazygit はパスフレーズの入力に備えるために
+  # 毎回新しいペインを開いてターミナルで git commit を実行する。
+  # ただし ssh-agent に鍵があれば入力は不要なので、Enter で戻る手間を省くためにバックグラウンドでコミットさせる。
+  #
+  # 逆に、ssh-agent に鍵がないと、パスフレーズを入力できずにコミットが失敗する。
+  # そのときはターミナルでコミットを実行してパスフレーズを入力するか、
+  # 次のコマンドで鍵を ssh-agent に登録してから、もう一度コミットする。
+  #   ssh-add --apple-load-keychain
+  overrideGpg: true
