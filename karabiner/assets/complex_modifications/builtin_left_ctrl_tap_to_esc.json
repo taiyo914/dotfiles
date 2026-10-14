@@ -12,6 +12,7 @@
           },
           "to": [{ "key_code": "left_control" }],
           "to_if_alone": [{ "key_code": "escape" }],
+          "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
           "conditions": [
             {
               "type": "device_if",
