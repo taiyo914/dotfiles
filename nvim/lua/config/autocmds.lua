@@ -9,15 +9,20 @@
 
 -- nvim を起動したときに、ファイルツリーを最初から開いておく
 -- カーソルはファイルツリーに移さず、編集画面に残す
-local function open_explorer()
+-- ファイルを指定せずに起動したときは、続けてファイル検索（<leader><space> と同じもの）も開く
+-- ただし nv-git で起動したとき（g:skip_start_picker があるとき）は lazygit を開くので、ファイル検索は開かない
+local function on_start()
   Snacks.explorer({ cwd = LazyVim.root(), enter = false })
+  if vim.fn.argc() == 0 and not vim.g.skip_start_picker then
+    LazyVim.pick("files")()
+  end
 end
 
 -- このファイルは、引数なしで起動すると VimEnter より後に読み込まれるので、その場合はすぐに開く
 if vim.v.vim_did_enter == 1 then
-  open_explorer()
+  on_start()
 else
-  vim.api.nvim_create_autocmd("VimEnter", { callback = open_explorer })
+  vim.api.nvim_create_autocmd("VimEnter", { callback = on_start })
 end
 
 -- macOS の入力ソースを英数（Google 日本語入力の英数モード）に切り替える

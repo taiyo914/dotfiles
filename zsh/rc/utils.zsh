@@ -10,12 +10,10 @@ alias fcode-c='dir=$(fd . . -H -I -E Library -E .cache -E .git --max-depth 4 | f
 alias fvim='dir=$(fd . ~ -H -I -E Library -E .cache -E .git --max-depth 4 | fzf) && nvim "$dir"'
 alias fvim-c='dir=$(fd . . -H -I -E Library -E .cache -E .git --max-depth 4 | fzf) && nvim "$dir"'
 
-# Neovim エイリアス
-alias nv="nvim"
-
 # 現在のディレクトリを nvim で開き、起動が終わったら lazygit の画面を開く
-nv-git() {
-  nvim -c 'autocmd User VeryLazy ++once lua vim.schedule(function() Snacks.lazygit() end)' "$@"
+# g:skip_start_picker を立てて、起動時のファイル検索は開かないようにする
+nvim-git() {
+  nvim --cmd 'let g:skip_start_picker = 1' -c 'autocmd User VeryLazy ++once lua vim.schedule(function() Snacks.lazygit() end)' "$@"
 }
 
 # rg のラッパー: 検索対象から spec/** を常に除外し、Perl正規表現を常に使う
