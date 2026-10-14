@@ -113,5 +113,6 @@
   "terminal.integrated.fontSize": 13,
   
   // タブを閉じたあとに隣のタブにフォーカスする
-  "workbench.editor.focusRecentEditorAfterClose": false
+  "workbench.editor.focusRecentEditorAfterClose": false,
+  "terminal.integrated.initialHint": false
 }

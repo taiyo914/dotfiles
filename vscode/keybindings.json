@@ -2,12 +2,12 @@
 // UI上から変更したほうが簡単かつ安全。現在どの機能に割り当てられてるかも調べられる。
 [
   // cmd+;(JIS配列の+)で拡大
-  { "key": "cmd+;","command": "workbench.action.zoomIn" },
+  // { "key": "cmd+;","command": "workbench.action.zoomIn" },
   // cmd+0 でサイズをもとに戻す
   { "key": "cmd+0", "command": "workbench.action.zoomReset" },
   // ターミナルの拡大縮小
-  { "key": "cmd+;", "command": "workbench.action.terminal.fontZoomIn",  "when": "terminalFocus" },
-  { "key": "cmd+-", "command": "workbench.action.terminal.fontZoomOut", "when": "terminalFocus" },
+  // { "key": "cmd+;", "command": "workbench.action.terminal.fontZoomIn",  "when": "terminalFocus" },
+  // { "key": "cmd+-", "command": "workbench.action.terminal.fontZoomOut", "when": "terminalFocus" },
   { "key": "cmd+0", "command": "workbench.action.terminal.fontZoomReset", "when": "terminalFocus" },
   // cmd+shift+cで相対パスをコピー。エディタではカーソル行の行番号も付ける
   {
