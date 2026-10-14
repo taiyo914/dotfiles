@@ -1,8 +1,8 @@
 {
-  "title": "Chrome: Cmd+Option+W to set <img> width to 800",
+  "title": "Chrome: Cmd+Ctrl+I to set <img> width to 800",
   "rules": [
     {
-      "description": "Chrome で Cmd+Option+W を押すと、選択中の <img> タグの width を 800 にそろえる",
+      "description": "Chrome で Cmd+Ctrl+I を押すと、選択中の <img> タグの width を 800 にそろえる",
       "manipulators": [
         {
           "type": "basic",
@@ -13,9 +13,9 @@
             }
           ],
           "from": {
-            "key_code": "w",
+            "key_code": "i",
             "modifiers": {
-              "mandatory": ["command", "option"],
+              "mandatory": ["command", "control"],
               "optional": []
             }
           },

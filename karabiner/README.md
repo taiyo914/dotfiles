@@ -25,7 +25,7 @@ assets の中には JSON 以外のファイルを置かない。Karabiner がル
 | Sticky Shift | Shift を単独で押して離すと、次の 1 キーだけ Shift 付きになる | `sticky_shift.json` | |
 | fn → Option | 内蔵キーボードの fn（地球儀）キーを右 Option にする | `builtin_fn_to_option.json` | |
 | Chrome 分割ビュー | Chrome で `Cmd+D` は新しいタブ付きの分割ビュー、`Cmd+Shift+D` は通常の分割ビューを開く | `chrome_cmd_d_to_split_view.json` | `chrome-split-newtab.sh` |
-| `<img>` の width を 800 に | Chrome で `<img>` タグを選択して `Cmd+Option+W` を押すと、width を 800 にして height を消す | `chrome_gh_img_width.json` | `gh-img-width.sh` |
+| `<img>` の width を 800 に | Chrome で `<img>` タグを選択して `Cmd+Ctrl+I` を押すと、width を 800 にして height を消す | `chrome_gh_img_width.json` | `gh-img-width.sh` |
 | `;` と `-` を入れ替え | 内蔵キーボードの `;` と `-` を入れ替える | `swap_builtin_semicolon_hyphen_jis.json` | |
 | JIS の印字どおりに入力 | 内蔵キーボード（JIS）で、キーに書かれている記号がそのまま入力されるようにする | `jis_symbols_on_builtin.json` | |
 
