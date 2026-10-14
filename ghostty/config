@@ -64,7 +64,13 @@ keybind = cmd+n=unbind
 keybind = cmd+shift+w=unbind
 keybind = cmd+b=unbind
 
-# ctrl+tab / ctrl+shift+tab だけは unbind が効かないので工夫が必要
+# 以下は Ghostty に割り当てがないので unbind しなくても herdr に届く
+# cmd+shift+n = space の名前を変える
+# cmd+` / cmd+shift+` = 次 / 前の space へ移動
+# ctrl+1〜9 = 番号の space へ移動
+
+# ctrl+tab / ctrl+shift+tab = 次 / 前のタブへ移動
+# これらだけは unbind が効かないので工夫が必要
 # これらは macOS が「Show Next/Previous Tab」としてもっているので、 Ghostty 側で無効化しても macOS で反応してしまう
 # なので、こいつらは Ghostty で先に奪い取って、次の意味のない操作で素通りさせて herdr へ届ける
 # - show_gtk_inspector は Linux 版だけのアクションなので macOS では何も起きない
