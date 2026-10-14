@@ -1,0 +1,17 @@
+/* 検索に一致したすべての文字列 */
+.cm-s-obsidian span.esp-match {
+  background-color: rgba(var(--color-yellow-rgb), 0.35);
+  border-radius: 2px;
+}
+
+/* 今いる 1 件 */
+.cm-s-obsidian span.esp-match-current {
+  background-color: rgba(var(--color-orange-rgb), 0.6);
+  box-shadow: 0 0 0 1px var(--color-orange);
+}
+
+/* 正規表現が ON のときのボタン */
+.document-search-button.esp-regex-button.is-active {
+  color: var(--text-on-accent);
+  background-color: var(--interactive-accent);
+}

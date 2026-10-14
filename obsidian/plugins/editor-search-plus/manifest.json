@@ -1,0 +1,9 @@
+{
+  "id": "editor-search-plus",
+  "name": "Editor Search Plus",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "編集ビューのファイル内検索で、入力した時点ですべての一致をハイライトし、JavaScript 正規表現で検索と置換をできるようにする",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}
