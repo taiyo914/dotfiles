@@ -392,9 +392,9 @@
               }
             },
             {
-              "key_code": "left_arrow",
+              "key_code": "delete_or_backspace",
               "modifiers": [
-                "left_shift"
+                "left_option"
               ]
             }
           ],
@@ -424,10 +424,7 @@
               }
             },
             {
-              "key_code": "right_arrow",
-              "modifiers": [
-                "left_shift"
-              ]
+              "key_code": "delete_forward"
             }
           ],
           "conditions": [
