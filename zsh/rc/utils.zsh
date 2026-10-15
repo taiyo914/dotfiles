@@ -43,6 +43,8 @@ alias v='cd ~/vault'
 alias dev='cd ~/dev'
 alias dot='cd ~/dotfiles'
 alias key='cd ~/keyboards'
+alias cline='cd ~/keyboards/cline46'
+alias keyball='cd ~/keyboards/keyball61'
 
 # zshの設定ファイルはよく開くのでエイリアスを設定
 alias e-zsh='code "$DOTFILES/zsh/.zshrc"'
