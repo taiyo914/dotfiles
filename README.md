@@ -30,6 +30,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | Neovim | `nvim/` | `~/.config/nvim` |
 | Lazygit | `lazygit/config.yml` | `~/Library/Application Support/lazygit/config.yml` |
 | Herdr | `herdr/config.toml` | `~/.config/herdr/config.toml` |
+| Zellij | `zellij/` | なし（ghostty 起動時に読み込まれる）|
 | Karabiner | `karabiner/` | `~/.config/karabiner` |
 | macOS | `macos/DefaultKeyBinding.dict` | `~/Library/KeyBindings/DefaultKeyBinding.dict` |
 | Obsidian | `obsidian/plugins/*/` | `~/vault/.obsidian/plugins/*/` |
@@ -237,6 +238,7 @@ https://brew.sh/ja/
 | jq | https://github.com/jqlang/jq |
 | lazygit | https://github.com/jesseduffield/lazygit |
 | lazydocker | https://github.com/jesseduffield/lazydocker |
+| Zellij | https://zellij.dev/ |
 | zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
 | zsh-syntax-highlighting | https://github.com/zsh-users/zsh-syntax-highlighting |
 | JetBrainsMono Nerd Font | https://www.nerdfonts.com/ |
@@ -248,7 +250,7 @@ https://brew.sh/ja/
 
 ```bash
 brew install starship neovim gh asdf direnv terminal-notifier fzf \
-  eza bat fd ripgrep jq lazygit lazydocker zsh-autosuggestions zsh-syntax-highlighting
+  eza bat fd ripgrep jq lazygit lazydocker zellij zsh-autosuggestions zsh-syntax-highlighting
 brew install --cask hammerspoon font-jetbrains-mono-nerd-font font-biz-udgothic
 ```
 

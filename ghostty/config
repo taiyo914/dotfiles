@@ -14,6 +14,10 @@ scrollback-limit = 100000000
 window-inherit-working-directory = false
 mouse-hide-while-typing = true
 
+# Ghostty を開いたら、シェルの代わりに Zellij を起動する
+# 設定の中身は dotfiles/zellij/ を参照する
+command = /bin/zsh -lc 'exec /opt/homebrew/bin/zellij --config ~/dotfiles/zellij/herdr.kdl --layout ~/dotfiles/zellij/herdr-layout.kdl'
+
 # タブ・ペイン・space の操作はすべて Ghostty では無効にして herdr に渡す
 # 割り当ては herdr/config.toml を参照する
 # hint: Ghostty の window 用のキーは herdr の space の操作に使う
