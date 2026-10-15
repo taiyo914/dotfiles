@@ -89,3 +89,7 @@ font-codepoint-map = U+3000-U+30FF,U+4E00-U+9FFF=BIZ UDGothic
 # discrete (離散的な) はマウスなどの離散的なスクロール - デフォルト値は 3 
 # 既定値の 3 だと分割キーボードでスクロールが大きくなりすぎるので 1 にする
 mouse-scroll-multiplier = discrete:1
+
+# option をメタキーとして使えるようになる
+# 特殊文字が打てなくなるが、使ったことないので多分大丈夫
+macos-option-as-alt = true
