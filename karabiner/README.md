@@ -28,6 +28,7 @@ assets の中には JSON 以外のファイルを置かない。Karabiner がル
 | `<img>` の width を 800 に | Chrome で `<img>` タグを選択して `Cmd+Ctrl+I` を押すと、width を 800 にして height を消す | `chrome_gh_img_width.json` | `gh-img-width.sh` |
 | `;` と `-` を入れ替え | 内蔵キーボードの `;` と `-` を入れ替える | `swap_builtin_semicolon_hyphen_jis.json` | |
 | JIS の印字どおりに入力 | 内蔵キーボード（JIS）で、キーに書かれている記号がそのまま入力されるようにする | `jis_symbols_on_builtin.json` | |
+| Ctrl で Emacs 風の移動と削除 | 下の「2-2」を参照 | `ctrl_emacs_keys.json` | |
 
 仮想キーボードの種類は ANSI（US 配列）にしている。そのままだと内蔵の JIS キーボードの記号がずれるので、最後の 2 つのルールで直している。
 
@@ -42,7 +43,23 @@ Space を押しながら左手のキーを押すと、カーソル移動にな�
 | `W` / `R` | 1 単語左 / 右（`Option+←` / `Option+→`） |
 | `Q` / `T` | 1 文字ずつ左 / 右に選択（`Shift+←` / `Shift+→`） |
 
-### 2-2. `<img>` の width を 800 にする仕組み
+### 2-2. Ctrl で Emacs 風の移動と削除
+
+左 Ctrl を押しながら次のキーを押すと、矢印キーや削除キーに変わる。Ghostty と iTerm2 では、シェルや vim の Ctrl キーを使うため無効にしている。
+
+| キー | 動作 | Shift も押したとき |
+| - | - | - |
+| `H` | Backspace | |
+| `D` | Delete（カーソルの右の 1 文字を消す） | |
+| `F` / `B` | → / ← | 1 文字ずつ選択 |
+| `N` / `P` | ↓ / ↑ | 1 行ずつ選択 |
+| `A` / `E` | 行頭 / 行末（`Cmd+←` / `Cmd+→`） | 行頭 / 行末まで選択 |
+| `K` | 行末までを消す（`Shift+Cmd+→` で選択して Backspace） | |
+| `U` | 行頭までを消す（`Cmd+Backspace`） | |
+
+`Ctrl+K` は、カーソルがすでに行末にあると何も選択されないので、カーソルの左の 1 文字が消えてしまう。
+
+### 2-3. `<img>` の width を 800 にする仕組み
 
 1. Karabiner が `Cmd+C` を押して、選択中のテキストをコピーする
 2. 0.1 秒待ってから `gh-img-width.sh` がクリップボードの中身を書き換える
@@ -60,7 +77,6 @@ Space を押しながら左手のキーを押すと、カーソル移動にな�
 | `nav_layer.json` | 矢印レイヤー（カーソル移動と削除） |
 | `ctrl_arrow_layer.json` | Ctrl を押しながら左手で矢印キー |
 | `space_layer_h_to_backspace_on_builtin.json` | 内蔵キーボードで Space レイヤーの `H` を Backspace にする |
-| `ctrl_h_to_backspace.json` | `Ctrl+H` を Backspace にする |
 | `disable_ctrl_h.json` | `Ctrl+H` を無効にする |
 | `disable_arrows_and_delete.json` | 矢印キーと Delete を無効にする（Fn を押している間は有効） |
 | `eisuu_kana_to_cmd.json` | 英数・かなキーを長押しすると Cmd になる |
