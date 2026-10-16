@@ -67,10 +67,12 @@ keybind = cmd+9=unbind
 keybind = cmd+n=unbind
 keybind = cmd+shift+w=unbind
 keybind = cmd+b=unbind
+# cmd+↓ / cmd+↑ = 次 / 前の space へ移動
+keybind = cmd+arrow_down=unbind
+keybind = cmd+arrow_up=unbind
 
 # 以下は Ghostty に割り当てがないので unbind しなくても herdr に届く
 # cmd+shift+n = space の名前を変える
-# cmd+` / cmd+shift+` = 次 / 前の space へ移動
 # ctrl+1〜9 = 番号の space へ移動
 
 # ctrl+tab / ctrl+shift+tab = 次 / 前のタブへ移動

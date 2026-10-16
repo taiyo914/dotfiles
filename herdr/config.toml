@@ -38,8 +38,8 @@ rename_tab = ["prefix+shift+t", "cmd+shift+t"]
 # hint: Ghostty の window 用のキーを space の操作に使う
 new_workspace = ["prefix+shift+n", "cmd+n"]
 close_workspace = ["prefix+shift+d", "cmd+shift+w"]
-next_workspace = "cmd+backtick"
-previous_workspace = "cmd+shift+backtick"
+next_workspace = "cmd+down"
+previous_workspace = "cmd+up"
 switch_workspace = "ctrl+1..9"
 rename_workspace = ["prefix+shift+w", "cmd+shift+n"]
 toggle_sidebar = ["prefix+b", "cmd+b"]
