@@ -1,0 +1,4 @@
+# markdownlint-cli2 の設定（nvim-lint から --config で読み込む）
+config:
+  # 1 行の長さの上限チェックを無効にする（日本語の文章では 80 文字をすぐ超えるため）
+  MD013: false
