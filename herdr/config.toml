@@ -16,6 +16,10 @@ focus_pane_left = ["prefix+h", "cmd+alt+left"]
 focus_pane_down = ["prefix+j", "cmd+alt+down"]
 focus_pane_up = ["prefix+k", "cmd+alt+up"]
 focus_pane_right = ["prefix+l", "cmd+alt+right"]
+swap_pane_left = "prefix+left"
+swap_pane_down = "prefix+down"
+swap_pane_up = "prefix+up"
+swap_pane_right = "prefix+right"
 resize_pane_left = "cmd+ctrl+left"
 resize_pane_down = "cmd+ctrl+down"
 resize_pane_up = "cmd+ctrl+up"
@@ -39,6 +43,22 @@ previous_workspace = "cmd+shift+backtick"
 switch_workspace = "ctrl+1..9"
 rename_workspace = ["prefix+shift+w", "cmd+shift+n"]
 toggle_sidebar = ["prefix+b", "cmd+b"]
+
+# フォーカスしている pane と隣の pane の並びを左右 ⇄ 上下で切り替える
+[[keys.command]]
+key = "prefix+space"
+type = "shell"
+command = '"$HOME/dotfiles/herdr/toggle-split.sh"'
+description = "toggle pane split direction"
+
+# フォーカスしている pane を、fzf で選んだタブか新しいタブに移す
+[[keys.command]]
+key = "prefix+m"
+type = "popup"
+command = '"$HOME/dotfiles/herdr/move-pane.sh"'
+description = "move pane to another tab"
+width = "80%"
+height = "60%"
 
 [ui.toast]
 delivery = "off"
