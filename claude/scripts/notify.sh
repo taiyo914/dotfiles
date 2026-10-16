@@ -5,6 +5,9 @@
 FIELD="$1"
 SOUND="$2"
 
+# pane の名前を作るための claude -p（auto-title.sh）からは通知しない
+[ "${CLAUDE_AUTO_TITLE:-}" = "1" ] && exit 0
+
 MSG=$(jq -r "$FIELD")
 
 # 通知をクリックしたとき、Claude Code を起動したターミナルを最前面に出す
