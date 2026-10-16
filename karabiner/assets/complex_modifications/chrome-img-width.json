@@ -1,8 +1,8 @@
 {
-  "title": "Chrome: Cmd+Ctrl+I to set <img> width to 800",
+  "title": "chrome-img-width",
   "rules": [
     {
-      "description": "Chrome で Cmd+Ctrl+I を押すと、選択中の <img> タグの width を 800 にそろえる",
+      "description": "chrome-img-width",
       "manipulators": [
         {
           "type": "basic",

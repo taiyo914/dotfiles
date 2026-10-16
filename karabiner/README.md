@@ -1,95 +1,139 @@
 # Karabiner
 
-`~/.config/karabiner` からこのフォルダにシンボリックリンクを張っている。
+JSON にはコメントが書けない & description も短く保ちたいので、ルールの詳細はこのファイルに記録する。ルールを追加・変更するときはこのファイルを編集する。
 
-## 1. フォルダ構成
+## 1. 追加・変更するとき
 
-| パス | 中身 |
+### 1-1. フォルダ構成
+
+- `karabiner.json`
+	- 実際に karabiner が読み込む設定ファイル
+- `assets/complex_modifications/`
+	- ルールのソースファイルを保存する場所
+	- `karabiner.json` にコピーされて初めて有効になる
+- `scripts/`
+	- ルールから呼ぶスクリプト
+- `automatic_backups/`
+	- Karabiner が自動で作るバックアップ
+	- git の管理対象外
+
+### 1-2. ルール名の付け方
+
+- assets/ におくソースファイルは次の 3 つを統一する
+	- ファイル名（`.json` を除く）
+	- `title`
+	- `description`
+- ルール名はなるべく短くシンプルにする
+- 特定の場面で有効なルールは、名前の頭に範囲を付ける
+	- 例 ：`builtin-` （内蔵キーボードだけ）
+
+### 1-3. ルールを追加・変更する手順
+
+1. `assets/complex_modifications/<ルール名>.json` を作成・更新する
+2. `karabiner.json` にも同じ内容を入れる
+	- assets と `karabiner.json` は必ず内容を揃える
+3. この README の「2. ルール一覧」と「3. 各ルールの使い方」を追記・更新する
+
+
+## 2. ルール一覧
+
+| ルール名 | 概要 |
 | - | - |
-| `karabiner.json` | 実際に使われる設定。Karabiner の画面で変更するとここが書き換わる |
-| `assets/complex_modifications/` | ルールの置き場。Karabiner の「Add predefined rule」に一覧で出る |
-| `scripts/` | ルールの `shell_command` から呼ぶスクリプト |
-| `automatic_backups/` | Karabiner が自動で作るバックアップ |
+| `space-layer` | Space 長押しで矢印・削除レイヤー。タップで Space ＋ 英数 |
+| `builtin-fn-to-option` | fn（地球儀）キー → 右 Option |
+| `builtin-ctrl-tap-to-esc` | 左 Ctrl タップ → Esc |
+| `builtin-tab-hold-to-option` | Tab ホールド → 左 Option |
+| `chrome-split-view` | Chrome で `Cmd+D` → 分割ビュー |
+| `chrome-img-width` | Chrome で `Cmd+Ctrl+I` → `<img>` の width を 800 に |
+| `builtin-jis-symbols` | 内蔵 JIS キーボードの記号を印字どおりに入力 |
+| `builtin-swap-semicolon-hyphen` | `;` と `-` を入れ替え |
+| `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
+| `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
 
-assets に置いただけでは有効にならない。Karabiner の画面でルールを追加すると、その内容が `karabiner.json` にコピーされて初めて有効になる。
+## 3. 各ルールの使い方
 
-assets の中には JSON 以外のファイルを置かない。Karabiner がルールとして読み込もうとするため。
+前提として、外付けキーボードとの互換性を保つために、**仮想キーボードは ANSI（US 配列）にしている。** 
 
-## 2. 有効なルール
+そのままだと内蔵の JIS キーボードの記号がずれるので、 `builtin-jis-symbols` で直している。
 
-上から順に評価される。同じキーに複数のルールが当たる場合は、上のルールが優先される。
+### 3-1. `space-layer`
 
-| ルール | 動作 | assets | スクリプト |
-| - | - | - | - |
-| Space 長押しで矢印レイヤー | 下の「2-1」を参照 | `space_arrow_layer.json` | |
-| Sticky Shift | Shift を単独で押して離すと、次の 1 キーだけ Shift 付きになる | `sticky_shift.json` | |
-| fn → Option | 内蔵キーボードの fn（地球儀）キーを右 Option にする | `builtin_fn_to_option.json` | |
-| Chrome 分割ビュー | Chrome で `Cmd+D` は新しいタブ付きの分割ビュー、`Cmd+Shift+D` は通常の分割ビューを開く | `chrome_cmd_d_to_split_view.json` | `chrome-split-newtab.sh` |
-| `<img>` の width を 800 に | Chrome で `<img>` タグを選択して `Cmd+Ctrl+I` を押すと、width を 800 にして height を消す | `chrome_gh_img_width.json` | `gh-img-width.sh` |
-| `;` と `-` を入れ替え | 内蔵キーボードの `;` と `-` を入れ替える | `swap_builtin_semicolon_hyphen_jis.json` | |
-| JIS の印字どおりに入力 | 内蔵キーボード（JIS）で、キーに書かれている記号がそのまま入力されるようにする | `jis_symbols_on_builtin.json` | |
-| Ctrl で Emacs 風の移動と削除 | 下の「2-2」を参照 | `ctrl_emacs_keys.json` | |
+Space を押しながら左手のキーを押すと、カーソル移動や削除になる。
 
-仮想キーボードの種類は ANSI（US 配列）にしている。そのままだと内蔵の JIS キーボードの記号がずれるので、最後の 2 つのルールで直している。
+| 操作                            | 結果                                               |
+| ----------------------------- | ------------------------------------------------ |
+| Space を単独でタップ                 | Space を入力し、英数に切り替える。日本語の入力途中（変換が確定する前）は英数に切り替えない |
+| Space を素早く 2 回押して、2 回目を長押し    | Space が連続で入力される                                  |
+| Space + `E` / `S` / `D` / `F` | ↑ / ← / ↓ / →                                    |
+| Space + `A` / `G`             | 行頭 / 行末（`Cmd+←` / `Cmd+→`）                       |
+| Space + `W` / `R`             | 1 単語左 / 右（`Option+←` / `Option+→`）               |
+| Space + `Q`                   | カーソルの左の 1 単語を削除（`Option+Delete`）                 |
+| Space + `T`                   | カーソルの右の 1 文字を削除（`Delete forward`）                |
 
-### 2-1. Space の矢印レイヤー
+注意: Space を押してから 0.15 秒以内にほかのキーを押すと、文章を速く打っているとみなして、Space とそのキーを順番に入力する（qmk ファームウェアのデフォルト）
 
-Space を押しながら左手のキーを押すと、カーソル移動になる。Space を単独で押したときは普通の Space になる。
+日本語の入力途中かどうかは、変数 `ime_composing` で判断している。日本語入力でアルファベットを打つと `ime_composing` を 1 にし、Enter・英数・かなキーで 0 に戻す。Space を単独で押したときは、この変数が 0 のときだけ英数に切り替える。
 
-| キー | 動作 |
-| - | - |
-| `E` / `S` / `D` / `F` | ↑ / ← / ↓ / → |
-| `A` / `G` | 行頭 / 行末（`Cmd+←` / `Cmd+→`） |
-| `W` / `R` | 1 単語左 / 右（`Option+←` / `Option+→`） |
-| `Q` | カーソルの左の 1 単語を削除（`Option+Delete`） |
-| `T` | カーソルの右の 1 文字を削除（`Delete forward`） |
+### 3-2. `builtin-fn-to-option`
 
-### 2-2. Ctrl で Emacs 風の移動と削除
+fn（地球儀）キーを右 Option にする。内蔵キーボードのみ適用。
 
-左 Ctrl を押しながら次のキーを押すと、矢印キーや削除キーに変わる。Ghostty と iTerm2 では、シェルや vim の Ctrl キーを使うため無効にしている。
+### 3-3. `builtin-ctrl-tap-to-esc`
 
-| キー | 動作 | Shift も押したとき |
-| - | - | - |
-| `H` | Backspace | |
-| `D` | Delete（カーソルの右の 1 文字を消す） | |
-| `F` / `B` | → / ← | 1 文字ずつ選択 |
-| `N` / `P` | ↓ / ↑ | 1 行ずつ選択 |
-| `A` / `E` | 行頭 / 行末（`Cmd+←` / `Cmd+→`） | 行頭 / 行末まで選択 |
-| `K` | 行末までを消す（`Shift+Cmd+→` で選択して Backspace） | |
-| `U` | 行頭までを消す（`Cmd+Backspace`） | |
+左 Ctrl をタップで Esc にする。200 ms 以上長押しすると Ctrl になる。
 
-`Ctrl+K` は、カーソルがすでに行末にあると何も選択されないので、カーソルの左の 1 文字が消えてしまう。
+hold-preferredで、200 ms 以内でも他のキーと組み合わさったときは Ctrl にする。
 
-### 2-3. `<img>` の width を 800 にする仕組み
+内蔵キーボードのみ適用。
 
-1. Karabiner が `Cmd+C` を押して、選択中のテキストをコピーする
-2. 0.1 秒待ってから `gh-img-width.sh` がクリップボードの中身を書き換える
-3. キーを押してから 0.3 秒後に、Karabiner が `Cmd+V` を押して貼り付ける
+### 3-4. `builtin-tab-hold-to-option`
 
-0.3 秒の間に別のキーを押すと、貼り付けは中止される。その場合もクリップボードには書き換えた後のテキストが入っている。
+Tab をホールドで Option にする。200 ms 以上長押しすると Option になる。
 
-## 3. 使っていない assets
+hold-preferredで、200 ms 以内でも他のキーと組み合わさったときは Option にする。
 
-`karabiner.json` で有効になっていないルール。不要なら消してよい。
+内蔵キーボードのみ適用。
 
-| ファイル | 内容 |
-| - | - |
-| `builtin_left_ctrl_to_nav_layer_key.json` | 内蔵キーボードの左 Ctrl を矢印レイヤーに、Caps Lock を左 Ctrl にする |
-| `nav_layer.json` | 矢印レイヤー（カーソル移動と削除） |
-| `ctrl_arrow_layer.json` | Ctrl を押しながら左手で矢印キー |
-| `space_layer_h_to_backspace_on_builtin.json` | 内蔵キーボードで Space レイヤーの `H` を Backspace にする |
-| `disable_ctrl_h.json` | `Ctrl+H` を無効にする |
-| `disable_arrows_and_delete.json` | 矢印キーと Delete を無効にする（Fn を押している間は有効） |
-| `eisuu_kana_to_cmd.json` | 英数・かなキーを長押しすると Cmd になる |
-| `swap_builtin_semicolon_hyphen.json` | 内蔵キーボードの `;` と `-` を入れ替える（JIS 版より前のもの） |
-| `us_layout_on_builtin_jis.json` | 内蔵の JIS キーボードを US 配列のキー位置で入力する |
-| `mac-remap-20260926.json` | 2026-09-26 時点のまとめ設定 |
+注意: Tab を押し続けても Tab は連続で入力されない。
 
-## 4. ルールを追加するとき
+### 3-5. `chrome-split-view`
 
-1. `assets/complex_modifications/` に JSON を作る
-2. スクリプトを使うなら `scripts/` に置き、`shell_command` から `$HOME/dotfiles/karabiner/scripts/...` で呼ぶ
-3. Karabiner の画面で「Add predefined rule」からルールを有効にする
-4. この README の「2. 有効なルール」に追記する
+Chrome の分割ビューを `Cmd+D` で開く。Chrome でのみ適用。
 
-`shell_command` から動かすスクリプトでは `.zshrc` が読み込まれない。コマンドはフルパスで書き、日本語を扱うなら `LANG` を指定する。
+| 操作            | 結果                       |
+| ------------- | ------------------------ |
+| `Cmd+D`       | 分割ビューを開き、右側を新しいタブにする     |
+| `Cmd+Shift+D` | 分割ビューを開き、右側は「タブを選択」画面にする |
+
+注意: Chrome 本来の `Cmd+D`（ブックマークに追加）は使えなくなる。
+
+### 3-6. `chrome-img-width`
+
+`<img>` タグを含む文章を選択して `Cmd+Ctrl+I` を押すと、選択した文章の中の `<img>` タグの width を 800 にし、height を消す。GitHub に貼った画像の大きさをそろえるために使う。Chrome でのみ適用。
+
+### 3-7. `builtin-jis-symbols`
+
+内蔵 JIS キーボードのキーに書かれている記号がそのまま入力されるようにする。仮想キーボードを ANSI にしたことでずれた記号を、JIS の印字どおりに直す。
+
+### 3-8. `builtin-swap-semicolon-hyphen`
+
+`;` キーと `-` キーを入れ替える。Shift を押したときの記号も一緒に入れ替わる。 `builtin-jis-symbols` には依存していないが、一緒に使う場合は `builtin-jis-symbols` より上に置かないと無視される。
+
+### 3-9. `shift-backspace-to-delete`
+
+`Shift+Backspace` で、カーソルの右の 1 文字を消す（Delete forward）。
+
+### 3-10. `ctrl-emacs`
+
+左 Ctrl を押しながらキーを押すと、矢印キーや削除キーになる。
+
+| 操作                  | 結果                                     | Shift も押したとき |
+| ------------------- | -------------------------------------- | ------------ |
+| `Ctrl+H`            | Backspace                              |              |
+| `Ctrl+D`            | Delete（カーソルの右の 1 文字を消す）                |              |
+| `Ctrl+F` / `Ctrl+B` | → / ←                                  | 1 文字ずつ選択     |
+| `Ctrl+N` / `Ctrl+P` | ↓ / ↑                                  | 1 行ずつ選択      |
+| `Ctrl+A` / `Ctrl+E` | 行頭 / 行末（`Cmd+←` / `Cmd+→`）             | 行頭 / 行末まで選択  |
+| `Ctrl+U`            | 行頭までを消す（`Cmd+Backspace`）               |              |
+
+注意： vim では cmd をうまく認識してくれないため、 ctrl A/E/U はうまくうごかない

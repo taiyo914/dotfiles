@@ -1,8 +1,8 @@
 {
-  "title": "Swap ; and - on the built-in keyboard (JIS)",
+  "title": "builtin-swap-semicolon-hyphen",
   "rules": [
     {
-      "description": "内蔵キーボードで ; と - を入れ替える（JIS版）",
+      "description": "builtin-swap-semicolon-hyphen",
       "manipulators": [
         {
           "type": "basic",

@@ -4,7 +4,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Space 長押しで矢印レイヤー、単押しで space を入力して英数に切り替え（日本語の入力途中は切り替えない）",
+                        "description": "space-layer",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -416,12 +416,7 @@
                                     { "from_event": true }
                                 ],
                                 "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "日本語入力でアルファベットを打ったら ime_composing を 1 に、Enter・英数・かなで 0 に戻す（Space の英数切り替え用）",
-                        "manipulators": [
+                            },
                             {
                                 "from": {
                                     "key_code": "return_or_enter",
@@ -1045,7 +1040,7 @@
                         ]
                     },
                     {
-                        "description": "内蔵キー: fn/地球儀キーを Option に変換",
+                        "description": "builtin-fn-to-option",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1064,7 +1059,7 @@
                         ]
                     },
                     {
-                        "description": "内蔵キー: 左 Ctrl を単押ししたときは Esc に変換",
+                        "description": "builtin-ctrl-tap-to-esc",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1085,7 +1080,28 @@
                         ]
                     },
                     {
-                        "description": "Chrome で Cmd+D を新しいタブ付き分割ビュー、Cmd+Shift+D を通常の分割ビューに変換",
+                        "description": "builtin-tab-hold-to-option",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [{ "is_built_in_keyboard": true }],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
+                                "to": [{ "key_code": "left_option" }],
+                                "to_if_alone": [{ "key_code": "tab" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "chrome-split-view",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1139,7 +1155,7 @@
                         ]
                     },
                     {
-                        "description": "Chrome で Cmd+Ctrl+I を押すと、選択中の <img> タグの width を 800 にそろえる",
+                        "description": "chrome-img-width",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1178,7 +1194,7 @@
                         ]
                     },
                     {
-                        "description": "内蔵キーボードで ; と - を入れ替える（JIS版）",
+                        "description": "builtin-swap-semicolon-hyphen",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1278,7 +1294,7 @@
                         ]
                     },
                     {
-                        "description": "内蔵キーボードのみ JIS の印字どおりに記号を入力する",
+                        "description": "builtin-jis-symbols",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1811,7 +1827,7 @@
                         ]
                     },
                     {
-                        "description": "Shift+Backspace を Delete に変換",
+                        "description": "shift-backspace-to-delete",
                         "manipulators": [
                             {
                                 "from": {
@@ -1827,18 +1843,9 @@
                         ]
                     },
                     {
-                        "description": "emacs keybind overwrap",
+                        "description": "ctrl-emacs",
                         "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": { "mandatory": ["left_control"] }
@@ -1847,15 +1854,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "f",
                                     "modifiers": {
@@ -1867,15 +1865,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "b",
                                     "modifiers": {
@@ -1887,15 +1876,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "n",
                                     "modifiers": {
@@ -1907,15 +1887,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "p",
                                     "modifiers": {
@@ -1927,15 +1898,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "d",
                                     "modifiers": { "mandatory": ["left_control"] }
@@ -1944,15 +1906,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "a",
                                     "modifiers": {
@@ -1969,15 +1922,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "e",
                                     "modifiers": {
@@ -1994,38 +1938,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "k",
-                                    "modifiers": { "mandatory": ["left_control"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_arrow",
-                                        "modifiers": ["left_command", "left_shift"]
-                                    },
-                                    { "key_code": "delete_or_backspace" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.mitchellh\\.ghostty$",
-                                            "^com\\.googlecode\\.iterm2$"
-                                        ],
-                                        "type": "frontmost_application_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "u",
                                     "modifiers": { "mandatory": ["left_control"] }

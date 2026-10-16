@@ -1,18 +1,16 @@
 {
-  "title": "Builtin Left Ctrl Tap to Esc",
+  "title": "builtin-fn-to-option",
   "rules": [
     {
-      "description": "内蔵キー: 左 Ctrl を単押ししたときは Esc に変換",
+      "description": "builtin-fn-to-option",
       "manipulators": [
         {
           "type": "basic",
           "from": {
-            "key_code": "left_control",
+            "key_code": "fn",
             "modifiers": { "optional": ["any"] }
           },
-          "to": [{ "key_code": "left_control" }],
-          "to_if_alone": [{ "key_code": "escape" }],
-          "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
+          "to": [{ "key_code": "right_option" }],
           "conditions": [
             {
               "type": "device_if",

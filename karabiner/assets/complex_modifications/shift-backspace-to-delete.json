@@ -1,8 +1,8 @@
 {
-  "title": "Shift+Backspace to Delete",
+  "title": "shift-backspace-to-delete",
   "rules": [
     {
-      "description": "Shift+Backspace を Delete に変換",
+      "description": "shift-backspace-to-delete",
       "manipulators": [
         {
           "type": "basic",

@@ -1,8 +1,8 @@
 {
-  "title": "Chrome: Cmd+D to Split View",
+  "title": "chrome-split-view",
   "rules": [
     {
-      "description": "Chrome で Cmd+D を新しいタブ付き分割ビュー、Cmd+Shift+D を通常の分割ビューに変換",
+      "description": "chrome-split-view",
       "manipulators": [
         {
           "type": "basic",

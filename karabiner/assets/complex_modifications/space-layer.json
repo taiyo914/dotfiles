@@ -1,8 +1,8 @@
 {
-  "title": "Space Arrow Layer",
+  "title": "space-layer",
   "rules": [
     {
-      "description": "Space 長押しで矢印レイヤー",
+      "description": "space-layer",
       "manipulators": [
         {
           "type": "basic",
@@ -17,6 +17,16 @@
           "to": [
             {
               "key_code": "spacebar"
+            },
+            {
+              "key_code": "japanese_eisuu",
+              "conditions": [
+                {
+                  "type": "variable_if",
+                  "name": "ime_composing",
+                  "value": 0
+                }
+              ]
             }
           ],
           "conditions": [
@@ -74,6 +84,21 @@
               ]
             },
             {
+              "key_code": "japanese_eisuu",
+              "conditions": [
+                {
+                  "type": "variable_if",
+                  "name": "space_used",
+                  "value": 0
+                },
+                {
+                  "type": "variable_if",
+                  "name": "ime_composing",
+                  "value": 0
+                }
+              ]
+            },
+            {
               "set_variable": {
                 "name": "space_tap_ms",
                 "expression": "system.now.milliseconds"
@@ -101,6 +126,16 @@
           "to": [
             {
               "key_code": "spacebar"
+            },
+            {
+              "key_code": "japanese_eisuu",
+              "conditions": [
+                {
+                  "type": "variable_if",
+                  "name": "ime_composing",
+                  "value": 0
+                }
+              ]
             },
             {
               "set_variable": {
@@ -463,7 +498,36 @@
               "value": 1
             }
           ]
-        }
+        },
+        { "type": "basic", "from": { "key_code": "return_or_enter", "modifiers": { "optional": ["any"] } }, "to": [{ "key_code": "return_or_enter" }, { "set_variable": { "name": "ime_composing", "value": 0 } }] },
+        { "type": "basic", "from": { "key_code": "japanese_eisuu", "modifiers": { "optional": ["any"] } }, "to": [{ "key_code": "japanese_eisuu" }, { "set_variable": { "name": "ime_composing", "value": 0 } }] },
+        { "type": "basic", "from": { "key_code": "japanese_kana", "modifiers": { "optional": ["any"] } }, "to": [{ "key_code": "japanese_kana" }, { "set_variable": { "name": "ime_composing", "value": 0 } }] },
+        { "type": "basic", "from": { "key_code": "a", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "a" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "b", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "b" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "c", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "c" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "d", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "d" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "e", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "e" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "f", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "f" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "g", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "g" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "h", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "h" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "i", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "i" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "j", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "j" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "k", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "k" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "l", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "l" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "m", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "m" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "n", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "n" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "o", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "o" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "p", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "p" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "q", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "q" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "r", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "r" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "s", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "s" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "t", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "t" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "u", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "u" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "v", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "v" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "w", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "w" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "x", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "x" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "y", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "y" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] },
+        { "type": "basic", "from": { "key_code": "z", "modifiers": { "optional": ["shift", "caps_lock"] } }, "to": [{ "key_code": "z" }, { "set_variable": { "name": "ime_composing", "value": 1 } }], "conditions": [{ "type": "input_source_if", "input_sources": [{ "language": "^ja$" }] }] }
       ]
     }
   ]
