@@ -5,6 +5,9 @@
 -- ビジュアルモードの Cmd + C で、選択した範囲を Mac のクリップボードにコピーする
 vim.keymap.set("v", "<D-c>", '"+y', { desc = "Copy to clipboard" })
 
+-- Cmd + S でファイルを保存する（LazyVim の Ctrl + S と同じ動作）
+vim.keymap.set({ "i", "x", "n", "s" }, "<D-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+
 -- ノーマルモードで Esc を3回押したら nvim を終了する（<leader>qq と同じ動作）
 -- 保存していないファイルがあるときは終了せずにエラーを出す
 vim.keymap.set("n", "<Esc><Esc><Esc>", "<cmd>qa<cr>", { desc = "Quit All" })
