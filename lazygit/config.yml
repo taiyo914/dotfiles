@@ -11,3 +11,9 @@ git:
   # 次のコマンドで鍵を ssh-agent に登録してから、もう一度コミットする。
   #   ssh-add --apple-load-keychain
   overrideGpg: true
+
+keybinding:
+  universal:
+    # コミットメッセージを Option + Enter で送信する
+    # 初期設定の <meta+enter> は、ターミナルが Option を Alt として送るので反応しない
+    confirmInEditor: <alt+enter>
