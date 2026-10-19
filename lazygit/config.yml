@@ -12,6 +12,10 @@ git:
   #   ssh-add --apple-load-keychain
   overrideGpg: true
 
+os:
+  # e でファイルを開くときに nvim を使う
+  editPreset: nvim
+
 keybinding:
   universal:
     # コミットメッセージを Option + Enter で送信する

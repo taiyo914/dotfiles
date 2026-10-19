@@ -46,7 +46,7 @@ alias cline='cd ~/keyboards/cline46'
 alias keyball='cd ~/keyboards/keyball61'
 
 # zshの設定ファイルはよく開くのでエイリアスを設定
-alias e-zsh='code "$DOTFILES/zsh/.zshrc"'
+alias e-zsh='nvim "$DOTFILES/zsh/.zshrc"'
 alias s-zsh='source ~/.zshrc'
 
 # Lazydocker エイリアス

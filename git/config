@@ -3,7 +3,7 @@
 # ~/.gitconfig が残っていると、こちらが優先されるため注意
 
 [core]
-	editor = code -w
+	editor = nvim
     # pager = delta 
 	quotePath = false
 

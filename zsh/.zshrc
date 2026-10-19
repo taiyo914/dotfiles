@@ -8,7 +8,7 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select # 補完をハイライトし矢印キーでも選択可能にする設定
 
 # エディター
-export EDITOR='code -w'
+export EDITOR='nvim'
 
 # direnv
 eval "$(direnv hook zsh)"

@@ -24,4 +24,4 @@ cc() {
 vcc() { cd ~/vault && cc "$@"; }
 
 # ccc = claude code config
-alias ccc='code "$DOTFILES/claude/settings.json"'
+alias ccc='nvim "$DOTFILES/claude/settings.json"'
