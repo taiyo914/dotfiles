@@ -27,6 +27,7 @@
       "Bash(cargo install:*)"
     ]
   },
+  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -81,40 +82,23 @@
       }
     ]
   },
+  "enableArtifact": false,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/scripts/statusline.sh",
     "padding": 2,
     "refreshInterval": 1
   },
-  "model": "opus",
-  "availableModels": [
-    "fable",
-    "claude-opus-5[1m]",
-    "claude-sonnet-5[1m]",
-    "claude-sonnet-4-6[1m]",
-    "claude-opus-4-8[1m]",
-    "claude-opus-4-7[1m]",
-    "claude-opus-4-6[1m]",
-    "haiku"
-  ],
+  "effortLevel": "medium",
   "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "medium"
-    },
-    "claude-sonnet-5": {
-      "effortLevel": "high"
-    },
     "claude-fable-5-1": {
       "effortLevel": "medium"
     }
   },
-  "effortLevel": "high",
   "tui": "fullscreen",
-  "theme": "auto",
-  "enableArtifact": false,
   "skipWorkflowUsageWarning": true,
-  "skipAutoPermissionPrompt": true,
+  "theme": "auto",
   "preferredNotifChannel": "notifications_disabled",
+  "skipAutoPermissionPrompt": true,
   "notifications": "notifications_disabled"
 }
