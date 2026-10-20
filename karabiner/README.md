@@ -117,7 +117,19 @@ Chrome の分割ビューを `Cmd+D` で開く。Chrome でのみ適用。
 
 ### 3-8. `builtin-swap-semicolon-hyphen`
 
-`;` キーと `-` キーを入れ替える。Shift を押したときの記号も一緒に入れ替わる。 `builtin-jis-symbols` には依存していないが、一緒に使う場合は `builtin-jis-symbols` より上に置かないと無視される。
+`;` と `-` だけを入れ替える。Shift を押したときの `=` と `+` は印字どおりのまま。 `builtin-jis-symbols` には依存していないが、一緒に使う場合は `builtin-jis-symbols` より上に置かないと無視される。
+
+| 押すキー（印字） | 入力される記号 |
+| - | - |
+| `-` | `;` |
+| `;` | `-` |
+| `Shift` + `-` | `=` |
+| `Shift` + `;` | `+` |
+
+Cmd や Ctrl を一緒に押しても同じ記号に変わる。たとえば Ghostty で文字の大きさを変えるときは次のキーを押す。
+
+- `Cmd+;`（印字）で縮小（`Cmd+-` が送られる）
+- `Cmd+Shift+;`（印字）で拡大（`Cmd++` が送られる）
 
 ### 3-9. `shift-backspace-to-delete`
 
