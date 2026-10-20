@@ -1,7 +1,7 @@
 # https://starship.rs/config/#format-strings
 # 各モジュールの最後に半角スペース入ってるので注意
 format = """
-$directory$git_branch$git_status${custom.docker}
+$directory$git_branch${custom.unstaged}$git_status${custom.docker}
 $character
 """
 
@@ -20,9 +20,16 @@ style = "bold #e8a04f"
 
 [git_status]
 format = "($ahead_behind )"
-ahead = "[${count}↑](green)"
-behind = "[${count}↓](red)"
-diverged = "[${ahead_count}↑](green) [${behind_count}↓](red)"
+ahead = "[↑${count}](green)"
+behind = "[↓${count}](red)"
+diverged = "[↑${ahead_count}](green) [↓${behind_count}](red)"
+
+[custom.unstaged]
+shell = ["sh"]
+command = "git status --porcelain | awk '/^.[^ ]/{n++} END{if(n)print n}'"
+require_repo = true
+when = true
+format = "([*$output](yellow) )"
 
 [custom.docker]
 # https://starship.rs/config/#custom-commands
