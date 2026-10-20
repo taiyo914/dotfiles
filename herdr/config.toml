@@ -9,7 +9,6 @@ prefix = "ctrl+q"
 # ペイン
 split_vertical = ["prefix+v", "cmd+d"]
 split_horizontal = ["prefix+minus", "cmd+shift+d"]
-close_pane = ["prefix+x", "cmd+w"]
 cycle_pane_next = ["prefix+tab", "cmd+]"]
 cycle_pane_previous = ["prefix+shift+tab", "cmd+["]
 focus_pane_left = ["prefix+h", "cmd+alt+left"]
@@ -31,18 +30,57 @@ new_tab = ["prefix+c", "cmd+t"]
 next_tab = ["prefix+n", "ctrl+tab", "cmd+shift+]"]
 previous_tab = ["prefix+p", "ctrl+shift+tab", "cmd+shift+["]
 switch_tab = "cmd+1..9"
-close_tab = ["prefix+shift+x", "cmd+alt+w"]
 rename_tab = ["prefix+shift+t", "cmd+shift+t"]
 
-# space
-# hint: Ghostty の window 用のキーを space の操作に使う
+# スペース
+# hint: Ghostty の window 用のキーをスペースの操作に使う
 new_workspace = ["prefix+shift+n", "cmd+n"]
-close_workspace = ["prefix+shift+d", "cmd+shift+w"]
 next_workspace = "cmd+down"
 previous_workspace = "cmd+up"
 switch_workspace = "ctrl+1..9"
 rename_workspace = ["prefix+shift+w", "cmd+shift+n"]
 toggle_sidebar = ["prefix+b", "cmd+b"]
+
+# ペイン、タブ、スペースを閉じるときに、中の nvim を終了するスクリプトを走らせる
+close_pane = ""
+close_tab = ""
+close_workspace = ""
+
+[[keys.command]]
+key = "prefix+x"
+type = "shell"
+command = 'sh "$HOME/dotfiles/herdr/close.sh" pane'
+description = "close pane after quitting nvim"
+
+[[keys.command]]
+key = "cmd+w"
+type = "shell"
+command = 'sh "$HOME/dotfiles/herdr/close.sh" pane'
+description = "close pane after quitting nvim"
+
+[[keys.command]]
+key = "prefix+shift+x"
+type = "shell"
+command = 'sh "$HOME/dotfiles/herdr/close.sh" tab'
+description = "close tab after quitting nvim"
+
+[[keys.command]]
+key = "cmd+alt+w"
+type = "shell"
+command = 'sh "$HOME/dotfiles/herdr/close.sh" tab'
+description = "close tab after quitting nvim"
+
+[[keys.command]]
+key = "prefix+shift+d"
+type = "shell"
+command = 'sh "$HOME/dotfiles/herdr/close.sh" workspace'
+description = "close workspace after quitting nvim"
+
+[[keys.command]]
+key = "cmd+shift+w"
+type = "shell"
+command = 'sh "$HOME/dotfiles/herdr/close.sh" workspace'
+description = "close workspace after quitting nvim"
 
 # フォーカスしている pane と隣の pane の並びを左右 ⇄ 上下で切り替える
 [[keys.command]]
