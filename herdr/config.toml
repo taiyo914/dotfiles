@@ -60,6 +60,15 @@ description = "move pane to another tab"
 width = "80%"
 height = "60%"
 
+# option + g でフォーカスしている pane の作業ディレクトリ（worktree）で lazygit を開く
+[[keys.command]]
+key = "alt+g"
+type = "popup"
+command = 'sh "$HOME/dotfiles/herdr/lazygit.sh"'
+description = "lazygit in focused pane's cwd"
+width = "90%"
+height = "90%"
+
 [ui.toast]
 delivery = "off"
 
