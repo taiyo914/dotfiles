@@ -11,7 +11,7 @@ alias fvim='dir=$(fd . ~ -H -I -E Library -E .cache -E .git --max-depth 4 | fzf)
 alias fvim-c='dir=$(fd . . -H -I -E Library -E .cache -E .git --max-depth 4 | fzf) && nvim "$dir"'
 
 # 現在のディレクトリを nvim で開き、起動が終わったら lazygit の画面を開く
-nvim-git() {
+ngit() {
   nvim -c 'autocmd User VeryLazy ++once lua vim.schedule(function() Snacks.lazygit() end)' "$@"
 }
 
