@@ -5,6 +5,16 @@
 -- ビジュアルモードの Cmd + C で、選択した範囲を Mac のクリップボードにコピーする
 vim.keymap.set("v", "<D-c>", '"+y', { desc = "Copy to clipboard" })
 
+-- Cmd + Shift + C でファイル名をコピー
+local function copy_relative_file_path()
+  local relative_path = vim.fn.expand("%:.")
+  vim.fn.setreg("+", relative_path)
+  vim.notify("Copied: " .. relative_path)
+end
+for _, lhs in ipairs({ "<D-C>", "<D-S-c>" }) do
+  vim.keymap.set("n", lhs, copy_relative_file_path, { desc = "Copy relative file path" })
+end
+
 -- Cmd + S でファイルを保存する（LazyVim の Ctrl + S と同じ動作）
 vim.keymap.set({ "i", "x", "n", "s" }, "<D-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
