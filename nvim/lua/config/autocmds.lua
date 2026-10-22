@@ -13,33 +13,11 @@ local function on_start()
   Snacks.explorer({ cwd = LazyVim.root(), enter = false })
 end
 
-local function start_ruby_lsp_if_gemfile_project()
-  local root = vim.fs.root(vim.fn.getcwd(), { "Gemfile", ".git" })
-  if not root or vim.fn.filereadable(root .. "/Gemfile") == 0 then
-    return
-  end
-
-  require("lazy").load({ plugins = { "nvim-lspconfig" } })
-  if not vim.lsp.is_enabled("ruby_lsp") then
-    return
-  end
-
-  local config = vim.deepcopy(vim.lsp.config.ruby_lsp)
-  config.name = "ruby_lsp"
-  config.root_dir = root
-  vim.lsp.start(config, { attach = false, reuse_client = config.reuse_client })
-end
-
-local function on_vim_enter()
-  on_start()
-  start_ruby_lsp_if_gemfile_project()
-end
-
 -- このファイルは、引数なしで起動すると VimEnter より後に読み込まれるので、その場合はすぐに開く
 if vim.v.vim_did_enter == 1 then
-  on_vim_enter()
+  on_start()
 else
-  vim.api.nvim_create_autocmd("VimEnter", { callback = on_vim_enter })
+  vim.api.nvim_create_autocmd("VimEnter", { callback = on_start })
 end
 
 -- macOS の入力ソースを英数（Google 日本語入力の英数モード）に切り替える
