@@ -1,0 +1,38 @@
+{
+  "title": "magic-keyboard-disabled",
+  "rules": [
+    {
+      "description": "magic-keyboard-disabled",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "any": "key_code",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "vk_none" }],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "vendor_id": 1452, "product_id": 666 }]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "any": "consumer_key_code",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "vk_none" }],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [{ "vendor_id": 1452, "product_id": 666 }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

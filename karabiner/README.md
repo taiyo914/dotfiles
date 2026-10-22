@@ -39,6 +39,7 @@ JSON にはコメントが書けない & description も短く保ちたいので
 
 | ルール名 | 概要 |
 | - | - |
+| `magic-keyboard-disabled` | Magic Keyboard with Touch ID のキーを Touch ID 以外すべて無効化 |
 | `space-layer` | Space 長押しで矢印・削除レイヤー。タップで Space ＋ 英数 |
 | `builtin-fn-to-option` | fn（地球儀）キー → 右 Option |
 | `builtin-ctrl-tap-to-esc` | 左 Ctrl タップ → Esc |
@@ -158,3 +159,11 @@ Shift や Cmd と一緒に押したとき（たとえば `Shift+Esc` で全チ�
 | `Ctrl+U`            | 行頭までを消す（`Cmd+Backspace`）               |              |
 
 注意： vim では cmd をうまく認識してくれないため、 ctrl A/E/U はうまくうごかない
+
+### 3-12. `magic-keyboard-disabled`
+
+Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）のキーをすべて無効にする。Touch ID の指紋認証は使える。
+
+通常のキー（`key_code`）と、音量や明るさなどのメディアキー（`consumer_key_code`）を何も入力しないキー（`vk_none`）に変える。ほかのルールより先に判定させるため、ルール一覧の一番上に置く。
+
+注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。
