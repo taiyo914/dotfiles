@@ -4,6 +4,8 @@ export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 export LOCAL_DOTFILES="${LOCAL_DOTFILES:-$HOME/dotfiles-local}"
 
 # zsh-autocomplete
+# zsh-autocomplete は移動したフォルダの履歴をこのフォルダに保存する。フォルダがないとフォルダを移動するたびにエラーが出るので、先に作っておく
+mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 source ${HOMEBREW_PREFIX}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # Tab で補完候補の一覧に入り、一覧の中では Tab / Shift+Tab で次 / 前の候補に移動する
 bindkey             '^I' menu-select
