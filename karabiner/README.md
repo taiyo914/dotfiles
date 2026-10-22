@@ -47,6 +47,7 @@ JSON にはコメントが書けない & description も短く保ちたいので
 | `chrome-img-width` | Chrome で `Cmd+Ctrl+I` → `<img>` の width を 800 に |
 | `builtin-jis-symbols` | 内蔵 JIS キーボードの記号を印字どおりに入力 |
 | `builtin-swap-semicolon-hyphen` | `;` と `-` を入れ替え |
+| `slack-disable-esc` | Slack で Esc と左 Ctrl タップの Esc を無効にする |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
 
@@ -131,11 +132,19 @@ Cmd や Ctrl を一緒に押しても同じ記号に変わる。たとえば Gho
 - `Cmd+;`（印字）で縮小（`Cmd+-` が送られる）
 - `Cmd+Shift+;`（印字）で拡大（`Cmd++` が送られる）
 
-### 3-9. `shift-backspace-to-delete`
+### 3-9. `slack-disable-esc`
+
+Slack が前面にあるときは、Esc キーを押しても何も起きないようにする。Esc でスレッドが閉じないようにするため。
+
+Shift や Cmd と一緒に押したとき（たとえば `Shift+Esc` で全チャンネルを既読にする操作）は、そのまま使える。
+
+`builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も出さない。Slack では左 Ctrl はただの Ctrl になる。このため、`karabiner.json` では `builtin-ctrl-tap-to-esc` より上に置く。
+
+### 3-10. `shift-backspace-to-delete`
 
 `Shift+Backspace` で、カーソルの右の 1 文字を消す（Delete forward）。
 
-### 3-10. `ctrl-emacs`
+### 3-11. `ctrl-emacs`
 
 左 Ctrl を押しながらキーを押すと、矢印キーや削除キーになる。
 
