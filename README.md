@@ -239,6 +239,7 @@ https://brew.sh/ja/
 | lazydocker | https://github.com/jesseduffield/lazydocker |
 | zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
 | zsh-syntax-highlighting | https://github.com/zsh-users/zsh-syntax-highlighting |
+| zsh-autocomplete | https://github.com/marlonrichert/zsh-autocomplete |
 | JetBrainsMono Nerd Font | https://www.nerdfonts.com/ |
 | BIZ UDGothic | https://fonts.google.com/specimen/BIZ+UDGothic |
 
@@ -248,7 +249,8 @@ https://brew.sh/ja/
 
 ```bash
 brew install starship neovim gh asdf direnv terminal-notifier fzf \
-  eza bat fd ripgrep jq lazygit lazydocker zsh-autosuggestions zsh-syntax-highlighting
+  eza bat fd ripgrep jq lazygit lazydocker zsh-autosuggestions zsh-syntax-highlighting \
+  zsh-autocomplete
 brew install --cask hammerspoon font-jetbrains-mono-nerd-font font-biz-udgothic
 ```
 

@@ -3,9 +3,13 @@
 export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 export LOCAL_DOTFILES="${LOCAL_DOTFILES:-$HOME/dotfiles-local}"
 
-# ツールやシステムが提供するTab補完を有効化する設定
-autoload -Uz compinit && compinit
-zstyle ':completion:*' menu select # 補完をハイライトし矢印キーでも選択可能にする設定
+# zsh-autocomplete
+source ${HOMEBREW_PREFIX}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# Tab で補完候補の一覧に入り、一覧の中では Tab / Shift+Tab で次 / 前の候補に移動する
+bindkey             '^I' menu-select
+bindkey "$terminfo[kcbt]" menu-select
+bindkey -M menuselect              '^I'         menu-complete
+bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
 
 # エディター
 export EDITOR='nvim'
