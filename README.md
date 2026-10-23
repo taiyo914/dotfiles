@@ -8,7 +8,6 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 
 ## 1. 設定ファイル一覧
 
-
 | 項目 | ファイル | リンク先 |
 | - | - | - | 
 | zsh | `zsh/.zshrc` | `~/.zshrc` |
@@ -219,13 +218,14 @@ CSSスニペットのオン/オフやテーマ・フォントは `appearance.jso
 
 https://brew.sh/ja/
 
+コマンドラインのツールとフォントは Homebrew で入れる。入れるものは `Brewfile` に書いてある。
+
 | ツール | リンク |
 | - | - |
 | Starship | https://starship.rs/ja-jp/ |
 | Neovim | https://neovim.io/ |
-| HammerSpoon | https://www.hammerspoon.org/ |
 | GitHub CLI | https://cli.github.com/ |
-| asdf | https://asdf-vm.com/ |
+| herdr | https://herdr.dev |
 | direnv | https://direnv.net/ |
 | terminal-notifier | https://github.com/julienXX/terminal-notifier |
 | fzf | https://github.com/junegunn/fzf |
@@ -242,16 +242,21 @@ https://brew.sh/ja/
 | JetBrainsMono Nerd Font | https://www.nerdfonts.com/ |
 | BIZ UDGothic | https://fonts.google.com/specimen/BIZ+UDGothic |
 
-<br/>
-
 まとめてインストール:
 
 ```bash
-brew install starship neovim gh asdf direnv terminal-notifier fzf \
-  eza bat fd ripgrep jq lazygit lazydocker zsh-autosuggestions zsh-syntax-highlighting \
-  zsh-autocomplete
-brew install --cask hammerspoon font-jetbrains-mono-nerd-font font-biz-udgothic
+brew bundle --file ~/dotfiles/Brewfile
 ```
+
+そのマシンでしか使わないツールは `~/dotfiles-local/Brewfile` に書く。
+
+```bash
+brew bundle --file ~/dotfiles-local/Brewfile
+```
+
+ツールを増やしたり減らしたりしたら、`Brewfile` も書き換える。`brew bundle check --file ~/dotfiles/Brewfile` で、`Brewfile` に書いたものがすべて入っているかを確認できる。
+
+GUI のアプリは Homebrew では入れない。新しいマシンではアクセシビリティなどの許可をどうせ一つずつ設定し直すので、まとめて入れても手間があまり減らないため。
 
 ### 4-2. ネイティブインストール
 
@@ -269,6 +274,8 @@ QMK CLI は QMK ファームウェアをローカルでビルドするために�
 
 ### 4-3. アプリでインストール
 
+公式サイトからダウンロードして入れる。
+
 | アプリ | リンク |
 | - | - |
 | Ghostty | https://ghostty.org/ |
@@ -276,4 +283,8 @@ QMK CLI は QMK ファームウェアをローカルでビルドするために�
 | Obsidian | https://obsidian.md/ |
 | Karabiner-Elements | https://karabiner-elements.pqrs.org/ |
 | Raycast | https://www.raycast.com/ |
+| HammerSpoon | https://www.hammerspoon.org/ |
+| Shottr | https://shottr.cc/ |
+| AltTab | https://alt-tab.app/ |
+| Google 日本語入力 | https://www.google.co.jp/ime/ |
 
