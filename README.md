@@ -31,7 +31,6 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | Lazygit | `lazygit/config.yml` | `~/Library/Application Support/lazygit/config.yml` |
 | Herdr | `herdr/config.toml` | `~/.config/herdr/config.toml` |
 | Karabiner | `karabiner/` | `~/.config/karabiner` |
-| macOS | `macos/DefaultKeyBinding.dict` | `~/Library/KeyBindings/DefaultKeyBinding.dict` |
 | Obsidian | `obsidian/plugins/*/` | `~/vault/.obsidian/plugins/*/` |
 |          | `obsidian/snippets/` | `~/vault/.obsidian/snippets` |
 |          | `obsidian/appearance.json` | `~/vault/.obsidian/appearance.json` |

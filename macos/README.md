@@ -6,7 +6,6 @@ macOS の設定のうち、ファイルを置くだけでは反映できない�
 
 | パス | 中身 |
 | - | - |
-| `DefaultKeyBinding.dict` | macOS の Emacs 風キーバインドを無効にする設定。`~/Library/KeyBindings/DefaultKeyBinding.dict` からシンボリックリンクを張っている |
 | `README.md` | 手動で設定する項目の一覧（このファイル） |
 
 ## 2. 手動で設定する項目
