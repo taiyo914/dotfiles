@@ -107,6 +107,14 @@ description = "lazygit in focused pane's cwd"
 width = "90%"
 height = "90%"
 
+[[keys.command]]
+key = "alt+s"
+type = "popup"
+command = 'sh "$HOME/dotfiles/herdr/sessions.sh"'
+description = "list claude sessions"
+width = "90%"
+height = "90%"
+
 [ui.toast]
 delivery = "off"
 
