@@ -50,11 +50,93 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 >
 > Claude Code のグローバルの設定ファイル `~/.claude/settings.json` は、別の設定ファイルを読み込んだり継承したりする仕組みを持っていない。そこで、そのマシン特有の設定は各プロジェクトの `.claude/settings.local.json` に書くことにする。ただし、これだと claude を使うすべてのプロジェクトで同じ設定を書かなければいけないので、あくまで暫定的な対応。プロジェクトの数が増えてきてきたらまた考える。
 
-## 3. セットアップ
+## 3. ツールのインストール
 
-新しいマシンで復元するときは、ホームディレクトリ直下に clone してからシンボリックリンクを貼る。
+新しいマシンでは、最初にツールを入れる。
 
-### 3-1. バックアップと既存ファイルの削除
+### 3-1. dotfiles と dotfiles-local を用意する
+
+dotfiles をホームディレクトリ直下に clone する。
+
+```bash
+git clone git@github.com:taiyo914/dotfiles.git ~/dotfiles
+```
+
+dotfiles-local は `~/dotfiles-local` に置く。別のリポジトリの中にある場合は、そこから `~/dotfiles-local` へシンボリックリンクを貼る。
+
+### 3-2. Homebrew でインストール
+
+https://brew.sh/ja/
+
+コマンドラインのツールとフォントは Homebrew で入れる。入れるものは `Brewfile` に書いてある。
+
+| ツール | リンク |
+| - | - |
+| Starship | https://starship.rs/ja-jp/ |
+| Neovim | https://neovim.io/ |
+| tree-sitter-cli | https://tree-sitter.github.io |
+| GitHub CLI | https://cli.github.com/ |
+| herdr | https://herdr.dev |
+| direnv | https://direnv.net/ |
+| terminal-notifier | https://github.com/julienXX/terminal-notifier |
+| fzf | https://github.com/junegunn/fzf |
+| eza | https://github.com/eza-community/eza |
+| bat | https://github.com/sharkdp/bat |
+| fd | https://github.com/sharkdp/fd |
+| ripgrep | https://github.com/BurntSushi/ripgrep |
+| jq | https://github.com/jqlang/jq |
+| lazygit | https://github.com/jesseduffield/lazygit |
+| lazydocker | https://github.com/jesseduffield/lazydocker |
+| zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
+| zsh-syntax-highlighting | https://github.com/zsh-users/zsh-syntax-highlighting |
+| zsh-autocomplete | https://github.com/marlonrichert/zsh-autocomplete |
+| JetBrainsMono Nerd Font | https://www.nerdfonts.com/ |
+| BIZ UDGothic | https://fonts.google.com/specimen/BIZ+UDGothic |
+
+まとめてインストール:
+
+```bash
+brew bundle --file ~/dotfiles/Brewfile
+```
+
+ツールを増やしたり減らしたりしたら、`Brewfile` も書き換える。`brew bundle check --file ~/dotfiles/Brewfile` で、`Brewfile` に書いたものがすべて入っているかを確認できる。
+
+GUI のアプリは Homebrew では入れない。新しいマシンではアクセシビリティなどの許可をどうせ一つずつ設定し直すので、まとめて入れても手間があまり減らないため。
+
+### 3-3. ネイティブインストール
+
+Homebrew を使わずに直接バイナリをダウンロードするもの。
+
+| ツール | リンク |
+| - | - |
+| Claude Code| https://docs.claude.com/ja/docs/claude-code/overview |
+| QMK CLI | https://docs.qmk.fm/cli |
+
+Claude Code はネイティブインストールすることでバックグラウンドで自動更新される。
+
+QMK CLI は QMK ファームウェアをローカルでビルドするために必要なツールで、公式サイトではネイティブインストールのみ案内されている。
+
+### 3-4. アプリでインストール
+
+GUI のアプリは公式サイトからダウンロードして入れる。
+
+| アプリ | リンク |
+| - | - |
+| Ghostty | https://ghostty.org/ |
+| VS Code | https://code.visualstudio.com/ |
+| Obsidian | https://obsidian.md/ |
+| Karabiner-Elements | https://karabiner-elements.pqrs.org/ |
+| Raycast | https://www.raycast.com/ |
+| HammerSpoon | https://www.hammerspoon.org/ |
+| Shottr | https://shottr.cc/ |
+| AltTab | https://alt-tab.app/ |
+| Google 日本語入力 | https://www.google.co.jp/ime/ |
+
+## 4. セットアップ
+
+「3. ツールのインストール」が終わったら、シンボリックリンクを貼る。
+
+### 4-1. バックアップと既存ファイルの削除
 
 同じ場所にファイルがあるとシンボリックリンクを貼れないので、既存のファイルは移動または削除する必要がある。
 
@@ -132,7 +214,7 @@ done
 
 </details>
 
-### 3-2. シンボリックリンクを貼る
+### 4-2. シンボリックリンクを貼る
 
 ```bash
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
@@ -157,7 +239,7 @@ ln -s ~/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
 ln -s ~/dotfiles/karabiner ~/.config/karabiner
 ```
 
-### 3-3. Obsidian
+### 4-3. Obsidian
 
 Obsidian の設定は各 vault の中の `.obsidian` にあるため、vault のパスを変数に入れてから貼る。
 
@@ -201,7 +283,7 @@ done
 
 CSSスニペットのオン/オフやテーマ・フォントは `appearance.json` に保存されているので、設定し直す必要はない。ただし、フォントはマシンにインストールする必要がある。
 
-### 3-4. UI から読み込ませるもの
+### 4-4. UI から読み込ませるもの
 
 次の2つはシンボリックリンクが不要で、アプリのUI上から直接読み込ませる。
 
@@ -209,82 +291,3 @@ CSSスニペットのオン/オフやテーマ・フォントは `appearance.jso
   - `chrome://extensions` の「パッケージ化されていない拡張機能を読み込む」からフォルダを指定する。
 - Raycast スクリプト
   - `Settings → Extensions → Script Commands → Script Directories` で、`~/dotfiles/raycast/scripts` を指定する。
-
-## 4. 補足: ツールのインストール
-
-この環境は次のツールをインストールすることを前提としている。
-
-### 4-1. Homebrew でインストール
-
-https://brew.sh/ja/
-
-コマンドラインのツールとフォントは Homebrew で入れる。入れるものは `Brewfile` に書いてある。
-
-| ツール | リンク |
-| - | - |
-| Starship | https://starship.rs/ja-jp/ |
-| Neovim | https://neovim.io/ |
-| GitHub CLI | https://cli.github.com/ |
-| herdr | https://herdr.dev |
-| direnv | https://direnv.net/ |
-| terminal-notifier | https://github.com/julienXX/terminal-notifier |
-| fzf | https://github.com/junegunn/fzf |
-| eza | https://github.com/eza-community/eza |
-| bat | https://github.com/sharkdp/bat |
-| fd | https://github.com/sharkdp/fd |
-| ripgrep | https://github.com/BurntSushi/ripgrep |
-| jq | https://github.com/jqlang/jq |
-| lazygit | https://github.com/jesseduffield/lazygit |
-| lazydocker | https://github.com/jesseduffield/lazydocker |
-| zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
-| zsh-syntax-highlighting | https://github.com/zsh-users/zsh-syntax-highlighting |
-| zsh-autocomplete | https://github.com/marlonrichert/zsh-autocomplete |
-| JetBrainsMono Nerd Font | https://www.nerdfonts.com/ |
-| BIZ UDGothic | https://fonts.google.com/specimen/BIZ+UDGothic |
-
-まとめてインストール:
-
-```bash
-brew bundle --file ~/dotfiles/Brewfile
-```
-
-そのマシンでしか使わないツールは `~/dotfiles-local/Brewfile` に書く。
-
-```bash
-brew bundle --file ~/dotfiles-local/Brewfile
-```
-
-ツールを増やしたり減らしたりしたら、`Brewfile` も書き換える。`brew bundle check --file ~/dotfiles/Brewfile` で、`Brewfile` に書いたものがすべて入っているかを確認できる。
-
-GUI のアプリは Homebrew では入れない。新しいマシンではアクセシビリティなどの許可をどうせ一つずつ設定し直すので、まとめて入れても手間があまり減らないため。
-
-### 4-2. ネイティブインストール
-
-Homebrew を使わずに直接バイナリをダウンロードするもの。
-
-| ツール | リンク |
-| - | - |
-| Claude Code| https://docs.claude.com/ja/docs/claude-code/overview |
-| QMK CLI | https://docs.qmk.fm/cli |
-
-Claude Code はネイティブインストールすることでバックグラウンドで自動更新される。
-
-QMK CLI は QMK ファームウェアをローカルでビルドするために必要なツールで、公式サイトではネイティブインストールのみ案内されている。
-
-
-### 4-3. アプリでインストール
-
-公式サイトからダウンロードして入れる。
-
-| アプリ | リンク |
-| - | - |
-| Ghostty | https://ghostty.org/ |
-| VS Code | https://code.visualstudio.com/ |
-| Obsidian | https://obsidian.md/ |
-| Karabiner-Elements | https://karabiner-elements.pqrs.org/ |
-| Raycast | https://www.raycast.com/ |
-| HammerSpoon | https://www.hammerspoon.org/ |
-| Shottr | https://shottr.cc/ |
-| AltTab | https://alt-tab.app/ |
-| Google 日本語入力 | https://www.google.co.jp/ime/ |
-
