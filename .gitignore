@@ -1,4 +1,5 @@
 karabiner/automatic_backups/
 claude/skills/synced/
 claude/skills/.trash/
-.obsidian/
+.obsidian/workspace.json
+.obsidian/graph.json
