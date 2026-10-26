@@ -200,14 +200,6 @@
       "key": "M"
     }
   ],
-  "book-log-note:create-next-log-note": [
-    {
-      "modifiers": [
-        "Ctrl"
-      ],
-      "key": "L"
-    }
-  ],
   "window:zoom-in": [
     {
       "modifiers": [
