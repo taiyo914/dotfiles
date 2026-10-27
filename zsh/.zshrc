@@ -3,6 +3,10 @@
 export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 export LOCAL_DOTFILES="${LOCAL_DOTFILES:-$HOME/dotfiles-local}"
 
+# EDITOR を nvim にすると zsh が自動で vi 風のキー操作にするため、通常の emacs 風操作に固定する
+# これでプロンプトで Esc を押しても vi のノーマルモードに入らなくなる
+bindkey -e
+
 # zsh-autocomplete
 # zsh-autocomplete は移動したフォルダの履歴をこのフォルダに保存する。フォルダがないとフォルダを移動するたびにエラーが出るので、先に作っておく
 mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
