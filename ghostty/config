@@ -1,3 +1,7 @@
+# TIPS: 設定ファイルを開くアプリを変更する方法
+# Ghostty の cmd + , は「macOS 標準のテキストエディター」で設定ファイルを開く（デフォルトは「テキストエディット」）
+# これを変更したいときは「Finder で適当な .txt ファイルを選択 → 情報を見る → このアプリケーションで開く → すべてを変更」
+
 # 見た目
 theme = "Catppuccin Mocha"
 # font-family = JetBrains Mono

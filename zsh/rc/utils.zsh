@@ -59,6 +59,9 @@ ghostty-light() {
     --config-default-files=false \
     --config-file="$DOTFILES/ghostty/light.config"
 }
+
+# Ghostty の設定ファイルを nvim で開く
+alias ghostty-config='nvim "$DOTFILES/ghostty/config"'
  
 # コマンドの履歴がグローバル&リアルタイムに共有されるzshのオプション
 setopt SHARE_HISTORY
