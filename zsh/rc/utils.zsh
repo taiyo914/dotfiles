@@ -45,6 +45,14 @@ alias key='cd ~/keyboards'
 alias cline='cd ~/keyboards/cline46'
 alias keyball='cd ~/keyboards/keyball61'
 
+# ~/dev にあるリポジトリを fzf で選んで移動する
+repo() {
+  # ls は eza のアイコン付きに置き換えているので、zsh のグロブでフォルダ名だけを取り出す
+  local name
+  name=$(print -l ~/dev/*(/:t) | fzf --height 40% --reverse) || return
+  cd ~/dev/"$name"
+}
+
 # zshの設定ファイルはよく開くのでエイリアスを設定
 alias e-zsh='nvim "$DOTFILES/zsh/.zshrc"'
 alias s-zsh='source ~/.zshrc'
