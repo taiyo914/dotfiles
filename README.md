@@ -78,6 +78,7 @@ https://brew.sh/ja/
 | GitHub CLI | https://cli.github.com/ |
 | herdr | https://herdr.dev |
 | direnv | https://direnv.net/ |
+| mise | https://mise.jdx.dev/ |
 | terminal-notifier | https://github.com/julienXX/terminal-notifier |
 | fzf | https://github.com/junegunn/fzf |
 | eza | https://github.com/eza-community/eza |
