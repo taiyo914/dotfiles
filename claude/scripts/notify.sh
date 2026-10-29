@@ -13,6 +13,9 @@ MSG=$(jq -r "$FIELD")
 # 通知をクリックしたとき、Claude Code を起動したターミナルを最前面に出す
 case "$TERM_PROGRAM" in
     ghostty) APP="com.mitchellh.ghostty" ;;
+    # herdr の中では TERM_PROGRAM が herdr になる。herdr は Ghostty の中で使っているので Ghostty を前に出す
+    # 注意: herdr を Ghostty 以外のターミナルで動かしても、クリックで前に出るのは Ghostty になる
+    herdr)   APP="com.mitchellh.ghostty" ;;
     vscode)  APP="com.microsoft.VSCode" ;;
     *)       APP="" ;;
 esac
