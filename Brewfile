@@ -16,6 +16,9 @@ brew "tree-sitter-cli"
 brew "zsh-autocomplete"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+# Sorbet の LSP がファイルの変更を監視するのに使う
+brew "watchman"
+
 
 cask "font-biz-udgothic"
 cask "font-jetbrains-mono-nerd-font"
