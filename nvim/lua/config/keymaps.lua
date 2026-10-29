@@ -22,20 +22,40 @@ vim.keymap.set({ "i", "x", "n", "s" }, "<D-s>", "<cmd>w<cr><esc>", { desc = "Sav
 -- 保存していないファイルがあるときは終了せずにエラーを出す
 vim.keymap.set("n", "<Esc><Esc><Esc>", "<cmd>qa<cr>", { desc = "Quit All" })
 
--- LazyVim の Git Browse はブランチ名入りの URL を作るので、コミットハッシュ入りのパーマリンクを作るように上書きする
+-- カーソル行（ビジュアルモードでは選択範囲）の、origin のデフォルトブランチ最新コミットでの GitHub パーマリンクをコピーし、必要ならブラウザでも開く
+-- LazyVim の Git Browse は手元の HEAD のコミットを使い、push 前だと GitHub で開けないので、自作のスクリプトを使う
+local function github_permalink(open_in_browser)
+  local start_line, end_line = vim.fn.line("v"), vim.fn.line(".")
+  if vim.fn.mode() == "n" then
+    start_line = end_line
+  end
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+  local lines = start_line == end_line and tostring(start_line) or (start_line .. "-" .. end_line)
+  local target = vim.api.nvim_buf_get_name(0) .. ":" .. lines
+
+  vim.cmd("normal! \27")
+  local command = { "bash", vim.fn.stdpath("config") .. "/scripts/github-permalink.sh", target }
+  if open_in_browser then
+    table.insert(command, "--open")
+  end
+  vim.system(command, { text = true }, function(result)
+    local message = vim.trim(result.stdout or "")
+    local level = result.code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR
+    vim.schedule(function()
+      vim.notify(message, level)
+    end)
+  end)
+end
+
 -- よく使う Browse を <leader>gb にして、LazyVim で <leader>gb だった Blame Line を <leader>gB に移す
 vim.keymap.set({ "n", "x" }, "<leader>gb", function()
-  Snacks.gitbrowse({ what = "permalink" })
-end, { desc = "Git Browse (permalink)" })
+  github_permalink(true)
+end, { desc = "Git Browse (permalink on default branch)" })
 vim.keymap.set("n", "<leader>gB", function()
   Snacks.picker.git_log_line()
 end, { desc = "Git Blame Line" })
 vim.keymap.set({ "n", "x" }, "<leader>gy", function()
-  Snacks.gitbrowse({
-    what = "permalink",
-    open = function(url)
-      vim.fn.setreg("+", url)
-    end,
-    notify = false,
-  })
-end, { desc = "Git Browse (copy permalink)" })
+  github_permalink(false)
+end, { desc = "Git Browse (copy permalink on default branch)" })
