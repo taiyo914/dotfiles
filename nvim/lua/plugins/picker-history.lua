@@ -35,7 +35,8 @@ local function history_items(picker, main_field)
           -- search / pattern という名前は snacks.nvim が別の用途で使うので、hist_ を付ける
           hist_search = hist.search or "",
           hist_pattern = hist.pattern or "",
-          hist_live = hist.live ~= false,
+          -- ファイル検索の履歴は live が nil で保存されるので、true のときだけ live にする
+          hist_live = hist.live == true,
         }
       end
     end
