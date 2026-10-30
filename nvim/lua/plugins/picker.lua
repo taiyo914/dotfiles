@@ -21,17 +21,35 @@ local function copy_locations(picker)
   Snacks.notify(("%d 件をコピーしました"):format(#lines), { title = "Snacks Picker" })
 end
 
+-- インサートモードで文字が入っていればノーマルモードに戻り、それ以外は picker を閉じる
+---@param picker snacks.Picker
+local function cancel_if_input_empty(picker)
+  if vim.fn.mode():find("^i") and picker.input:get() ~= "" then
+    return vim.cmd.stopinsert()
+  end
+  Snacks.picker.actions.cancel(picker)
+end
+
 return {
   {
     "folke/snacks.nvim",
     opts = {
       picker = {
-        -- picker で Ctrl + y を押すと、一覧を「ファイル:行番号: 行の内容」の形でクリップボードにコピーする
         actions = {
           copy_locations = copy_locations,
+          cancel_if_input_empty = cancel_if_input_empty,
         },
         win = {
-          input = { keys = { ["<c-y>"] = { "copy_locations", mode = { "n", "i" } } } },
+          input = {
+            keys = {
+              -- picker で Ctrl + y を押すと、一覧を「ファイル:行番号: 行の内容」の形でクリップボードにコピーする
+              ["<c-y>"] = { "copy_locations", mode = { "n", "i" } },
+              -- Esc を押すと、インサートモードで文字が入っていればノーマルモードに戻り、それ以外は picker を閉じる。
+              -- snacks は <Esc> の設定をモードごとではなくキーごとに 1 つしか持てないので、ノーマルモードの分もここで受け持つ
+              ["<esc>"] = { "cancel_if_input_empty", mode = { "n", "i" } },
+            },
+          },
+          -- 一覧の欄でも Ctrl + y でコピーできるようにする
           list = { keys = { ["<c-y>"] = "copy_locations" } },
         },
         sources = {
