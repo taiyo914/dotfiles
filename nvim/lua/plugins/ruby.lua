@@ -183,6 +183,51 @@ local function goto_definition()
   end)
 end
 
+-- 同じファイルの中でこの行数以内に並ぶ定義の候補は、同じ定義の別の位置とみなす
+local nearby_definition_max_line_gap = 5
+
+local function sort_by_line(items)
+  local sorted_items = vim.list_slice(items)
+  table.sort(sorted_items, function(a, b)
+    return a.lnum < b.lnum
+  end)
+  return sorted_items
+end
+
+local function are_nearby_in_same_file(sorted_items)
+  for i = 2, #sorted_items do
+    local previous_item, item = sorted_items[i - 1], sorted_items[i]
+    if item.filename ~= previous_item.filename or item.lnum - previous_item.lnum > nearby_definition_max_line_gap then
+      return false
+    end
+  end
+  return true
+end
+
+local function jump_to_item(item)
+  local bufnr = item.bufnr or vim.fn.bufadd(item.filename)
+  vim.cmd("normal! m'")
+  vim.bo[bufnr].buflisted = true
+  vim.api.nvim_win_set_buf(0, bufnr)
+  vim.api.nvim_win_set_cursor(0, { item.lnum, item.col - 1 })
+  vim.cmd("normal! zv")
+end
+
+-- 候補がまとまっていれば一番上に直接ジャンプし、離れていれば一覧を出す
+local function goto_definition_or_list()
+  vim.lsp.buf.definition({
+    on_list = function(options)
+      local sorted_items = sort_by_line(options.items)
+      if are_nearby_in_same_file(sorted_items) then
+        jump_to_item(sorted_items[1])
+      else
+        vim.fn.setqflist({}, " ", { title = options.title, items = options.items })
+        vim.cmd("botright copen")
+      end
+    end,
+  })
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -191,7 +236,7 @@ return {
         ["*"] = {
           keys = {
             -- Enter で定義に、Shift + Enter で参照の一覧にジャンプする
-            { "<CR>", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
+            { "<CR>", goto_definition_or_list, desc = "Goto Definition", has = "definition" },
             { "<S-CR>", function() Snacks.picker.lsp_references() end, desc = "References", has = "references" },
           },
         },
