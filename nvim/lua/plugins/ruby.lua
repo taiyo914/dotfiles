@@ -190,7 +190,9 @@ return {
       servers = {
         ["*"] = {
           keys = {
+            -- Enter で定義に、Shift + Enter で参照の一覧にジャンプする
             { "<CR>", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
+            { "<S-CR>", function() Snacks.picker.lsp_references() end, desc = "References", has = "references" },
           },
         },
         ruby_lsp = {
@@ -198,6 +200,7 @@ return {
           keys = {
             { "gr", find_references, desc = "References", nowait = true },
             { "<CR>", goto_definition, desc = "Goto Definition" },
+            { "<S-CR>", find_references, desc = "References" },
           },
           cmd = function(dispatchers, config)
             return vim.lsp.rpc.start({ "ruby-lsp" }, dispatchers, {
