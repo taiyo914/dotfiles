@@ -1,5 +1,6 @@
 -- グローバル検索（<leader>/ と <leader>sg）とファイル検索（<leader><leader>）の入力欄が空のときに、過去に検索した文字列を候補に出す。
 -- 履歴は snacks.nvim が内部で持っているデータ（picker.history）から読む。
+-- 履歴の上で Ctrl + x を押すと、その履歴を消す。
 
 ---@param picker snacks.Picker
 local function record_cwd_in_history(picker)
@@ -69,6 +70,76 @@ local function confirm_history(picker, item, action)
   picker.input:set(item.hist_pattern, item.hist_search)
   picker:find()
 end
+
+-- 履歴ファイルを読み直して is_target に当てはまる記録を消し、すぐに書き込む。
+-- 終了時の保存を待つと、別の Neovim が先に終了したときに、削除前の履歴で上書きされてしまうため。
+---@param kv snacks.picker.KeyValue
+local function delete_from_history_file(kv, is_target)
+  local stat = vim.uv.fs_stat(kv.path)
+  local fd = stat and io.open(kv.path, "rb")
+  if not fd then
+    return
+  end
+  local content = fd:read("*a")
+  fd:close()
+  local ok, data = pcall(require("string.buffer").decode, content)
+  if not ok or type(data) ~= "table" then
+    return
+  end
+  for key, hist in pairs(data) do
+    if is_target(hist) then
+      data[key] = nil
+    end
+  end
+  fd = io.open(kv.path, "wb")
+  if not fd then
+    return
+  end
+  fd:write(require("string.buffer").encode(data))
+  fd:close()
+  -- snacks は「読み込んだ時刻より後にファイルが書き換えられていたら、終了時に保存しない」。
+  -- 自分の書き込みで終了時の保存が止まらないように、読み込んだ時刻を今に更新する。
+  -- 別の Neovim がすでに書き換えていた場合は、その内容を上書きしないように更新しない。
+  if stat.mtime.sec <= kv.loaded_time then
+    kv.loaded_time = os.time()
+  end
+end
+
+-- カーソルがある履歴と同じ文字列の記録を、このプロジェクトの履歴からすべて消す
+---@param picker snacks.Picker
+local function delete_history(picker)
+  local item = picker:current()
+  if not (item and item.history) then
+    return
+  end
+  local cwd = picker:cwd()
+  local function is_target(hist)
+    return type(hist) == "table"
+      and hist.cwd == cwd
+      and (hist.search or "") == item.hist_search
+      and (hist.pattern or "") == item.hist_pattern
+  end
+
+  local history = picker.history
+  local data = history.kv.data
+  for i = #data, 1, -1 do
+    if is_target(data[i]) then
+      table.remove(data, i)
+    end
+  end
+  -- 消した分だけ件数が減るので、次の履歴を書き込む位置を一覧の末尾の次に合わせ直す
+  history.idx = #data + 1
+  history.cursor = history.idx
+
+  delete_from_history_file(history.kv, is_target)
+  picker:find({ refresh = true })
+end
+
+-- 履歴を消すキー（Ctrl + x）の設定。grep とファイル検索で共通にする
+local delete_history_win = {
+  input = { keys = { ["<c-x>"] = { "delete_history", mode = { "n", "i" } } } },
+  list = { keys = { ["<c-x>"] = "delete_history" } },
+}
 
 -- プレビュー欄の各行の左に入れる余白
 local PAD = " "
@@ -320,6 +391,9 @@ return {
     "folke/snacks.nvim",
     opts = {
       picker = {
+        actions = {
+          delete_history = delete_history,
+        },
         sources = {
           grep = {
             -- 入力が空なら履歴を返し、入力があれば通常の grep を実行する
@@ -333,6 +407,7 @@ return {
             format = format_history("search"),
             preview = history_preview(preview_grep_files),
             confirm = confirm_history,
+            win = delete_history_win,
           },
           files = {
             finder = function(opts, ctx)
@@ -357,6 +432,7 @@ return {
             format = format_history("pattern"),
             preview = history_preview(preview_matching_files),
             confirm = confirm_history,
+            win = delete_history_win,
           },
         },
       },
