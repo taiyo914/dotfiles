@@ -35,6 +35,10 @@
           {
             "type": "command",
             "command": "~/.claude/scripts/notify.sh '.last_assistant_message' Glass"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/save-log.sh answer"
           }
         ]
       }
@@ -65,6 +69,10 @@
           {
             "type": "command",
             "command": "~/.claude/scripts/auto-title.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/save-log.sh question"
           }
         ]
       }
