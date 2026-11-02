@@ -1,6 +1,6 @@
 #!/bin/bash
 # Claude Code の UserPromptSubmit hook から呼ぶ
-# herdr の space（workspace）にまだ名前がないときだけ、質問の内容から「テーマ:タスクの要約」の名前を Haiku に作らせて、space の名前にする
+# herdr の space（workspace）にまだ名前がないときだけ、質問の内容から「タスクの要約」の名前を Haiku に作らせて、space の名前にする
 # 一度名前を付けた space の名前は変えない。付け直したいときは /retitle コマンドを使う
 # 名前を作るのに数秒かかるので、裏で動かしてすぐに終わる（質問の送信を待たせない）
 
@@ -60,9 +60,8 @@ ${prompt:0:1000}") || { log "error: claude -p が失敗した"; exit 0; }
   title=$(printf '%s' "$answer" | head -n 1 | sed -E 's/^[[:space:]`"「]+//; s/[[:space:]`"」]+$//')
   title=${title:0:40}
 
-  # 「テーマ:要約」の形になっていないときは使わない
-  if ! printf '%s' "$title" | grep -qE '^[a-z0-9-]{1,8}:.+'; then
-    log "skip (形が違う): $answer"
+  if [ -z "$title" ]; then
+    log "skip (名前が空): $answer"
     exit 0
   fi
   "$herdr" workspace rename "$workspace" "$title" >/dev/null
