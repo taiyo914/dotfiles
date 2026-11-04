@@ -30,6 +30,12 @@ local function cancel_if_input_empty(picker)
   Snacks.picker.actions.cancel(picker)
 end
 
+-- 検索欄に入力した文字を全部消す
+---@param picker snacks.Picker
+local function clear_input(picker)
+  picker.input:set("", "")
+end
+
 -- grep で、.gitignore に書かれていても vendor/bundle の中を検索する。
 -- ripgrep は直接渡されたフォルダなら .gitignore に書かれていても検索するので、プロジェクトと vendor/bundle の 2 つを渡す
 ---@param opts snacks.picker.Config
@@ -60,6 +66,7 @@ return {
         actions = {
           copy_locations = copy_locations,
           cancel_if_input_empty = cancel_if_input_empty,
+          clear_input = clear_input,
         },
         win = {
           input = {
@@ -69,6 +76,8 @@ return {
               -- Esc を押すと、インサートモードで文字が入っていればノーマルモードに戻り、それ以外は picker を閉じる。
               -- snacks は <Esc> の設定をモードごとではなくキーごとに 1 つしか持てないので、ノーマルモードの分もここで受け持つ
               ["<esc>"] = { "cancel_if_input_empty", mode = { "n", "i" } },
+              -- 検索欄で Ctrl + u を押すと、入力した文字を全部消す。snacks の初期設定の「一覧を上にスクロールする」を上書きする
+              ["<c-u>"] = { "clear_input", mode = { "n", "i" } },
             },
           },
           -- 一覧の欄でも Ctrl + y でコピーできるようにする
