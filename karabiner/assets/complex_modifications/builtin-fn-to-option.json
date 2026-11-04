@@ -14,7 +14,7 @@
           "conditions": [
             {
               "type": "device_if",
-              "identifiers": [{ "is_built_in_keyboard": true }]
+              "identifiers": [{ "is_built_in_keyboard": true }, { "vendor_id": 1452, "product_id": 666 }]
             }
           ]
         }

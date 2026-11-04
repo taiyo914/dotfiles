@@ -25,7 +25,7 @@ JSON にはコメントが書けない & description も短く保ちたいので
 	- `description`
 - ルール名はなるべく短くシンプルにする
 - 特定の場面で有効なルールは、名前の頭に範囲を付ける
-	- 例 ：`builtin-` （内蔵キーボードだけ）
+	- 例 ：`builtin-` （内蔵キーボードと Magic Keyboard with Touch ID だけ）
 
 ### 1-3. ルールを追加・変更する手順
 
@@ -58,6 +58,8 @@ JSON にはコメントが書けない & description も短く保ちたいので
 
 そのままだと内蔵の JIS キーボードの記号がずれるので、 `builtin-jis-symbols` で直している。
 
+`builtin-` で始まるルールは、内蔵キーボードと Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）に適用する。ただし、今は `magic-keyboard-disabled` が先に Magic Keyboard のキーを無効にしているので、Magic Keyboard では `builtin-` のルールは動かない。
+
 ### 3-1. `space-layer`
 
 Space を押しながら左手のキーを押すと、カーソル移動や削除になる。
@@ -78,7 +80,7 @@ Space を押しながら左手のキーを押すと、カーソル移動や削�
 
 ### 3-2. `builtin-fn-to-option`
 
-fn（地球儀）キーを右 Option にする。内蔵キーボードのみ適用。
+fn（地球儀）キーを右 Option にする。内蔵キーボードと Magic Keyboard のみ適用。
 
 ### 3-3. `builtin-ctrl-tap-to-esc`
 
@@ -86,7 +88,7 @@ fn（地球儀）キーを右 Option にする。内蔵キーボードのみ適�
 
 hold-preferredで、200 ms 以内でも他のキーと組み合わさったときは Ctrl にする。
 
-内蔵キーボードのみ適用。
+内蔵キーボードと Magic Keyboard のみ適用。
 
 ### 3-4. `builtin-tab-hold-to-option`
 
@@ -94,7 +96,7 @@ Tab をホールドで Option にする。200 ms 以上長押しすると Option
 
 hold-preferredで、200 ms 以内でも他のキーと組み合わさったときは Option にする。
 
-内蔵キーボードのみ適用。
+内蔵キーボードと Magic Keyboard のみ適用。
 
 注意: Tab を押し続けても Tab は連続で入力されない。
 
