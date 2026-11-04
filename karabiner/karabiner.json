@@ -62,7 +62,6 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
-                                    { "key_code": "spacebar" },
                                     {
                                         "conditions": [
                                             {
@@ -72,7 +71,8 @@
                                             }
                                         ],
                                         "key_code": "japanese_eisuu"
-                                    }
+                                    },
+                                    { "key_code": "spacebar" }
                                 ],
                                 "type": "basic"
                             },
