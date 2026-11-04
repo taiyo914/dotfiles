@@ -46,6 +46,7 @@ JSON にはコメントが書けない & description も短く保ちたいので
 | `builtin-tab-hold-to-option` | Tab ホールド → 左 Option |
 | `chrome-split-view` | Chrome で `Cmd+D` → 分割ビュー |
 | `chrome-img-width` | Chrome で `Cmd+Ctrl+I` → `<img>` の width を 800 に |
+| `chrome-arrow-tab-switch` | Chrome で `Cmd+↓` / `Cmd+↑` → 次 / 前のタブ |
 | `builtin-jis-symbols` | 内蔵 JIS キーボードの記号を印字どおりに入力 |
 | `builtin-swap-semicolon-hyphen` | `;` と `-` を入れ替え |
 | `slack-disable-esc` | Slack で Esc と左 Ctrl タップの Esc を無効にする |
@@ -169,3 +170,9 @@ Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）のキーをす
 通常のキー（`key_code`）と、音量や明るさなどのメディアキー（`consumer_key_code`）を何も入力しないキー（`vk_none`）に変える。ほかのルールより先に判定させるため、ルール一覧の一番上に置く。
 
 注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。
+
+### 3-13. `chrome-arrow-tab-switch`
+
+Chrome で `Cmd+↓` を押すと次のタブ（`Ctrl+Tab`）、`Cmd+↑` を押すと前のタブ（`Ctrl+Shift+Tab`）に移る。herdr でスペースを移るキー（`Cmd+↓` / `Cmd+↑`）とそろえるため。Chrome でのみ適用。
+
+注意: Chrome 本来の `Cmd+↓` / `Cmd+↑`（ページの一番下 / 一番上まで移る）は使えなくなる。

@@ -1,0 +1,44 @@
+{
+  "title": "chrome-arrow-tab-switch",
+  "rules": [
+    {
+      "description": "chrome-arrow-tab-switch",
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+            }
+          ],
+          "from": {
+            "key_code": "down_arrow",
+            "modifiers": {
+              "mandatory": ["command"],
+              "optional": []
+            }
+          },
+          "to": [{ "key_code": "tab", "modifiers": ["control"] }]
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+            }
+          ],
+          "from": {
+            "key_code": "up_arrow",
+            "modifiers": {
+              "mandatory": ["command"],
+              "optional": []
+            }
+          },
+          "to": [{ "key_code": "tab", "modifiers": ["control", "shift"] }]
+        }
+      ]
+    }
+  ]
+}
