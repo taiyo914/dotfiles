@@ -58,6 +58,22 @@ local function search_vendor_bundle_too(opts)
   end
 end
 
+-- picker を画面の 9 割の大きさで開き、上から検索欄・一覧・プレビューの順に並べる。画面の幅に関係なくプレビューを一覧の下に出す
+local preview_below_layout = {
+  layout = {
+    backdrop = false,
+    width = 0.9,
+    height = 0.9,
+    box = "vertical",
+    border = true,
+    title = "{title} {live} {flags}",
+    title_pos = "center",
+    { win = "input", height = 1, border = "bottom" },
+    { win = "list", border = "none" },
+    { win = "preview", title = "{preview}", height = 0.6, border = "top" },
+  },
+}
+
 return {
   {
     "folke/snacks.nvim",
@@ -96,21 +112,18 @@ return {
             matcher = { sort_empty = true },
             sort = { fields = { "score:desc", "file", "idx" } },
             config = search_vendor_bundle_too,
-            layout = {
-              layout = {
-                backdrop = false,
-                width = 0.9,
-                height = 0.9,
-                box = "vertical",
-                border = true,
-                title = "{title} {live} {flags}",
-                title_pos = "center",
-                { win = "input", height = 1, border = "bottom" },
-                { win = "list", border = "none" },
-                { win = "preview", title = "{preview}", height = 0.6, border = "top" },
-              },
-            },
+            layout = preview_below_layout,
           },
+          -- LSP の一覧（gd、gr、gI、gy、<leader>ss など）も、プレビューを一覧の下に出す
+          lsp_declarations = { layout = preview_below_layout },
+          lsp_definitions = { layout = preview_below_layout },
+          lsp_implementations = { layout = preview_below_layout },
+          lsp_type_definitions = { layout = preview_below_layout },
+          lsp_references = { layout = preview_below_layout },
+          lsp_incoming_calls = { layout = preview_below_layout },
+          lsp_outgoing_calls = { layout = preview_below_layout },
+          lsp_symbols = { layout = preview_below_layout },
+          lsp_workspace_symbols = { layout = preview_below_layout },
         },
       },
     },
