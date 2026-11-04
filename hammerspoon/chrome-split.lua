@@ -27,7 +27,8 @@ local function waitForNewWindow(app, originalWindow, onNewWindowFocused)
   end)
 end
 
-chromeSplitHotkey = hs.hotkey.bind({ "alt", "ctrl" }, "S", function()
+-- Raycast の Script Command から `hs -c` で呼び出すので、グローバル関数にしている
+function splitChromeWindow()
   local app = hs.application.frontmostApplication()
   if app:bundleID() ~= CHROME_BUNDLE_ID then return end
 
@@ -38,4 +39,7 @@ chromeSplitHotkey = hs.hotkey.bind({ "alt", "ctrl" }, "S", function()
   waitForNewWindow(app, originalWindow, function(newWindow)
     placeSideBySide(originalWindow, newWindow)
   end)
-end)
+end
+
+-- control + option + s で、Chrome の新しいウィンドウを開いて左右半分ずつに並べる
+chromeSplitHotkey = hs.hotkey.bind({ "alt", "ctrl" }, "S", splitChromeWindow)
