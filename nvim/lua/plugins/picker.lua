@@ -30,6 +30,28 @@ local function cancel_if_input_empty(picker)
   Snacks.picker.actions.cancel(picker)
 end
 
+-- grep で、.gitignore に書かれていても vendor/bundle の中を検索する。
+-- ripgrep は直接渡されたフォルダなら .gitignore に書かれていても検索するので、プロジェクトと vendor/bundle の 2 つを渡す
+---@param opts snacks.picker.Config
+local function search_vendor_bundle_too(opts)
+  local finder = opts.finder
+  opts.finder = function(finder_opts, ctx)
+    local cwd = finder_opts.cwd or vim.uv.cwd()
+    local vendor_bundle = vim.fs.joinpath(cwd, "vendor/bundle")
+    local searches_other_place = finder_opts.ignored -- alt + i を押していると vendor/bundle がもう検索に入るので、足すと結果が 2 回ずつ出る
+      or (finder_opts.dirs and #finder_opts.dirs > 0)
+      or finder_opts.buffers
+      or finder_opts.rtp
+    if not searches_other_place and vim.fn.isdirectory(vendor_bundle) == 1 then
+      finder_opts = vim.tbl_extend("force", finder_opts, { dirs = { cwd, vendor_bundle } })
+    end
+    if type(finder) == "function" then
+      return finder(finder_opts, ctx)
+    end
+    return require("snacks.picker.source.grep").grep(finder_opts, ctx)
+  end
+end
+
 return {
   {
     "folke/snacks.nvim",
@@ -54,6 +76,7 @@ return {
         },
         sources = {
           grep = {
+            config = search_vendor_bundle_too,
             layout = {
               layout = {
                 backdrop = false,
