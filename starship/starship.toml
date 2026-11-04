@@ -5,6 +5,9 @@ $directory$git_branch${custom.unstaged}$git_status${custom.docker}
 $character
 """
 
+# プロンプトのコマンドがこの時間内に終わらないと警告がでるが無視して大丈夫
+command_timeout = 500
+
 [directory]
 # https://starship.rs/config/#directory
 #↓ デフォルト設定だと最後に半角スペースがあるので注意
