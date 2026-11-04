@@ -10,6 +10,8 @@ brew "lazydocker"
 brew "lazygit"
 brew "mise"
 brew "neovim"
+# ov は less の上位互換となる高機能なビューア（git の pager として使っている）
+brew "ov"
 brew "ripgrep"
 brew "starship"
 brew "terminal-notifier"

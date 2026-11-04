@@ -4,7 +4,9 @@
 
 [core]
 	editor = nvim
-    # pager = delta 
+    # ページャーとして ov を使用する
+    # git log では一番上のコミットの「commit ...」の行を画面の一番上に固定する（sticky にする）
+    pager = ov -F --section-delimiter \"^commit\" --section-header
 	quotePath = false
 
 [alias]

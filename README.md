@@ -29,6 +29,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 | Neovim | `nvim/` | `~/.config/nvim` |
 | Lazygit | `lazygit/config.yml` | `~/Library/Application Support/lazygit/config.yml` |
 | Herdr | `herdr/config.toml` | `~/.config/herdr/config.toml` |
+| ov | `ov/config.yaml` | `~/.config/ov/config.yaml` |
 | Karabiner | `karabiner/` | `~/.config/karabiner` |
 | Obsidian | `obsidian/plugins/*/` | `~/vault/.obsidian/plugins/*/` |
 |          | `obsidian/snippets/` | `~/vault/.obsidian/snippets` |
@@ -86,6 +87,7 @@ https://brew.sh/ja/
 | fd | https://github.com/sharkdp/fd |
 | ripgrep | https://github.com/BurntSushi/ripgrep |
 | jq | https://github.com/jqlang/jq |
+| ov | https://github.com/noborus/ov |
 | lazygit | https://github.com/jesseduffield/lazygit |
 | lazydocker | https://github.com/jesseduffield/lazydocker |
 | zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
@@ -168,6 +170,7 @@ targets=(
   .config/nvim
   "Library/Application Support/lazygit/config.yml"
   .config/herdr/config.toml
+  .config/ov/config.yaml
   .config/karabiner
 )
 
@@ -237,6 +240,7 @@ ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
 ln -s ~/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
+mkdir -p ~/.config/ov && ln -s ~/dotfiles/ov/config.yaml ~/.config/ov/config.yaml
 ln -s ~/dotfiles/karabiner ~/.config/karabiner
 ```
 

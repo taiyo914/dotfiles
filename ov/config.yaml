@@ -1,0 +1,7 @@
+General:
+  Style:
+    # ヘッダーの行を背景色なしで太字と下線にする
+    # hint: git log の commit の行を見やすくする
+    SectionLine:
+      Bold: true
+      Underline: true
