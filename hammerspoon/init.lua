@@ -4,5 +4,6 @@ require("hs.ipc")
 require("window-dim")
 require("copy-notify")
 require("chrome-split")
+require("window-focus-center")
 
 hs.alert.show("Hammerspoon loaded")
