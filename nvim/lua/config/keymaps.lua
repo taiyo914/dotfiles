@@ -6,13 +6,23 @@
 vim.keymap.set("v", "<D-c>", '"+y', { desc = "Copy to clipboard" })
 
 -- Cmd + Shift + C でファイル名をコピー
+-- ビジュアルモードでは、選択した行の行番号を付けて path:10 や path:10-12 の形でコピーする
 local function copy_relative_file_path()
   local relative_path = vim.fn.expand("%:.")
+  if vim.fn.mode() ~= "n" then
+    local start_line, end_line = vim.fn.line("v"), vim.fn.line(".")
+    if start_line > end_line then
+      start_line, end_line = end_line, start_line
+    end
+    local lines = start_line == end_line and tostring(start_line) or (start_line .. "-" .. end_line)
+    relative_path = relative_path .. ":" .. lines
+    vim.cmd("normal! \27")
+  end
   vim.fn.setreg("+", relative_path)
   vim.notify("Copied: " .. relative_path)
 end
 for _, lhs in ipairs({ "<D-C>", "<D-S-c>" }) do
-  vim.keymap.set("n", lhs, copy_relative_file_path, { desc = "Copy relative file path" })
+  vim.keymap.set({ "n", "x" }, lhs, copy_relative_file_path, { desc = "Copy relative file path" })
 end
 
 -- Cmd + S でファイルを保存する（LazyVim の Ctrl + S と同じ動作）
