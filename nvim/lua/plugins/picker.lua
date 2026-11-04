@@ -75,7 +75,17 @@ return {
           list = { keys = { ["<c-y>"] = "copy_locations" } },
         },
         sources = {
+          -- 一覧を、一致度が同じものどうしはファイルパスのアルファベット順に並べる。検索欄が空でも並べる。
+          -- fd は複数のスレッドで探すので、並べ替えないと見つかった順番が毎回変わる
+          files = {
+            matcher = { sort_empty = true },
+            sort = { fields = { "score:desc", "file", "idx" } },
+          },
           grep = {
+            -- 一覧を、一致度が同じものどうしはファイルパスのアルファベット順に並べる。同じファイルの中は rg が出した行の順番のままにする。
+            -- rg は複数のスレッドで探すので、並べ替えないとファイルの順番が毎回変わる。live grep では検索欄が空扱いなので sort_empty も要る
+            matcher = { sort_empty = true },
+            sort = { fields = { "score:desc", "file", "idx" } },
             config = search_vendor_bundle_too,
             layout = {
               layout = {
