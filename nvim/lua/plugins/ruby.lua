@@ -115,6 +115,7 @@ local function jump_to_grep_match(match)
   vim.cmd("normal! m'")
   vim.cmd.edit(vim.fn.fnameescape(match.path))
   vim.api.nvim_win_set_cursor(0, { match.line, match.col })
+  vim.cmd("normal! zvzz")
 end
 
 local function goto_method_definition_by_grep(method_name)
@@ -156,6 +157,7 @@ local function show_lsp_definitions(definitions)
   if #definitions == 1 then
     vim.cmd("normal! m'")
     vim.lsp.util.show_document(definitions[1].location, definitions[1].encoding, { focus = true })
+    vim.cmd("normal! zvzz")
     return
   end
 
@@ -210,7 +212,7 @@ local function jump_to_item(item)
   vim.bo[bufnr].buflisted = true
   vim.api.nvim_win_set_buf(0, bufnr)
   vim.api.nvim_win_set_cursor(0, { item.lnum, item.col - 1 })
-  vim.cmd("normal! zv")
+  vim.cmd("normal! zvzz")
 end
 
 -- 候補がまとまっていれば一番上に直接ジャンプし、離れていれば一覧を出す
