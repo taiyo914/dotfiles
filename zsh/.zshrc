@@ -16,6 +16,14 @@ bindkey             '^I' menu-select
 bindkey "$terminfo[kcbt]" menu-select
 bindkey -M menuselect              '^I'         menu-complete
 bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
+# ↑ / ↓ (Ctrl+P / Ctrl+N) で履歴の一覧を出さず、1つ前 / 次のコマンドをそのまま表示する
+bindkey -M emacs \
+    "^P"   .up-line-or-history \
+    "^[OA" .up-line-or-history \
+    "^[[A" .up-line-or-history \
+    "^N"   .down-line-or-history \
+    "^[OB" .down-line-or-history \
+    "^[[B" .down-line-or-history
 
 # エディター
 export EDITOR='nvim'
