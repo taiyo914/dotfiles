@@ -34,7 +34,7 @@ vim.keymap.set("n", "<Esc><Esc><Esc>", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- カーソル行（ビジュアルモードでは選択範囲）の、origin のデフォルトブランチ最新コミットでの GitHub パーマリンクをコピーし、必要ならブラウザでも開く
 -- LazyVim の Git Browse は手元の HEAD のコミットを使い、push 前だと GitHub で開けないので、自作のスクリプトを使う
-local function github_permalink(open_in_browser)
+local function github_permalink(open_in_browser, blame)
   local start_line, end_line = vim.fn.line("v"), vim.fn.line(".")
   if vim.fn.mode() == "n" then
     start_line = end_line
@@ -50,6 +50,9 @@ local function github_permalink(open_in_browser)
   if open_in_browser then
     table.insert(command, "--open")
   end
+  if blame then
+    table.insert(command, "--blame")
+  end
   vim.system(command, { text = true }, function(result)
     local message = vim.trim(result.stdout or "")
     local level = result.code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR
@@ -59,10 +62,10 @@ local function github_permalink(open_in_browser)
   end)
 end
 
--- よく使う Browse を <leader>gb にして、LazyVim で <leader>gb だった Blame Line を <leader>gB に移す
+-- <leader>gb で GitHub の blame ページを開き、LazyVim で <leader>gb だった Blame Line を <leader>gB に移す
 vim.keymap.set({ "n", "x" }, "<leader>gb", function()
-  github_permalink(true)
-end, { desc = "Git Browse (permalink on default branch)" })
+  github_permalink(true, true)
+end, { desc = "Git Browse Blame (GitHub, default branch)" })
 vim.keymap.set("n", "<leader>gB", function()
   Snacks.picker.git_log_line()
 end, { desc = "Git Blame Line" })

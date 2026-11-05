@@ -8,6 +8,7 @@
 #   github-permalink.sh /path/to/file.rb:42
 #   github-permalink.sh /path/to/file.rb:10-20
 #   github-permalink.sh /path/to/file.rb:42 --open
+#   github-permalink.sh /path/to/file.rb:42 --open --blame   # blame ページのリンクにする
 #
 # nvim の <leader>gb / <leader>gy（dotfiles/nvim/lua/config/keymaps.lua）から呼ばれる。
 
@@ -17,6 +18,17 @@ die() { echo "$1"; exit 1; }
 
 input="${1:-}"
 [ -n "$input" ] || die "パスを渡してください（例: /path/to/file.rb:42）"
+
+# 2つ目以降の引数からオプションを読み取る
+open_in_browser=false
+view="blob"
+for option in "${@:2}"; do
+  case "$option" in
+    --open) open_in_browser=true ;;
+    --blame) view="blame" ;;
+    *) die "不明なオプションです: $option" ;;
+  esac
+done
 
 # "path" / "path:42" / "path:10-20" を分ける
 path="${input%%:*}"
@@ -54,17 +66,17 @@ esac
 # GitHub は .md を整形して表示するので、そのままだと #L… で行をハイライトできない。
 # ?plain=1 を付けるとソースのまま表示され、行のハイライトが効く
 query=""
-if [ -n "$anchor" ]; then
+if [ -n "$anchor" ] && [ "$view" = "blob" ]; then
   case "$(printf '%s' "$rel" | tr '[:upper:]' '[:lower:]')" in
     *.md|*.markdown) query="?plain=1" ;;
   esac
 fi
 
-permalink="https://$host/$slug/blob/$sha/$rel$query$anchor"
+permalink="https://$host/$slug/$view/$sha/$rel$query$anchor"
 printf '%s' "$permalink" | pbcopy
 
 # --open を付けたときだけ、コピーと同時にブラウザでも開く
-if [ "${2:-}" = "--open" ]; then
+if [ "$open_in_browser" = true ]; then
   open "$permalink"
 fi
 
