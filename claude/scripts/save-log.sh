@@ -24,14 +24,18 @@ short_id=${session_id:0:8}
 # タイトルを作るのに数秒かかるので、裏で動かしてすぐに終わる（質問の送信を待たせない）
 rename_with_title() {
   local file=$1 prompt=$2
+  # 文章で答えさせると Haiku が質問そのものに答えてしまうので、{"title": "..."} の形でしか答えられないようにする
+  local schema='{"type":"object","properties":{"title":{"type":"string","maxLength":30}},"required":["title"],"additionalProperties":false}'
   (
     answer=$(cd "${TMPDIR:-/tmp}" && CLAUDE_AUTO_TITLE=1 claude -p \
       --model haiku \
       --settings '{"disableAllHooks": true}' \
       --no-session-persistence \
       --tools "" \
-      --system-prompt "あなたは、会話ログのファイル名を付ける係です。<question> の中の質問の話題を、20 文字以内の日本語の名詞句で表してください。
-質問に答えたり、質問について説明したりしないでください。出力はタイトルの 1 行だけにしてください。
+      --output-format json \
+      --json-schema "$schema" \
+      --system-prompt "あなたは、会話ログのファイル名を付ける係です。<question> の中の質問の話題を、30 文字以内の日本語の名詞句で表してください。
+質問に答えたり、質問について説明したりしないでください。
 
 <example>
 <question>git で直前のコミットメッセージだけ直したい</question>
@@ -43,7 +47,7 @@ Ghostty の文字サイズのキー設定
 </example>" \
       "<question>${prompt:0:1000}</question>") || exit 0
     # ファイル名や Obsidian のリンクに使えない文字と空白を取り除く
-    title=$(printf '%s' "$answer" | head -n 1 | tr -d '/\\:*?"<>|#^[]`「」' | tr -s '[:space:]' '-' | sed -E 's/^-+//; s/-+$//')
+    title=$(printf '%s' "$answer" | jq -r '.structured_output.title // empty' | tr -d '/\\:*?"<>|#^[]`「」' | tr -s '[:space:]' '-' | sed -E 's/^-+//; s/-+$//')
     title=${title:0:30}
     [ -n "$title" ] || exit 0
     new_file="${file%_untitled_*}_${title}.md"

@@ -43,21 +43,25 @@ has_default_label() {
 
   [ -f "$rules_file" ] || { log "error: $rules_file がない"; exit 0; }
   system="あなたは、ターミナルの space に付ける短い名前を作る係です。
-次のルールに従って名前を作り、名前を 1 行だけ出力してください。説明や引用符は付けないでください。
+次のルールに従って名前を作ってください。
 
 $(cat "$rules_file")"
+  # 文章で答えさせると Haiku が質問そのものに答えてしまうので、{"title": "..."} の形でしか答えられないようにする
+  schema='{"type":"object","properties":{"title":{"type":"string","maxLength":30}},"required":["title"],"additionalProperties":false}'
 
   answer=$(cd "${TMPDIR:-/tmp}" && CLAUDE_AUTO_TITLE=1 claude -p \
     --model haiku \
     --settings '{"disableAllHooks": true}' \
     --no-session-persistence \
     --tools "" \
+    --output-format json \
+    --json-schema "$schema" \
     --system-prompt "$system" \
     "質問:
 ${prompt:0:1000}") || { log "error: claude -p が失敗した"; exit 0; }
 
-  # 1 行目だけを使い、前後の空白と引用符を取り除く
-  title=$(printf '%s' "$answer" | head -n 1 | sed -E 's/^[[:space:]`"「]+//; s/[[:space:]`"」]+$//')
+  # 名前から改行・前後の空白・引用符を取り除く
+  title=$(printf '%s' "$answer" | jq -r '.structured_output.title // empty' | tr '\n' ' ' | sed -E 's/^[[:space:]`"「]+//; s/[[:space:]`"」]+$//')
   title=${title:0:40}
 
   if [ -z "$title" ]; then
