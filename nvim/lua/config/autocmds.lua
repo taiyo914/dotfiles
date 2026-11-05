@@ -47,6 +47,52 @@ vim.api.nvim_create_autocmd("FocusGained", {
   end,
 })
 
+-- 最後に押したキーがマウスホイールかどうかを覚えておく
+local wheel_keys = {}
+for _, name in ipairs({ "ScrollWheelUp", "ScrollWheelDown", "ScrollWheelLeft", "ScrollWheelRight" }) do
+  wheel_keys[vim.keycode("<" .. name .. ">")] = true
+end
+local last_key_was_wheel = false
+vim.on_key(function(_, typed)
+  if typed and typed ~= "" then
+    last_key_was_wheel = wheel_keys[typed] == true
+  end
+end)
+
+local function is_cursor_beyond_line_end()
+  return vim.fn.virtcol(".") >= vim.fn.virtcol("$")
+end
+
+-- ノーマルモードでカーソルが行末より右に行ったら、行の最後の文字に戻す
+-- ホイールでスクロールしたときだけは戻さない。戻すと画面が左に戻ってしまい、横スクロールできないため
+-- curswant を戻しておくと、j / k で長い行に移ったときに元の列に戻れる
+vim.api.nvim_create_autocmd("CursorMoved", {
+  callback = function()
+    if vim.api.nvim_get_mode().mode == "n" and not last_key_was_wheel and is_cursor_beyond_line_end() then
+      local view = vim.fn.winsaveview()
+      vim.cmd("normal! $")
+      vim.fn.winrestview({ curswant = view.curswant })
+    end
+  end,
+})
+
+-- インサートモードの間は virtualedit を切り、行末より右から入ったら行末から書き始める
+-- こうしないと、行末からカーソルの位置までスペースが自動で入る
+vim.api.nvim_create_autocmd("InsertEnter", {
+  callback = function()
+    local was_beyond_line_end = is_cursor_beyond_line_end()
+    vim.opt.virtualedit = ""
+    if was_beyond_line_end then
+      vim.api.nvim_win_set_cursor(0, { vim.fn.line("."), #vim.api.nvim_get_current_line() })
+    end
+  end,
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function()
+    vim.opt.virtualedit = "all"
+  end,
+})
+
 -- Markdown ではスペルチェックをオフにする
 -- 必要なときは <leader>us でオンにできる
 vim.api.nvim_create_autocmd("FileType", {
