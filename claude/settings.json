@@ -108,5 +108,8 @@
   "theme": "auto",
   "preferredNotifChannel": "notifications_disabled",
   "skipAutoPermissionPrompt": true,
-  "notifications": "notifications_disabled"
+  "notifications": "notifications_disabled",
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
+  }
 }
