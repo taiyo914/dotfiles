@@ -161,7 +161,7 @@
             },
             {
               "type": "expression_if",
-              "expression": "system.now.milliseconds - space_down_ms < 150"
+              "expression": "system.now.milliseconds - space_down_ms < 100"
             }
           ]
         },
