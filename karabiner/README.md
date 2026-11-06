@@ -175,4 +175,6 @@ Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）のキーをす
 
 Chrome で `Cmd+↓` を押すと次のタブ（`Ctrl+Tab`）、`Cmd+↑` を押すと前のタブ（`Ctrl+Shift+Tab`）に移る。herdr でスペースを移るキー（`Cmd+↓` / `Cmd+↑`）とそろえるため。Chrome でのみ適用。
 
+Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブを移る。Karabiner はあるルールが出したキーを別のルールに通さないため、この動作は `space-layer` の中に書いている。
+
 注意: Chrome 本来の `Cmd+↓` / `Cmd+↑`（ページの一番下 / 一番上まで移る）は使えなくなる。
