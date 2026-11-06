@@ -200,15 +200,6 @@
       "key": "M"
     }
   ],
-  "window:zoom-in": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "-"
-    }
-  ],
   "editor:open-search-replace": [
     {
       "modifiers": [
@@ -218,5 +209,14 @@
     }
   ],
   "editor:open-search": [],
-  "graph:open": []
+  "graph:open": [],
+  "window:zoom-in": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "="
+    }
+  ]
 }
