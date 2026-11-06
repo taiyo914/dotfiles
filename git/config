@@ -26,6 +26,10 @@
     sweep = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d
     push-fl = push --force-with-lease --force-if-includes
 
+# git log と git show の表示を標準と同じ形にしたまま、コミットのタイトルだけに背景色を付ける
+[format]
+    pretty = "format:%C(yellow)commit %H%C(auto)%d%C(reset)%nAuthor: %an <%ae>%nDate:   %ad%n%n   %C(normal #313244) %s %C(reset)%n%w(0,4,4)%+b"
+
 [url "ssh://git@github.com"]
   insteadOf = https://github.com
 
