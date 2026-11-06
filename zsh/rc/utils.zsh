@@ -32,10 +32,10 @@ eza() {
   done
   command eza "${args[@]}"
 }
-ls() { eza --icons=always "$@"; }
-ls-l() { eza --icons=always -l "$@"; }
-ls-a() { eza --icons=always -la "$@"; }
-ls-tree() { eza --icons=always -T -L 2 "$@"; }
+
+eza-l() { eza --icons=always -l "$@"; }
+eza-a() { eza --icons=always -la "$@"; }
+eza-tree() { eza --icons=always -T -L 2 "$@"; }
 
 # よく使うディレクトリへのcdエイリアス
 alias v='cd ~/vault'
