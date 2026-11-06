@@ -20,34 +20,30 @@ rg-app() {
   command rg -P -g '!spec/**' "$@"
 }
 
-# eza
-eza() {
-  local args=()
-  for arg in "$@"; do
-    if [[ "$arg" == "--ic" ]]; then
-      args+=(--icons=always)
-    else
-      args+=("$arg")
-    fi
-  done
-  command eza "${args[@]}"
-}
+# eza はデフォルトでアイコンをつける
+# hint: --icons=auto は出力がターミナルのときだけアイコンを付ける設定
+eza() { command eza --icons=auto "$@"; }
 
-eza-l() { eza --icons=always -l "$@"; }
-eza-a() { eza --icons=always -la "$@"; }
-eza-tree() { eza --icons=always -T -L 2 "$@"; }
+# eza-tree 2 のように階層を指定できる（デフォルトは1）
+eza-tree() {
+  local level=1
+  if [[ "$1" == <-> ]]; then
+    level=$1
+    shift
+  fi
+  eza -T -L "$level" "$@"
+}
 
 # よく使うディレクトリへのcdエイリアス
 alias v='cd ~/vault'
 alias dev='cd ~/dev'
 alias dot='cd ~/dotfiles'
 alias key='cd ~/keyboards'
-alias cline='cd ~/keyboards/cline46'
+alias cline='cd ~/keyboards/cline46/zmk-config'
 alias keyball='cd ~/keyboards/keyball61'
 
 # ~/dev にあるリポジトリを fzf で選んで移動する
 repo() {
-  # ls は eza のアイコン付きに置き換えているので、zsh のグロブでフォルダ名だけを取り出す
   local name
   name=$(print -l ~/dev/*(/:t) | fzf --height 40% --reverse) || return
   cd ~/dev/"$name"
