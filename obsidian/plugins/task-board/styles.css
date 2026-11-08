@@ -1,0 +1,548 @@
+/* 列ごとの色。BLOCKED はオレンジ、TODO はグレー、WIP は青、DONE は緑、ARCHIVE は赤 */
+[data-status="BLOCKED"] { --tb-color: var(--color-orange); }
+[data-status="TODO"] { --tb-color: var(--text-muted); }
+[data-status="WIP"] { --tb-color: var(--color-blue); }
+[data-status="DONE"] { --tb-color: var(--color-green); }
+[data-status="ARCHIVE"] { --tb-color: var(--color-red); }
+
+/* ノートのプロパティ欄で order を表示しない。order はドラッグで自動で書き換わるので、手で触らないようにする */
+.metadata-property[data-property-key="order"] {
+  display: none;
+}
+
+/* KANBAN: 列を横に並べ、入りきらないときは横にスクロールする */
+.task-board-kanban {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 12px 16px;
+  overflow-x: auto;
+  height: 100%;
+}
+
+.task-board-column {
+  flex: 0 0 272px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--tb-color) 7%, transparent);
+}
+
+.task-board-column.is-drop-target {
+  outline: 2px solid color-mix(in srgb, var(--tb-color) 60%, transparent);
+}
+
+.task-board-column-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 4px 4px;
+}
+
+.task-board-column-count {
+  color: var(--tb-color);
+  font-size: var(--font-ui-small);
+}
+
+/* 列名の右端に置くボタン（DONE の「全部アーカイブ」） */
+.task-board-header-button {
+  display: inline-flex;
+  margin-left: auto;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  --icon-size: 14px;
+}
+
+.task-board-header-button:hover {
+  background: color-mix(in srgb, var(--tb-color) 15%, transparent);
+  color: var(--text-normal);
+}
+
+/* ARCHIVE 列はカードを表示しないので、幅を狭くして落とす場所だけを見せる */
+.task-board-column.is-hidden-column {
+  flex-basis: 180px;
+}
+
+.task-board-hidden-hint {
+  padding: 16px 8px;
+  border: 1px dashed color-mix(in srgb, var(--tb-color) 40%, transparent);
+  border-radius: 6px;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  text-align: center;
+}
+
+/* 列名やカードの status を表す丸付きのラベル */
+/* 文字の上下のすき間がフォントによって偏るので、行の高さを文字の高さちょうどにして、上下の余白を同じにする */
+.task-board-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  line-height: 1;
+  border-radius: 999px;
+  font-size: var(--font-ui-small);
+  color: var(--tb-color);
+  background: color-mix(in srgb, var(--tb-color) 15%, transparent);
+}
+
+.task-board-pill.is-small {
+  padding: 3px 8px;
+  font-size: var(--font-ui-smaller);
+  align-self: flex-start;
+}
+
+.task-board-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tb-color);
+}
+
+/* カード。終わっていない blocked_by があるカードだけ赤っぽくする */
+.task-board-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  box-shadow: var(--shadow-s);
+  cursor: pointer;
+}
+
+.task-board-card:hover {
+  background: var(--background-primary-alt);
+}
+
+.task-board-card.is-waiting {
+  background: color-mix(in srgb, var(--color-red) 8%, var(--background-primary));
+}
+
+
+.task-board-card.is-dragging {
+  opacity: 0.4;
+}
+
+/* ドラッグ中に、カードが入る位置に表示する線 */
+.task-board-drop-indicator {
+  height: 3px;
+  margin: -5px 4px;
+  border-radius: 2px;
+  background: var(--interactive-accent);
+}
+
+.task-board-card-title {
+  display: flex;
+  gap: 6px;
+  font-weight: var(--font-medium);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.task-board-card-icon {
+  flex: none;
+}
+
+/* カードの下に並べる blocked_by / blocking のカード */
+.task-board-relations {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.task-board-relation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  border-radius: 4px;
+  padding: 1px 2px;
+}
+
+.task-board-relation:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.task-board-relation.is-finished .task-board-relation-text {
+  text-decoration: line-through;
+}
+
+.task-board-relation-mark {
+  display: inline-flex;
+  --icon-size: 12px;
+}
+
+.task-board-relation-text {
+  text-decoration: underline;
+  text-decoration-color: var(--background-modifier-border);
+}
+
+.task-board-add {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--tb-color);
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+  --icon-size: 14px;
+}
+
+.task-board-add:hover {
+  background: color-mix(in srgb, var(--tb-color) 12%, transparent);
+}
+
+/* 絵文字を選ぶ画面の一番上に出す、選んでいるノートのファイル名 */
+.task-board-emoji-target {
+  padding: 10px 16px 0;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 絵文字の候補の一覧。絵文字を大きめに出し、その右に英語名を薄く出す */
+.task-board-emoji-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-board-emoji-suggestion-emoji {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 1.4em;
+  font-size: 1.4em;
+  --icon-size: 16px;
+}
+
+/* 「候補を探しています…」などの選べない案内の行。選べないので、選んでいる行の色も付けない */
+.task-board-emoji-suggestion.is-message,
+.task-board-emoji-suggestion.is-message.is-selected {
+  color: var(--text-faint);
+  background: none;
+  box-shadow: none;
+  border-color: transparent;
+  cursor: default;
+}
+
+/* 候補を探している間に回し続ける丸。一部だけ色を抜いた円を回す */
+.task-board-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--text-faint);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: task-board-spin 0.8s linear infinite;
+}
+
+@keyframes task-board-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.task-board-emoji-suggestion-name {
+  color: var(--text-muted);
+}
+
+.task-board-title-input {
+  width: 100%;
+}
+
+/* DEPENDENCIES: つながりのまとまりを縦に並べ、カードと矢印は位置を指定して置く */
+.task-board-dependencies {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px;
+  overflow: auto;
+  height: 100%;
+}
+
+.task-board-graph {
+  position: relative;
+  flex: none;
+}
+
+.task-board-arrows {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.task-board-arrow {
+  fill: none;
+  stroke: var(--color-orange);
+  stroke-width: 1.5;
+}
+
+.task-board-arrow.is-finished {
+  stroke: var(--text-faint);
+  stroke-dasharray: 4 3;
+}
+
+.task-board-arrowhead path { fill: var(--color-orange); }
+.task-board-arrowhead-finished path { fill: var(--text-faint); }
+
+.task-board-graph-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  gap: 4px;
+  padding: 8px 12px;
+}
+
+.task-board-graph-card.is-finished {
+  opacity: 0.55;
+}
+
+/* TABLE: 行は中身に合わせて伸び、長い文字は必要な分だけ折り返す */
+.task-board-table-wrap {
+  height: 100%;
+  overflow: auto;
+  padding: 0 12px 16px;
+}
+
+/* cmd + z を受け取るために表にフォーカスできるようにしているが、表全体を囲む枠は出さない */
+.task-board-table-wrap:focus {
+  outline: none;
+}
+
+/* 列の幅は main.js が col に指定する。table-layout: fixed にして、中身の長さで幅が変わらないようにする */
+.task-board-table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: var(--font-ui-small);
+}
+
+.task-board-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 6px 8px;
+  text-align: start;
+  font-weight: var(--font-normal);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--background-primary);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* 見出しの右端の、列の幅を変えるためにドラッグする場所 */
+.task-board-table-resize {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 6px;
+  cursor: col-resize;
+}
+
+.task-board-table-resize:hover,
+.task-board-table-resize.is-dragging {
+  background: var(--interactive-accent);
+}
+
+.task-board-table td {
+  padding: 6px 8px;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.task-board-table td.is-compact {
+  white-space: nowrap;
+}
+
+.task-board-table tbody tr:hover {
+  background: var(--background-modifier-hover);
+}
+
+.task-board-table-link {
+  color: var(--link-color);
+  cursor: pointer;
+}
+
+/* name 列。ファイル名の前に絵文字を置き、絵文字をクリックすると選び直せる */
+.task-board-table-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.task-board-table-icon {
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  min-width: 1.4em;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  --icon-size: 14px;
+}
+
+.task-board-table-icon:hover {
+  background: var(--background-modifier-hover);
+}
+
+.task-board-table-icon.is-empty {
+  color: var(--text-faint);
+  padding-top: 2px;
+  opacity: 0;
+}
+
+.task-board-table tr:hover .task-board-table-icon.is-empty {
+  opacity: 1;
+}
+
+.task-board-table-link:hover {
+  text-decoration: underline;
+}
+
+.task-board-table-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.task-board-table-chip {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+/* × ボタンはリンクの文字のすぐ右に小さく置き、行にマウスを乗せたときだけ表示する */
+.task-board-table-chip-remove {
+  display: inline-flex;
+  flex: none;
+  margin-top: 2px;
+  padding: 1px;
+  border-radius: 3px;
+  color: var(--text-faint);
+  cursor: pointer;
+  opacity: 0;
+  --icon-size: 12px;
+}
+
+.task-board-table tr:hover .task-board-table-chip-remove {
+  opacity: 1;
+}
+
+.task-board-table-chip-remove:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+
+/* セルの中に置いたプロパティ欄の入力欄。リンクの入力欄はセルいっぱいに広げ、枠線や下線を消して、文字の大きさを他のセルとそろえる。
+   日付などの入力欄は他のセルと同じ余白のままにして、status の選択肢と高さをそろえる */
+.task-board-table td:has(.task-board-table-editor .multi-select-container) {
+  padding: 0;
+}
+
+.task-board-table td:focus-within {
+  box-shadow: inset 0 0 0 2px var(--interactive-accent);
+}
+
+.task-board-table .task-board-table-editor {
+  --metadata-input-font-size: var(--font-ui-small);
+  border-bottom: none;
+  background: transparent;
+  overflow: visible;
+}
+
+.task-board-table .task-board-table-editor .multi-select-container {
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 0;
+}
+
+/* リンクを追加するための入力欄は、リンクがあるセルでは入力中だけ表示する。
+   display: none にするとセルをクリックしても入力欄にフォーカスが移らないので、見えない大きさにして残す */
+.task-board-table .task-board-table-editor .multi-select-container:has(.multi-select-pill):not(:focus-within) .multi-select-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+/* 折り返したリンクの文字と × を1つの文章として並べ、× が最後の文字のすぐ右に来るようにする */
+.task-board-table .task-board-table-editor .multi-select-pill {
+  position: relative;
+  display: block;
+  max-width: 100%;
+}
+
+/* 選んだリンクを囲む枠。文字の並べ方を変えたので、枠もリンク全体に重ねる位置に置き直す */
+.task-board-table .task-board-table-editor .multi-select-pill:focus::after {
+  inset: -1px -4px;
+  width: auto;
+  height: auto;
+}
+
+.task-board-table .task-board-table-editor .multi-select-pill-content {
+  display: inline;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+}
+
+.task-board-table .task-board-table-editor .multi-select-pill-remove-button {
+  display: inline-flex;
+  vertical-align: -2px;
+  margin-inline-start: 2px;
+  --icon-size: 12px;
+}
+
+/* status と、日付などの1つの値の入力欄は、行の縦の真ん中に置く。リンクの一覧と文字のセルは上にそろえたまま */
+.task-board-table td.is-compact,
+.task-board-table td:has(.task-board-table-editor):not(:has(.multi-select-container)),
+.task-board-table td:has(input[type="checkbox"]) {
+  vertical-align: middle;
+}
+
+/* 日付の入力欄。本体の表と同じく、枠線と上下の余白をなくして、セルの文字のように見せる */
+.task-board-table .task-board-table-editor input.mod-date,
+.task-board-table .task-board-table-editor input.mod-datetime {
+  height: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* status の選択肢。Obsidian の標準の高さだと行が高くなりすぎるので、上下の余白を詰める */
+.task-board-table-status {
+  height: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  line-height: 1.4;
+  color: var(--tb-color);
+  font-size: var(--font-ui-smaller);
+}
+
+.task-board-empty {
+  color: var(--text-muted);
+  padding: 24px;
+}

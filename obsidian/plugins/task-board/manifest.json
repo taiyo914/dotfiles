@@ -1,0 +1,9 @@
+{
+  "id": "task-board",
+  "name": "Task Board",
+  "version": "1.0.0",
+  "minAppVersion": "1.10.2",
+  "description": "tasks フォルダのノートを、依存関係（blocked_by / blocking）付きのカンバンと依存関係の図として Bases に表示する",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}
