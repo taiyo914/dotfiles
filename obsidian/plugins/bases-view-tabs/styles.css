@@ -1,0 +1,54 @@
+/* タブの並び。幅が足りないときは縮んで、はみ出したことを main.js が見つけられるようにする */
+.bases-view-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.bases-view-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 3px 10px;
+  border-radius: var(--radius-m);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  white-space: nowrap;
+  cursor: pointer;
+  --icon-size: var(--icon-s);
+}
+
+.bases-view-tab:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.bases-view-tab.is-active {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+  font-weight: var(--font-semibold);
+}
+
+.bases-view-tab-icon {
+  display: inline-flex;
+}
+
+/* タブを出しているときは、元のメニューを ⌃⌄ のボタンだけにする。「ビューを追加」などはこのボタンから開く */
+.bases-toolbar.has-view-tabs:not(.is-compact) .bases-toolbar-views-menu .text-button-icon:not(.mod-aux),
+.bases-toolbar.has-view-tabs:not(.is-compact) .bases-toolbar-views-menu .text-button-label {
+  display: none;
+}
+
+/* 幅が足りなくなったときは、タブより先に「◯ 件の結果」を縮める */
+.bases-toolbar.has-view-tabs .bases-toolbar-result-count {
+  flex-shrink: 100;
+}
+
+/* 幅が足りないときは、タブを隠して元のメニューに戻す */
+.bases-toolbar.is-compact .bases-view-tabs {
+  display: none;
+}

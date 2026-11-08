@@ -1,0 +1,9 @@
+{
+  "id": "bases-view-tabs",
+  "name": "Bases View Tabs",
+  "version": "1.0.0",
+  "minAppVersion": "1.10.0",
+  "description": "Bases の表示の切り替えを、ツールバーに横並びのタブで表示する。幅が足りないときは元のメニューに戻る",
+  "author": "taiyo",
+  "isDesktopOnly": false
+}
