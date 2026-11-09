@@ -120,9 +120,53 @@ delivery = "off"
 
 [ui]
 mouse_capture = true
+# サイドバーをたたんだときのエージェントの状態のアイコンを、実行中は ◐、返答待ちは ×、回答完了は ✓、確認済みは ○ にする
+# サイドバーを開いているときのアイコンは、下の [ui.sidebar.*] の $icon_* で出す
+status_indicators = "symbols"
 
 [ui.sound]
 enabled = false
 
+# サイドバーのエージェントとスペースの状態のアイコンを、herdr/plugins/status-icons が送るアイコンにする
+# 実行中は回る ⠋（黄）、返答待ちは点滅する !（赤）、回答完了は ✓（緑）、確認済みは ○（白）、エージェントのいないターミナルは ›（白っぽいグレー）になる
+# $icon_* には「アイコン ワークスペース名」が入り、今の状態の $icon_* だけに文字が入るので、状態ごとに色を変えられる
+# "workspace" を別に並べないのは、herdr がトークンの間に「 · 」を入れてアイコンと名前が離れてしまうため
+[ui.sidebar.agents]
+rows = [
+  [
+    { token = "$icon_working", fg = "#ffdd33" },
+    { token = "$icon_blocked", fg = "#ff6e80" },
+    { token = "$icon_done", fg = "#4dff8f" },
+    { token = "$icon_idle", fg = "#ffffff" },
+    { token = "$icon_unknown", fg = "#c8cbd3" },
+    "tab",
+    "machine",
+  ],
+  ["agent"],
+]
+
 [ui.sidebar.agents.rows_by_agent]
-claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"]]
+claude = [
+  [
+    { token = "$icon_working", fg = "#ffdd33" },
+    { token = "$icon_blocked", fg = "#ff6e80" },
+    { token = "$icon_done", fg = "#4dff8f" },
+    { token = "$icon_idle", fg = "#ffffff" },
+    { token = "$icon_unknown", fg = "#c8cbd3" },
+    "tab",
+  ],
+  ["terminal_title_stripped"],
+]
+
+# worktree のスペースの行には herdr の "branch" が出ないので、代わりに status-icons が送る $worktree_branch でブランチ名を出す
+[ui.sidebar.spaces]
+rows = [
+  [
+    { token = "$icon_working", fg = "#ffdd33" },
+    { token = "$icon_blocked", fg = "#ff6e80" },
+    { token = "$icon_done", fg = "#4dff8f" },
+    { token = "$icon_idle", fg = "#ffffff" },
+    { token = "$icon_unknown", fg = "#c8cbd3" },
+  ],
+  ["branch", "$worktree_branch", "git_status"],
+]

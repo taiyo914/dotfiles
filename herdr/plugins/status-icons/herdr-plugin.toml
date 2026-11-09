@@ -1,0 +1,20 @@
+# herdr のサイドバーに、エージェントの状態ごとに違うアイコンを出すプラグイン
+# 動いている間は回るアイコン、返答待ちは点滅する !、回答完了は ✓、確認済みは ○ を出す
+id = "dotfiles.status-icons"
+name = "Status icons"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Per-state agent icons in the sidebar, with a spinner while working"
+platforms = ["macos", "linux"]
+
+# herdr が起動したときにアイコンを更新し続けるスクリプトを立ち上げる
+[[startup]]
+command = ["node", "status_icons.mjs"]
+
+# herdr を再起動せずにスクリプトを立ち上げ直す。動いているスクリプトがあれば止めて入れ替える
+# アクションのコマンドが終わってもスクリプトが動き続けるように、nohup でバックグラウンドに切り離す
+[[actions]]
+id = "restart"
+title = "Status icons: restart"
+contexts = ["workspace"]
+command = ["sh", "-c", "nohup node status_icons.mjs --replace >/dev/null 2>&1 &"]

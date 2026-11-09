@@ -8,34 +8,34 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 
 ## 1. 設定ファイル一覧
 
-| 項目 | ファイル | リンク先 |
-| - | - | - | 
-| zsh | `zsh/.zshrc` | `~/.zshrc` |
-|     | `zsh/.zprofile` | `~/.zprofile` |
-| Claude Code | `claude/settings.json` | `~/.claude/settings.json` |
-|             | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
-|             | `claude/scripts/` | `~/.claude/scripts` |
-|             | `claude/hooks/` | `~/.claude/hooks` |
-|             | `claude/keybindings.json` | `~/.claude/keybindings.json` |
-|             | `claude/skills/` | `~/.claude/skills` |
-|             | `claude/commands/` | `~/.claude/commands` |
-|             | `claude/mods/` | `~/.claude/mods` |
-| VS Code | `vscode/settings.json` | `~/Library/Application Support/Code/User/settings.json` |
-|         | `vscode/keybindings.json` | `~/Library/Application Support/Code/User/keybindings.json` |
-|         | `vscode/tasks.json` | `~/Library/Application Support/Code/User/tasks.json` |
-| Git | `git/` | `~/.config/git` |
-| Ghossty | `ghostty/config` | `~/.config/ghostty/config` |
-| Starship | `starship/starship.toml` | `~/.config/starship.toml` |
-| HammerSpoon | `hammerspoon/` | `~/.hammerspoon` |
-| Neovim | `nvim/` | `~/.config/nvim` |
-| Lazygit | `lazygit/config.yml` | `~/Library/Application Support/lazygit/config.yml` |
-| Herdr | `herdr/config.toml` | `~/.config/herdr/config.toml` |
-| ov | `ov/config.yaml` | `~/.config/ov/config.yaml` |
-| Karabiner | `karabiner/` | `~/.config/karabiner` |
-| Obsidian | `obsidian/plugins/*/` | `~/vault/.obsidian/plugins/*/` |
-|          | `obsidian/snippets/` | `~/vault/.obsidian/snippets` |
-|          | `obsidian/appearance.json` | `~/vault/.obsidian/appearance.json` |
-|          | `obsidian/hotkeys.json` | `~/vault/.obsidian/hotkeys.json` |
+| 項目        | ファイル                   | リンク先                                                   |
+| ----------- | -------------------------- | ---------------------------------------------------------- |
+| zsh         | `zsh/.zshrc`               | `~/.zshrc`                                                 |
+|             | `zsh/.zprofile`            | `~/.zprofile`                                              |
+| Claude Code | `claude/settings.json`     | `~/.claude/settings.json`                                  |
+|             | `claude/CLAUDE.md`         | `~/.claude/CLAUDE.md`                                      |
+|             | `claude/scripts/`          | `~/.claude/scripts`                                        |
+|             | `claude/hooks/`            | `~/.claude/hooks`                                          |
+|             | `claude/keybindings.json`  | `~/.claude/keybindings.json`                               |
+|             | `claude/skills/`           | `~/.claude/skills`                                         |
+|             | `claude/commands/`         | `~/.claude/commands`                                       |
+|             | `claude/mods/`             | `~/.claude/mods`                                           |
+| VS Code     | `vscode/settings.json`     | `~/Library/Application Support/Code/User/settings.json`    |
+|             | `vscode/keybindings.json`  | `~/Library/Application Support/Code/User/keybindings.json` |
+|             | `vscode/tasks.json`        | `~/Library/Application Support/Code/User/tasks.json`       |
+| Git         | `git/`                     | `~/.config/git`                                            |
+| Ghossty     | `ghostty/config`           | `~/.config/ghostty/config`                                 |
+| Starship    | `starship/starship.toml`   | `~/.config/starship.toml`                                  |
+| HammerSpoon | `hammerspoon/`             | `~/.hammerspoon`                                           |
+| Neovim      | `nvim/`                    | `~/.config/nvim`                                           |
+| Lazygit     | `lazygit/config.yml`       | `~/Library/Application Support/lazygit/config.yml`         |
+| Herdr       | `herdr/config.toml`        | `~/.config/herdr/config.toml`                              |
+| ov          | `ov/config.yaml`           | `~/.config/ov/config.yaml`                                 |
+| Karabiner   | `karabiner/`               | `~/.config/karabiner`                                      |
+| Obsidian    | `obsidian/plugins/*/`      | `~/vault/.obsidian/plugins/*/`                             |
+|             | `obsidian/snippets/`       | `~/vault/.obsidian/snippets`                               |
+|             | `obsidian/appearance.json` | `~/vault/.obsidian/appearance.json`                        |
+|             | `obsidian/hotkeys.json`    | `~/vault/.obsidian/hotkeys.json`                           |
 
 ## 2. dotfiles-local
 
@@ -72,30 +72,30 @@ https://brew.sh/ja/
 
 コマンドラインのツールとフォントは Homebrew で入れる。入れるものは `Brewfile` に書いてある。
 
-| ツール | リンク |
-| - | - |
-| Starship | https://starship.rs/ja-jp/ |
-| Neovim | https://neovim.io/ |
-| tree-sitter-cli | https://tree-sitter.github.io |
-| GitHub CLI | https://cli.github.com/ |
-| herdr | https://herdr.dev |
-| direnv | https://direnv.net/ |
-| mise | https://mise.jdx.dev/ |
-| terminal-notifier | https://github.com/julienXX/terminal-notifier |
-| fzf | https://github.com/junegunn/fzf |
-| eza | https://github.com/eza-community/eza |
-| bat | https://github.com/sharkdp/bat |
-| fd | https://github.com/sharkdp/fd |
-| ripgrep | https://github.com/BurntSushi/ripgrep |
-| jq | https://github.com/jqlang/jq |
-| ov | https://github.com/noborus/ov |
-| lazygit | https://github.com/jesseduffield/lazygit |
-| lazydocker | https://github.com/jesseduffield/lazydocker |
-| zsh-autosuggestions | https://github.com/zsh-users/zsh-autosuggestions |
+| ツール                  | リンク                                               |
+| ----------------------- | ---------------------------------------------------- |
+| Starship                | https://starship.rs/ja-jp/                           |
+| Neovim                  | https://neovim.io/                                   |
+| tree-sitter-cli         | https://tree-sitter.github.io                        |
+| GitHub CLI              | https://cli.github.com/                              |
+| herdr                   | https://herdr.dev                                    |
+| direnv                  | https://direnv.net/                                  |
+| mise                    | https://mise.jdx.dev/                                |
+| terminal-notifier       | https://github.com/julienXX/terminal-notifier        |
+| fzf                     | https://github.com/junegunn/fzf                      |
+| eza                     | https://github.com/eza-community/eza                 |
+| bat                     | https://github.com/sharkdp/bat                       |
+| fd                      | https://github.com/sharkdp/fd                        |
+| ripgrep                 | https://github.com/BurntSushi/ripgrep                |
+| jq                      | https://github.com/jqlang/jq                         |
+| ov                      | https://github.com/noborus/ov                        |
+| lazygit                 | https://github.com/jesseduffield/lazygit             |
+| lazydocker              | https://github.com/jesseduffield/lazydocker          |
+| zsh-autosuggestions     | https://github.com/zsh-users/zsh-autosuggestions     |
 | zsh-syntax-highlighting | https://github.com/zsh-users/zsh-syntax-highlighting |
-| zsh-autocomplete | https://github.com/marlonrichert/zsh-autocomplete |
-| JetBrainsMono Nerd Font | https://www.nerdfonts.com/ |
-| BIZ UDGothic | https://fonts.google.com/specimen/BIZ+UDGothic |
+| zsh-autocomplete        | https://github.com/marlonrichert/zsh-autocomplete    |
+| JetBrainsMono Nerd Font | https://www.nerdfonts.com/                           |
+| BIZ UDGothic            | https://fonts.google.com/specimen/BIZ+UDGothic       |
 
 まとめてインストール:
 
@@ -111,10 +111,10 @@ GUI のアプリは Homebrew では入れない。新しいマシンではアク
 
 Homebrew を使わずに直接バイナリをダウンロードするもの。
 
-| ツール | リンク |
-| - | - |
-| Claude Code| https://docs.claude.com/ja/docs/claude-code/overview |
-| QMK CLI | https://docs.qmk.fm/cli |
+| ツール      | リンク                                               |
+| ----------- | ---------------------------------------------------- |
+| Claude Code | https://docs.claude.com/ja/docs/claude-code/overview |
+| QMK CLI     | https://docs.qmk.fm/cli                              |
 
 Claude Code はネイティブインストールすることでバックグラウンドで自動更新される。
 
@@ -124,17 +124,17 @@ QMK CLI は QMK ファームウェアをローカルでビルドするために�
 
 GUI のアプリは公式サイトからダウンロードして入れる。
 
-| アプリ | リンク |
-| - | - |
-| Ghostty | https://ghostty.org/ |
-| VS Code | https://code.visualstudio.com/ |
-| Obsidian | https://obsidian.md/ |
+| アプリ             | リンク                               |
+| ------------------ | ------------------------------------ |
+| Ghostty            | https://ghostty.org/                 |
+| VS Code            | https://code.visualstudio.com/       |
+| Obsidian           | https://obsidian.md/                 |
 | Karabiner-Elements | https://karabiner-elements.pqrs.org/ |
-| Raycast | https://www.raycast.com/ |
-| HammerSpoon | https://www.hammerspoon.org/ |
-| Shottr | https://shottr.cc/ |
-| AltTab | https://alt-tab.app/ |
-| Google 日本語入力 | https://www.google.co.jp/ime/ |
+| Raycast            | https://www.raycast.com/             |
+| HammerSpoon        | https://www.hammerspoon.org/         |
+| Shottr             | https://shottr.cc/                   |
+| AltTab             | https://alt-tab.app/                 |
+| Google 日本語入力  | https://www.google.co.jp/ime/        |
 
 ## 4. セットアップ
 
@@ -298,3 +298,27 @@ CSSスニペットのオン/オフやテーマ・フォントは `appearance.jso
   - `chrome://extensions` の「パッケージ化されていない拡張機能を読み込む」からフォルダを指定する。
 - Raycast スクリプト
   - `Settings → Extensions → Script Commands → Script Directories` で、`~/dotfiles/raycast/scripts` を指定する。
+
+### 4-5. herdr のプラグイン
+
+`herdr/plugins/` にある自作のプラグインは、シンボリックリンクではなく herdr のコマンドで登録する。herdr は登録したプラグインの場所を `~/.config/herdr/plugins.json` にフルパスで保存するので、このファイルはマシンごとに作る必要があるため。
+
+| プラグイン     | できること                                                                                                                                                           |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `status-icons` | サイドバーのエージェントの状態のアイコンを、実行中はローディング（黄色）、返答待ちは点滅する `!`（赤色）、回答完了は `✓` （緑色）にする。動かすには Node.js が必要。 |
+
+登録して、すぐに動かす:
+
+```bash
+herdr plugin link ~/dotfiles/herdr/plugins/status-icons
+herdr plugin action invoke dotfiles.status-icons.restart
+```
+
+一度登録すれば、次からは herdr を起動したときに自動で動く。
+
+書き換えたときは、次のコマンドで反映する。
+
+| 書き換えたもの                                      | 反映するコマンド                                           |
+| --------------------------------------------------- | ---------------------------------------------------------- |
+| `status_icons.mjs`（スクリプト）                    | `herdr plugin action invoke dotfiles.status-icons.restart` |
+| `herdr/config.toml` の `[ui.sidebar.*]`（スタイル） | `herdr server reload-config`                               |
