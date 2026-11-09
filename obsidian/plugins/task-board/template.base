@@ -1,0 +1,31 @@
+filters:
+  and:
+    - file.inFolder("tasks")
+formulas:
+  ready: if(blocked_by, blocked_by.filter(!["DONE", "ARCHIVE"].contains(value.asFile().properties.status)).isEmpty(), true)
+properties:
+  file.name:
+    displayName: name
+  formula.ready:
+    displayName: ready?
+views:
+  - type: task-kanban
+    name: KANBAN
+  - type: task-dependencies
+    name: DEPENDENCIES
+  - type: task-table
+    name: TABLE
+    order:
+      - file.name
+      - blocked_by
+      - blocking
+      - formula.ready
+      - status
+      - date
+    sort:
+      - property: file.name
+        direction: DESC
+      - property: blocked_by
+        direction: DESC
+      - property: formula.ready
+        direction: ASC

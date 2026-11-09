@@ -19,6 +19,10 @@ const {
 // タスクのノートを置くフォルダ
 const TASK_FOLDER = "tasks";
 
+// タスクボードの .base ファイルの場所と、無いときに作るひな形（このプラグインのフォルダの中）
+const BOARD_PATH = "tasks.base";
+const BOARD_TEMPLATE_FILE = "template.base";
+
 // カンバンの列。この順番で左から並べる
 const STATUSES = ["BLOCKED", "TODO", "WIP", "DONE", "ARCHIVE"];
 
@@ -1364,6 +1368,11 @@ module.exports = class TaskBoardPlugin extends Plugin {
       name: "タスクを作成",
       callback: () => this.promptNewTask("TODO")
     });
+    this.addCommand({
+      id: "open-board",
+      name: "タスクボードを開く",
+      callback: () => this.openBoard()
+    });
 
     // 絵文字の候補は外部のコマンドで出すので、外部のコマンドを動かせるパソコンの Obsidian でだけ使えるようにする
     if (Platform.isDesktopApp) {
@@ -1448,6 +1457,21 @@ module.exports = class TaskBoardPlugin extends Plugin {
         });
       }
     }).open();
+  }
+
+  // vault の tasks.base を開く。無いときは、このプラグインのフォルダのひな形から作ってから開く
+  async openBoard() {
+    let board = this.app.vault.getFileByPath(BOARD_PATH);
+    if (!board) {
+      const templatePath = `${this.manifest.dir}/${BOARD_TEMPLATE_FILE}`;
+      try {
+        board = await this.app.vault.create(BOARD_PATH, await this.app.vault.adapter.read(templatePath));
+      } catch (error) {
+        new Notice(`タスクボードを作れませんでした: ${error.message}`);
+        return;
+      }
+    }
+    await this.app.workspace.getLeaf(false).openFile(board);
   }
 
   promptNewTask(status) {

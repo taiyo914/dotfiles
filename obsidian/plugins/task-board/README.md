@@ -21,23 +21,13 @@
 
 ## 使い方
 
-1. `.base` ファイルを作り、絞り込みを `file.inFolder("tasks")` にする
-2. 表示の追加メニューから「Kanban」「Dependencies」を選ぶ
+コマンド「Task Board: タスクボードを開く」で、vault 直下の `tasks.base` を開く。
 
-例: vault 直下の `tasks.base`
+- `tasks.base` が無いときは、このフォルダの `template.base`（ひな形）をコピーして作ってから開く
+- 作った後の `tasks.base` は vault のファイルなので、列の幅や並べ替えを変えても dotfiles には差分が出ない
+- ひな形を変えても、すでにある `tasks.base` には反映されない。反映したいときは `tasks.base` を消してからコマンドを実行する
 
-```yaml
-filters:
-  and:
-    - file.inFolder("tasks")
-views:
-  - type: task-kanban
-    name: KANBAN
-  - type: task-table
-    name: TABLE
-  - type: task-dependencies
-    name: DEPENDENCIES
-```
+自分で `.base` ファイルを作る場合は、絞り込みを `file.inFolder("tasks")` にして、表示の追加メニューから「Kanban」「Dependencies」「Task table」を選ぶ。
 
 ## カード（ノート）
 
