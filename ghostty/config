@@ -16,7 +16,6 @@ background-opacity = 0.95
 window-save-state = always
 scrollback-limit = 100000000
 window-inherit-working-directory = false
-mouse-hide-while-typing = true
 # cmd + shift + - で文字を拡大する
 keybind = cmd+shift+minus=increase_font_size:1
 # cmd + z で ctrl + _ と同じ文字を送り、zsh で入力中の編集を1つ元に戻す
