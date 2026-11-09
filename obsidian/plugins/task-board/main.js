@@ -481,76 +481,144 @@ function runEmojiCommand(keyword) {
   });
 }
 
-// 絵文字を選ぶ画面。絵文字を直接入力して決めるか、「候補を探す」を選んだときだけ Claude に候補を出してもらう。
-// 一覧の項目は kind で分ける: emoji（決める絵文字）/ search（候補を探す）/ remove（絵文字を外す）/ message（選べない案内）
+function isSingleEmoji(text) {
+  const graphemes = [...new Intl.Segmenter().segment(text)];
+  return graphemes.length === 1 && /\p{Extended_Pictographic}|\p{Regional_Indicator}|⃣/u.test(text);
+}
+
+// 絵文字を選ぶ画面。絵文字を入力して Enter で決めるか、Claude に出してもらった候補から選ぶ。
+// 一覧の項目は kind で分ける: input（入力した絵文字を使う）/ emoji（決める絵文字）/ search-input（入力した文字から候補を探す）/
+// search-title（タイトルから候補を探す）/ remove（絵文字を外す）/ message（選べない案内）
 class EmojiSuggestModal extends SuggestModal {
-  constructor(app, { fileName, hasIcon, candidates, search, onChoose }) {
+  constructor(app, { fileName, title, candidates, search, onChoose }) {
     super(app);
     // どのノートの絵文字を選んでいるかを、入力欄の上に小さく出す
     this.modalEl.prepend(createDiv({ cls: "task-board-emoji-target", text: fileName }));
-    this.hasIcon = hasIcon;
+    this.title = title;
     this.candidates = candidates ?? [];
     this.search = search;
     this.onChoose = onChoose;
     this.message = null;
-    this.searching = false;
-    this.setPlaceholder("絵文字を入力する");
+    this.searchingKind = null;
+    this.lastQuery = "";
+    this.selectOnlyWhenMouseMoves();
+    this.setPlaceholder("絵文字を入力して Enter");
+  }
+
+  // 画面が開いたときや一覧を作り直したときに、カーソルの下に項目が出ると、マウスを動かしていなくても mousemove が届き、
+  // Obsidian がカーソルの下の項目を選んでしまう。先頭の「入力した絵文字を使う」を選んだままにするため、
+  // Obsidian の「カーソルの下の項目を選ぶ」機能（公開 API ではない）を止めて、カーソルの位置が変わったときだけ自分で選ぶ
+  selectOnlyWhenMouseMoves() {
+    this.chooser.shouldSelectOnHover?.(false);
+    let lastMouse = null;
+    this.resultContainerEl.addEventListener("mousemove", (evt) => {
+      const moved = lastMouse && (lastMouse.x !== evt.screenX || lastMouse.y !== evt.screenY);
+      lastMouse = { x: evt.screenX, y: evt.screenY };
+      const index = this.chooser.suggestions.indexOf(evt.target.closest(".suggestion-item"));
+      if (moved && index >= 0) this.chooser.setSelectedItem(index, evt);
+    });
   }
 
   getSuggestions(query) {
     const q = query.trim();
-    const items = [];
-    if (/\p{Extended_Pictographic}/u.test(q)) items.push({ kind: "emoji", emoji: q, name: "入力した絵文字を使う" });
-    for (const c of this.candidates) {
-      if (!q || c.name.toLowerCase().includes(q.toLowerCase()) || c.emoji.includes(q)) {
-        items.push({ kind: "emoji", ...c });
-      }
+    if (q !== this.lastQuery) {
+      this.lastQuery = q;
+      this.message = null;
     }
-    if (q) return items;
 
-    if (this.searching) items.push({ kind: "message", name: "候補を探しています…", loading: true });
-    else if (this.message) items.push({ kind: "message", name: this.message });
-    else if (this.candidates.length === 0 && this.search) items.push({ kind: "search", name: "候補を探す" });
-    if (this.hasIcon) items.push({ kind: "remove", name: "絵文字を外す" });
+    const items = [{ kind: "input", emoji: q, name: "入力した絵文字を使う" }];
+    if (this.message) items.push({ kind: "message", ...this.message });
+    for (const c of this.candidates) items.push({ kind: "emoji", ...c });
+    if (this.search) {
+      items.push(this.searchItem("search-input", "入力した文字で検索"));
+      items.push(this.searchItem("search-title", "タイトルから検索"));
+    }
+    items.push({ kind: "remove", name: "削除" });
     return items;
+  }
+
+  // 検索している間は、検索の項目を2つとも押せなくし、押した方の項目に「〜中...」と回る印を出す
+  searchItem(kind, name) {
+    if (!this.searchingKind) return { kind, name };
+    if (kind === this.searchingKind) return { kind, name: `${name}中...`, disabled: true, loading: true };
+    return { kind, name, disabled: true };
   }
 
   renderSuggestion(item, el) {
     el.addClass("task-board-emoji-suggestion");
     el.toggleClass("is-message", item.kind === "message");
+    el.toggleClass("is-error", Boolean(item.isError));
+    // 検索中の項目は押せないが、押した項目を選んだままに見せるため、薄い表示にはしない
+    el.toggleClass("is-disabled", Boolean(item.disabled && !item.loading));
     const markEl = el.createSpan({ cls: "task-board-emoji-suggestion-emoji" });
-    if (item.kind === "emoji") markEl.setText(item.emoji);
-    else if (item.kind === "search") setIcon(markEl, "sparkles");
+    if (item.loading) markEl.createSpan({ cls: "task-board-spinner" });
+    else if (item.kind === "emoji") markEl.setText(item.emoji);
+    else if (item.kind === "input" && isSingleEmoji(item.emoji)) markEl.setText(item.emoji);
+    else if (item.kind === "input") setIcon(markEl, "corner-down-left");
+    else if (item.kind === "search-input") setIcon(markEl, "search");
+    else if (item.kind === "search-title") setIcon(markEl, "sparkles");
     else if (item.kind === "remove") setIcon(markEl, "x");
-    else if (item.loading) markEl.createSpan({ cls: "task-board-spinner" });
     el.createSpan({ cls: "task-board-emoji-suggestion-name", text: item.name });
   }
 
-  // 「候補を探す」と案内の行では画面を閉じない。それ以外は通常どおり閉じて onChooseSuggestion に進む
+  // 入力した絵文字を使うとき、候補を探すとき、案内の行では画面を閉じない。それ以外は通常どおり閉じて onChooseSuggestion に進む
   selectSuggestion(item, evt) {
-    if (item.kind === "message") return;
-    if (item.kind === "search") {
-      this.runSearch();
+    const q = this.inputEl.value.trim();
+    if (item.kind === "input") {
+      this.chooseInput(q, evt);
+      return;
+    }
+    if (item.kind === "message" || item.disabled) return;
+    if (item.kind === "search-title") {
+      this.runSearch(this.title, item.kind);
+      return;
+    }
+    if (item.kind === "search-input") {
+      if (!q) {
+        this.showError("検索する文字を入力してください");
+        return;
+      }
+      this.runSearch(q, item.kind);
       return;
     }
     super.selectSuggestion(item, evt);
   }
 
-  async runSearch() {
-    this.searching = true;
-    this.refresh();
-    try {
-      this.candidates = await this.search();
-      if (this.candidates.length === 0) this.message = "候補が見つかりませんでした。絵文字を直接入力してください";
-    } catch (error) {
-      this.message = `候補を出せませんでした（${error.message}）`;
+  chooseInput(text, evt) {
+    if (!isSingleEmoji(text)) {
+      this.showError("絵文字を1つ入力してください");
+      return;
     }
-    this.searching = false;
+    super.selectSuggestion({ kind: "emoji", emoji: text }, evt);
+  }
+
+  showError(text) {
+    this.message = { name: text, isError: true };
     this.refresh();
   }
 
+  // searchingKind は検索している間だけ、押した検索の項目の kind を入れておく
+  async runSearch(keyword, searchingKind) {
+    this.searchingKind = searchingKind;
+    this.message = null;
+    this.refresh();
+    try {
+      this.candidates = await this.search(keyword);
+      if (this.candidates.length === 0) this.message = { name: "候補が見つかりませんでした。絵文字を直接入力してください" };
+    } catch (error) {
+      this.message = { name: `候補を出せませんでした（${error.message}）`, isError: true };
+    }
+    this.searchingKind = null;
+    this.refresh();
+  }
+
+  // 一覧を作り直すと Obsidian が先頭の項目を選ぶので、押した検索の項目などを選んだままにするため、作り直す前に選んでいた項目を選び直す
   refresh() {
+    const selected = this.chooser.values?.[this.chooser.selectedItem];
     this.inputEl.dispatchEvent(new Event("input"));
+    if (!selected) return;
+    const index = this.chooser.values.findIndex((v) => v.kind === selected.kind && v.emoji === selected.emoji);
+    if (index >= 0) this.chooser.setSelectedItem(index, null);
   }
 
   onChooseSuggestion(item) {
@@ -1435,19 +1503,20 @@ module.exports = class TaskBoardPlugin extends Plugin {
     });
   }
 
-  // タイトルをキーワードにして emoji コマンドで候補を出し、選んだ絵文字を icon に入れる
-  // 一度出した候補はタイトルごとに覚えておき、同じタイトルでもう一度開いたときは Claude を呼ばずに出す
+  // タイトルか入力した文字をキーワードにして emoji コマンドで候補を出し、選んだ絵文字を icon に入れる
+  // 一度出した候補はキーワードごとに覚えておき、同じキーワードでもう一度探したときは Claude を呼ばずに出す
   pickEmoji(file) {
     this.emojiCache ??= new Map();
     const title = taskTitle(file);
     new EmojiSuggestModal(this.app, {
       fileName: file.basename,
-      hasIcon: Boolean(readTask(this.app, file).icon),
+      title,
       candidates: this.emojiCache.get(title),
       search: Platform.isDesktopApp
-        ? async () => {
-            const candidates = parseEmojiCandidates(await runEmojiCommand(title));
-            if (candidates.length > 0) this.emojiCache.set(title, candidates);
+        ? async (keyword) => {
+            if (this.emojiCache.has(keyword)) return this.emojiCache.get(keyword);
+            const candidates = parseEmojiCandidates(await runEmojiCommand(keyword));
+            if (candidates.length > 0) this.emojiCache.set(keyword, candidates);
             return candidates;
           }
         : null,

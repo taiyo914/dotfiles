@@ -226,14 +226,22 @@
   --icon-size: 16px;
 }
 
-/* 「候補を探しています…」などの選べない案内の行。選べないので、選んでいる行の色も付けない */
+/* 「候補が見つかりませんでした」などの選べない案内の行と、検索している間の検索の項目。選べないので、選んでいる行の色も付けない */
 .task-board-emoji-suggestion.is-message,
-.task-board-emoji-suggestion.is-message.is-selected {
+.task-board-emoji-suggestion.is-message.is-selected,
+.task-board-emoji-suggestion.is-disabled,
+.task-board-emoji-suggestion.is-disabled.is-selected {
   color: var(--text-faint);
   background: none;
   box-shadow: none;
   border-color: transparent;
   cursor: default;
+}
+
+/* 「絵文字を1つ入力してください」などのエラーの案内を赤くする */
+.task-board-emoji-suggestion.is-message.is-error,
+.task-board-emoji-suggestion.is-message.is-error .task-board-emoji-suggestion-name {
+  color: var(--text-error);
 }
 
 /* 候補を探している間に回し続ける丸。一部だけ色を抜いた円を回す */
