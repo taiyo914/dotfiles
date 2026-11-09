@@ -8,6 +8,7 @@ export LOCAL_DOTFILES="${LOCAL_DOTFILES:-$HOME/dotfiles-local}"
 bindkey -e
 
 # zsh-autocomplete
+if [[ -o interactive && -t 0 ]]; then
 # zsh-autocomplete は移動したフォルダの履歴をこのフォルダに保存する。フォルダがないとフォルダを移動するたびにエラーが出るので、先に作っておく
 mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 source ${HOMEBREW_PREFIX}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
@@ -24,6 +25,7 @@ bindkey -M emacs \
     "^N"   .down-line-or-history \
     "^[OB" .down-line-or-history \
     "^[[B" .down-line-or-history
+fi
 
 # エディター
 export EDITOR='nvim'
