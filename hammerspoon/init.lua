@@ -5,5 +5,6 @@ require("window-dim")
 require("copy-notify")
 require("chrome-split")
 require("window-focus-center")
+require("image-paste")
 
 hs.alert.show("Hammerspoon loaded")
