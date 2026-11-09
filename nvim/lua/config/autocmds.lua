@@ -7,6 +7,24 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
+-- ファイルを開いたとき、ファイルツリーでそのファイルの行が真ん中に来るようにスクロールする
+-- snacks.nvim の元の処理は、その行が画面に入る最小限しかスクロールしないので、行の位置が毎回変わる
+-- ファイルツリーで選んで開いたときは、カーソルがすでにその行にあるので、スクロールしない
+local explorer_actions = require("snacks.explorer.actions")
+explorer_actions.reveal = function(picker, path)
+  if picker.closed then
+    return
+  end
+  for item, idx in picker:iter() do
+    if item.file == path then
+      if idx ~= picker.list.cursor then
+        picker.list:view(idx, idx - math.floor(picker.list:height() / 2))
+      end
+      return true
+    end
+  end
+end
+
 -- nvim を起動したときに、ファイルツリーを最初から開いておく
 -- カーソルはファイルツリーに移さず、編集画面に残す
 local function on_start()
