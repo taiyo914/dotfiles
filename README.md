@@ -19,6 +19,7 @@ public リポジトリなので、 **機密情報や業務に関わる情報は�
 |             | `claude/keybindings.json` | `~/.claude/keybindings.json` |
 |             | `claude/skills/` | `~/.claude/skills` |
 |             | `claude/commands/` | `~/.claude/commands` |
+|             | `claude/mods/` | `~/.claude/mods` |
 | VS Code | `vscode/settings.json` | `~/Library/Application Support/Code/User/settings.json` |
 |         | `vscode/keybindings.json` | `~/Library/Application Support/Code/User/keybindings.json` |
 |         | `vscode/tasks.json` | `~/Library/Application Support/Code/User/tasks.json` |
@@ -230,6 +231,7 @@ ln -s ~/dotfiles/claude/hooks ~/.claude/hooks
 ln -s ~/dotfiles/claude/keybindings.json ~/.claude/keybindings.json
 ln -s ~/dotfiles/claude/skills ~/.claude/skills
 ln -s ~/dotfiles/claude/commands ~/.claude/commands
+ln -s ~/dotfiles/claude/mods ~/.claude/mods
 ln -s ~/dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
 ln -s ~/dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
 ln -s ~/dotfiles/vscode/tasks.json ~/Library/Application\ Support/Code/User/tasks.json
