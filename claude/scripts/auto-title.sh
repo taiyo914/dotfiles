@@ -5,7 +5,7 @@
 # 名前を作るのに数秒かかるので、裏で動かしてすぐに終わる（質問の送信を待たせない）
 
 # 名前を作るための claude -p から呼ばれたときは何もしない
-[ "${CLAUDE_AUTO_TITLE:-}" = "1" ] && exit 0
+[ "${CLAUDE_SKIP_HOOKS:-}" = "1" ] && exit 0
 # herdr の pane の中で動いているときだけ動かす
 [ "${HERDR_ENV:-}" = "1" ] && [ -n "${HERDR_PANE_ID:-}" ] || exit 0
 
@@ -49,7 +49,7 @@ $(cat "$rules_file")"
   # 文章で答えさせると Haiku が質問そのものに答えてしまうので、{"title": "..."} の形でしか答えられないようにする
   schema='{"type":"object","properties":{"title":{"type":"string","maxLength":30}},"required":["title"],"additionalProperties":false}'
 
-  answer=$(cd "${TMPDIR:-/tmp}" && CLAUDE_AUTO_TITLE=1 claude -p \
+  answer=$(cd "${TMPDIR:-/tmp}" && CLAUDE_SKIP_HOOKS=1 claude -p \
     --model haiku \
     --settings '{"disableAllHooks": true}' \
     --no-session-persistence \

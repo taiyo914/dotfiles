@@ -29,9 +29,10 @@ emoji() {
     echo "使い方: emoji キーワード" >&2
     return 1
   fi
-  # 速く答えさせるため、ツールを使わせず会話の履歴も残さない
-  claude -p "キーワード: $*" \
+  # 速く答えさせるためツールを使わせず会話の履歴も残さない。hook も止めて、通知・ログ保存・space の名前付けをしない
+  CLAUDE_SKIP_HOOKS=1 claude -p "キーワード: $*" \
     --model sonnet \
+    --settings '{"disableAllHooks": true}' \
     --tools "" \
     --no-session-persistence \
     --system-prompt "あなたは日本語または英語のキーワードに合う絵文字を探す。合う絵文字を10個、関係の強い順に挙げる。各行は必ず絵文字1個で始め、半角スペースの後に絵文字の英語名を書く。絵文字以外の文字で行を始めない。それ以外の文は書かない。"

@@ -5,7 +5,7 @@
 # ファイル名は最初「261030_1100_untitled_セッションIDの先頭8文字.md」で、質問の内容から Haiku がタイトルを作ったら「261030_1100_タイトル.md」に変える
 
 # タイトルを作るための claude -p からは記録しない
-[ "${CLAUDE_AUTO_TITLE:-}" = "1" ] && exit 0
+[ "${CLAUDE_SKIP_HOOKS:-}" = "1" ] && exit 0
 
 # hook のロケールが未設定だと、${var:0:50} が文字ではなくバイトで切って日本語の文字を壊すので、UTF-8 を指定する
 export LC_ALL=en_US.UTF-8
@@ -27,7 +27,7 @@ rename_with_title() {
   # 文章で答えさせると Haiku が質問そのものに答えてしまうので、{"title": "..."} の形でしか答えられないようにする
   local schema='{"type":"object","properties":{"title":{"type":"string","maxLength":30}},"required":["title"],"additionalProperties":false}'
   (
-    answer=$(cd "${TMPDIR:-/tmp}" && CLAUDE_AUTO_TITLE=1 claude -p \
+    answer=$(cd "${TMPDIR:-/tmp}" && CLAUDE_SKIP_HOOKS=1 claude -p \
       --model haiku \
       --settings '{"disableAllHooks": true}' \
       --no-session-persistence \
