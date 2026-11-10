@@ -1,7 +1,7 @@
 # https://starship.rs/config/#format-strings
 # 各モジュールの最後に半角スペース入ってるので注意
 format = """
-$directory$git_branch${custom.unstaged}$git_status${custom.docker}
+$directory$git_branch$git_commit${custom.unstaged}$git_status${custom.docker}
 $character
 """
 
@@ -20,12 +20,19 @@ read_only = " 󰌾"
 format = "[$symbol$branch]($style) "
 symbol = " "
 style = "bold #e8a04f"
+# detached HEAD のときは「HEAD」と表示しない
+only_attached = true
 
 [git_status]
 format = "($ahead_behind )"
 ahead = "[↑${count}](green)"
 behind = "[↓${count}](red)"
 diverged = "[↑${ahead_count}](green) [↓${behind_count}](red)"
+
+# detached HEAD のときだけ、ブランチ名の代わりにコミットのハッシュをブランチ名と同じ見た目で表示する
+[git_commit]
+format = "[ $hash]($style) "
+style = "bold #e8a04f"
 
 [custom.unstaged]
 shell = ["sh"]
