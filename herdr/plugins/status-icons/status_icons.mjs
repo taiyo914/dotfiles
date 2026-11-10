@@ -11,10 +11,10 @@
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { closeSync, mkdirSync, openSync, readFileSync, rmSync, writeSync } from "node:fs";
+import { closeSync, mkdirSync, openSync, readFileSync, rmSync, statSync, writeSync } from "node:fs";
 import { createConnection } from "node:net";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 
 // 状態ごとのアイコンのコマと、1秒あたりに切り替えるコマの数（0 なら動かない）
@@ -84,20 +84,57 @@ function callHerdr(method, params) {
   });
 }
 
-// worktree のスペースで、今 checkout しているブランチ名を調べる
-// herdr のサイドバーは worktree の行にブランチ名を出さないので、このスクリプトが $worktree_branch として送る
+// ディレクトリのプロジェクト名を調べて、$project として送る
+// git リポジトリの中ならリポジトリ名、worktree の中なら元のリポジトリ名、git の外ならディレクトリ名にする
+// 0.5 秒ごとに調べるので、git コマンドを起動せずに .git を直接探し、結果をディレクトリごとに覚えておく
+const projectNames = new Map();
+
+function projectName(cwd) {
+  if (!cwd) return null;
+  if (!projectNames.has(cwd)) projectNames.set(cwd, findProjectName(cwd));
+  return projectNames.get(cwd);
+}
+
+function findProjectName(cwd) {
+  for (let dir = cwd; dir !== dirname(dir); dir = dirname(dir)) {
+    const dotGit = join(dir, ".git");
+    let isWorktree;
+    try {
+      isWorktree = statSync(dotGit).isFile();
+    } catch {
+      continue;
+    }
+    if (!isWorktree) return basename(dir);
+    try {
+      const gitDir = resolve(dir, readFileSync(dotGit, "utf8").match(/^gitdir: (.+)$/m)?.[1] ?? "");
+      const mainRepo = gitDir.match(/^(.+)\/\.git\/worktrees\/[^/]+$/)?.[1];
+      return basename(mainRepo ?? dir);
+    } catch {
+      return basename(dir);
+    }
+  }
+  return basename(cwd);
+}
+
+// worktree で今 checkout しているブランチ名を調べる
 // 0.5 秒ごとに調べるので、git コマンドを起動せずに HEAD のファイルを直接読む
-function linkedWorktreeBranch(workspace) {
-  const worktree = workspace.worktree;
-  if (!worktree?.is_linked_worktree) return null;
+function worktreeBranch(checkoutPath) {
   try {
-    const gitDir = readFileSync(join(worktree.checkout_path, ".git"), "utf8").match(/^gitdir: (.+)$/m)?.[1];
-    if (!gitDir) return null;
-    const head = readFileSync(join(gitDir, "HEAD"), "utf8").trim();
+    const dotGit = readFileSync(join(checkoutPath, ".git"), "utf8").match(/^gitdir: (.+)$/m)?.[1];
+    if (!dotGit) return null;
+    const head = readFileSync(join(resolve(checkoutPath, dotGit), "HEAD"), "utf8").trim();
     return head.match(/^ref: refs\/heads\/(.+)$/)?.[1] ?? head.slice(0, 7);
   } catch {
     return null;
   }
+}
+
+// スペースの2行目に出す文字を決める。ふつうのスペースはプロジェクト名にする
+// worktree のスペースは元のスペースの下に並んでプロジェクトがわかるので、代わりにブランチ名にする
+function spaceLocation(workspace, dir) {
+  const worktree = workspace.worktree;
+  if (worktree?.is_linked_worktree) return worktreeBranch(worktree.checkout_path);
+  return projectName(dir);
 }
 
 // 各ペインとスペースで、サイドバーに出す状態を調べる
@@ -108,13 +145,25 @@ function shownState(item) {
   return state in ICONS ? state : "unknown";
 }
 
+// スペースのプロジェクト名を調べるディレクトリを決める
+// 1スペースに1エージェントで使っているので、エージェントのディレクトリを優先し、いなければ最初のペインのディレクトリにする
+function workspaceDirs(agents, panes) {
+  const dirs = new Map();
+  for (const item of [...agents, ...panes]) {
+    if (!dirs.has(item.workspace_id)) dirs.set(item.workspace_id, item.foreground_cwd ?? item.cwd);
+  }
+  return dirs;
+}
+
 async function currentTargets() {
-  const [agentList, workspaceList] = await Promise.all([
+  const [agentList, workspaceList, paneList] = await Promise.all([
     callHerdr("agent.list", {}),
     callHerdr("workspace.list", {}),
+    callHerdr("pane.list", {}),
   ]);
   const workspaces = workspaceList.workspaces ?? [];
   const labels = new Map(workspaces.map((w) => [w.workspace_id, w.label ?? ""]));
+  const dirs = workspaceDirs(agentList.agents ?? [], paneList.panes ?? []);
   const targets = new Map();
   for (const agent of agentList.agents ?? []) {
     targets.set(`pane ${agent.pane_id}`, {
@@ -122,6 +171,7 @@ async function currentTargets() {
       id: agent.pane_id,
       state: shownState(agent),
       label: labels.get(agent.workspace_id) ?? "",
+      extras: { [PROJECT_TOKEN]: projectName(agent.foreground_cwd ?? agent.cwd) },
     });
   }
   for (const workspace of workspaces) {
@@ -130,7 +180,7 @@ async function currentTargets() {
       id: workspace.workspace_id,
       state: shownState(workspace),
       label: workspace.label ?? "",
-      branch: linkedWorktreeBranch(workspace),
+      extras: { [LOCATION_TOKEN]: spaceLocation(workspace, dirs.get(workspace.workspace_id)) },
     });
   }
   return targets;
@@ -147,13 +197,20 @@ function frameAt(state, nowMs) {
   return frames[Math.floor((nowMs / 1000) * fps) % frames.length];
 }
 
-const BRANCH_TOKEN = "worktree_branch";
+// アイコンと一緒に送る、アイコン以外のトークン
+const PROJECT_TOKEN = "project";
+const LOCATION_TOKEN = "location";
 
 function clearedTokens() {
   return {
     ...Object.fromEntries(Object.keys(ICONS).map((state) => [tokenName(state), null])),
-    [BRANCH_TOKEN]: null,
+    [PROJECT_TOKEN]: null,
+    [LOCATION_TOKEN]: null,
   };
+}
+
+function sameExtras(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
 }
 
 class IconReporter {
@@ -184,7 +241,7 @@ class IconReporter {
       tokens = { [tokenName(previous.state)]: null };
     } else if (
       previous.text === text &&
-      previous.branch === target.branch &&
+      sameExtras(previous.extras, target.extras) &&
       nowMs - previous.sentAt < RESEND_MS
     ) {
       return;
@@ -192,15 +249,15 @@ class IconReporter {
       tokens = {};
     }
     tokens[tokenName(target.state)] = text;
-    // TTL はトークンごとに数えられるので、アイコンを送るたびにブランチ名も一緒に送り直す
-    if (target.kind === "workspace") tokens[BRANCH_TOKEN] = target.branch;
+    // TTL はトークンごとに数えられるので、アイコンを送るたびにブランチ名やプロジェクト名も一緒に送り直す
+    Object.assign(tokens, target.extras);
     if (await this.send(key, target, tokens)) {
       this.sent.set(key, {
         kind: target.kind,
         id: target.id,
         state: target.state,
         text,
-        branch: target.branch,
+        extras: target.extras,
         sentAt: nowMs,
       });
     }

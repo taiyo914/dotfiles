@@ -1,5 +1,10 @@
 onboarding = false
 
+# herdr が新しい worktree を作るときの置き場所を ~/dev/worktrees にする
+# hint: デフォルトは ~/.herdr/worktrees
+[worktrees]
+directory = "~/dev/worktrees"
+
 [keys]
 prefix = "ctrl+q"
 
@@ -115,6 +120,10 @@ description = "list claude sessions"
 width = "90%"
 height = "90%"
 
+# サイドバーで今いるスペースとフォーカスしているエージェントの行の背景を青くして、Ghostty の暗い背景の上でも目立つようにする
+[theme.custom]
+active_row_bg = "#3b4d7a"
+
 [ui.toast]
 delivery = "off"
 
@@ -142,9 +151,13 @@ rows = [
     "tab",
     "machine",
   ],
-  ["agent"],
+  [
+    "agent",
+  ],
 ]
 
+# Claude の2行目には、status-icons が送る $project でエージェントが動いているプロジェクト名を出す
+# 1スペースに1エージェントで、スペース名にお願いした内容を付けているので、Claude が付ける会話の題名は出さない
 [ui.sidebar.agents.rows_by_agent]
 claude = [
   [
@@ -155,10 +168,12 @@ claude = [
     { token = "$icon_unknown", fg = "#c8cbd3" },
     "tab",
   ],
-  ["terminal_title_stripped"],
+  [
+    "$project",
+  ],
 ]
 
-# worktree のスペースの行には herdr の "branch" が出ないので、代わりに status-icons が送る $worktree_branch でブランチ名を出す
+# スペースの2行目に、status-icons が送る $location でプロジェクト名を出す。worktree のスペースはブランチ名になる
 [ui.sidebar.spaces]
 rows = [
   [
@@ -168,5 +183,8 @@ rows = [
     { token = "$icon_idle", fg = "#ffffff" },
     { token = "$icon_unknown", fg = "#c8cbd3" },
   ],
-  ["branch", "$worktree_branch", "git_status"],
+  [
+    "$location",
+    "git_status",
+  ],
 ]
