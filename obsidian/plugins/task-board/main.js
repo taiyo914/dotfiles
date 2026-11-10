@@ -1746,7 +1746,14 @@ module.exports = class TaskBoardPlugin extends Plugin {
         .map((linkedPath) => this.app.vault.getFileByPath(linkedPath))
         .filter(Boolean)
         .map((file) => formatLink(this.app, file, path));
-    const frontmatter = { status, icon, blocked_by: linksTo(blockedBy), blocking: linksTo(blocking) };
+    const frontmatter = {
+      status,
+      icon,
+      blocked_by: linksTo(blockedBy),
+      blocking: linksTo(blocking),
+      resume_cmd: [],
+      session_cwd: []
+    };
     return this.app.vault.create(path, `---\n${stringifyYaml(frontmatter)}---\n`);
   }
 
