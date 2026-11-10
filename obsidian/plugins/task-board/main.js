@@ -5,6 +5,7 @@ const {
   BasesView,
   Modal,
   SuggestModal,
+  AbstractInputSuggest,
   Platform,
   Menu,
   Notice,
@@ -13,6 +14,8 @@ const {
   setIcon,
   parseLinktext,
   parsePropertyId,
+  prepareFuzzySearch,
+  stringifyYaml,
   moment
 } = require("obsidian");
 
@@ -81,6 +84,9 @@ const EMOJI_TIMEOUT = 60 * 1000;
 
 // 前後のカードの order の差がこれより小さくなったら、列の order を 1, 2, 3... に振り直す
 const MIN_ORDER_GAP = 1e-6;
+
+// 新しいタスクの画面で、blocked_by / blocking の入力欄の下に出すカードの候補の最大数
+const LINK_SUGGESTION_LIMIT = 20;
 
 
 function isTaskFile(file) {
@@ -428,34 +434,190 @@ class EditQueue {
 // カード
 // ---------------------------------------------------------------------------
 
-class TaskTitleModal extends Modal {
-  constructor(app, heading, onSubmit) {
-    super(app);
-    this.heading = heading;
-    this.onSubmit = onSubmit;
+// 新しいタスクを作る画面。絵文字・タイトル・blocked_by・blocking をまとめて入れる。
+// タイトルの入力欄で Enter、どこでも cmd + Enter、「作成」ボタンのどれかで作る
+class NewTaskModal extends Modal {
+  constructor(plugin, status) {
+    super(plugin.app);
+    this.plugin = plugin;
+    this.status = status;
+    this.icon = "";
   }
 
   onOpen() {
-    this.titleEl.setText(this.heading);
-    const input = this.contentEl.createEl("input", {
+    this.titleEl.setText(`新しいタスク（${this.status}）`);
+    this.modalEl.addClass("task-board-new-task");
+
+    // 絵文字のボタンとタイトルの入力欄
+    const titleRowEl = this.contentEl.createDiv({ cls: "task-board-new-title-row" });
+    this.iconButtonEl = titleRowEl.createEl("button", { cls: "task-board-new-icon", attr: { "aria-label": "絵文字を選ぶ" } });
+    this.iconButtonEl.addEventListener("click", () => this.pickIcon());
+    this.renderIconButton();
+    this.titleInputEl = titleRowEl.createEl("input", {
       type: "text",
       cls: "task-board-title-input",
       attr: { placeholder: "タイトル" }
     });
-    // 日本語入力の変換を確定する Enter では作成しない
-    input.addEventListener("keydown", (evt) => {
-      if (evt.key !== "Enter" || evt.isComposing) return;
-      evt.preventDefault();
-      const title = input.value.trim();
-      if (!title) return;
-      this.close();
-      this.onSubmit(title);
+
+    // blocked_by と blocking の入力欄。同じカードを両方に入れられないように、どちらかに入れたカードは候補に出さない
+    const selectedPaths = () => new Set([...this.blockedByInput.paths, ...this.blockingInput.paths]);
+    this.blockedByInput = new TaskLinkInput(this.app, this.contentEl, {
+      label: "blocked_by",
+      placeholder: "先に終わらせるタスク",
+      excludedPaths: selectedPaths
     });
-    window.setTimeout(() => input.focus(), 0);
+    this.blockingInput = new TaskLinkInput(this.app, this.contentEl, {
+      label: "blocking",
+      placeholder: "このあと進めるタスク",
+      excludedPaths: selectedPaths
+    });
+
+    // 作成ボタンと、キーボードで作る操作。日本語入力の変換を確定する Enter では作成しない
+    const buttonsEl = this.contentEl.createDiv({ cls: "modal-button-container" });
+    buttonsEl.createEl("button", { cls: "mod-cta", text: "作成" }).addEventListener("click", () => this.submit());
+    this.contentEl.addEventListener("keydown", (evt) => {
+      if (evt.key !== "Enter" || evt.isComposing) return;
+      if (evt.target !== this.titleInputEl && !Keymap.isModifier(evt, "Mod")) return;
+      evt.preventDefault();
+      this.submit();
+    });
+    window.setTimeout(() => this.titleInputEl.focus(), 0);
+  }
+
+  renderIconButton() {
+    this.iconButtonEl.empty();
+    if (this.icon) this.iconButtonEl.setText(this.icon);
+    else setIcon(this.iconButtonEl, "smile-plus");
+  }
+
+  // 「タイトルから検索」には、今入力しているタイトルを使う
+  pickIcon() {
+    const title = this.titleInputEl.value.trim();
+    this.plugin.openEmojiPicker({
+      label: title || "新しいタスク",
+      title,
+      onChoose: (emoji) => {
+        this.icon = emoji;
+        this.renderIconButton();
+      },
+      onClosed: () => window.setTimeout(() => this.titleInputEl.focus(), 0)
+    });
+  }
+
+  submit() {
+    const title = this.titleInputEl.value.trim();
+    if (!title) {
+      this.titleInputEl.focus();
+      return;
+    }
+    this.close();
+    this.plugin.createTask(title, this.status, {
+      icon: this.icon,
+      blockedBy: this.blockedByInput.paths,
+      blocking: this.blockingInput.paths
+    });
   }
 
   onClose() {
     this.contentEl.empty();
+  }
+}
+
+// blocked_by / blocking の入力欄。カードのタイトルを打つと候補が出て、選んだカードを × 付きの札にして入力欄の前に並べる
+class TaskLinkInput {
+  constructor(app, containerEl, { label, placeholder, excludedPaths }) {
+    this.app = app;
+    this.paths = [];
+
+    const fieldEl = containerEl.createDiv({ cls: "task-board-new-field" });
+    fieldEl.createDiv({ cls: "task-board-new-field-label", text: label });
+    this.boxEl = fieldEl.createDiv({ cls: "task-board-new-links" });
+    this.inputEl = this.boxEl.createEl("input", { type: "text", attr: { placeholder } });
+    // 札の横の空いているところを押しても入力欄に入れるようにする
+    this.boxEl.addEventListener("click", (evt) => {
+      if (evt.target === this.boxEl) this.inputEl.focus();
+    });
+
+    new TaskFileSuggest(app, this.inputEl, { excludedPaths, onPick: (task) => this.add(task.file.path) });
+
+    // 入力欄が空のときに Backspace を押すと、最後に入れたカードを外す
+    this.inputEl.addEventListener("keydown", (evt) => {
+      if (evt.key !== "Backspace" || evt.isComposing || this.inputEl.value || this.paths.length === 0) return;
+      evt.preventDefault();
+      this.remove(this.paths[this.paths.length - 1]);
+    });
+  }
+
+  add(path) {
+    if (!this.paths.includes(path)) this.paths.push(path);
+    this.renderChips();
+  }
+
+  remove(path) {
+    this.paths = this.paths.filter((other) => other !== path);
+    this.renderChips();
+  }
+
+  renderChips() {
+    this.boxEl.querySelectorAll(".task-board-new-chip").forEach((el) => el.remove());
+    for (const path of this.paths) {
+      const file = this.app.vault.getFileByPath(path);
+      if (!file) continue;
+      const task = readTask(this.app, file);
+
+      const chipEl = createDiv({ cls: "task-board-new-chip" });
+      if (task.icon) chipEl.createSpan({ text: task.icon });
+      chipEl.createSpan({ cls: "task-board-new-chip-text", text: task.title });
+      const removeEl = chipEl.createSpan({ cls: "task-board-new-chip-remove", attr: { "aria-label": "外す" } });
+      setIcon(removeEl, "x");
+      removeEl.addEventListener("click", () => {
+        this.remove(path);
+        this.inputEl.focus();
+      });
+      this.boxEl.insertBefore(chipEl, this.inputEl);
+    }
+  }
+}
+
+// tasks フォルダのカードを、打った文字にタイトルが近い順に候補に出す。何も打っていないときは、最近書き換えた終わっていないカードを出す
+class TaskFileSuggest extends AbstractInputSuggest {
+  constructor(app, inputEl, { excludedPaths, onPick }) {
+    super(app, inputEl);
+    this.excludedPaths = excludedPaths;
+    this.onPick = onPick;
+    this.limit = LINK_SUGGESTION_LIMIT;
+  }
+
+  getSuggestions(query) {
+    this.taskIndex = buildTaskIndex(this.app);
+    const excluded = this.excludedPaths();
+    const tasks = [...this.taskIndex.values()].filter((task) => !excluded.has(task.file.path));
+    const q = query.trim();
+    if (!q) {
+      return tasks.filter((task) => !isFinished(task)).sort((a, b) => b.file.stat.mtime - a.file.stat.mtime);
+    }
+    const match = prepareFuzzySearch(q);
+    return tasks
+      .map((task) => ({ task, result: match(task.title) }))
+      .filter(({ result }) => result)
+      .sort((a, b) => b.result.score - a.result.score)
+      .map(({ task }) => task);
+  }
+
+  renderSuggestion(task, el) {
+    el.addClass("task-board-link-suggestion");
+    el.createSpan({ cls: "task-board-link-suggestion-icon", text: task.icon });
+    el.createSpan({ cls: "task-board-link-suggestion-title", text: task.title });
+    const status = displayStatus(task, this.taskIndex);
+    const pillEl = el.createSpan({ cls: "task-board-pill is-small" });
+    pillEl.dataset.status = status;
+    pillEl.createSpan({ text: status });
+  }
+
+  selectSuggestion(task) {
+    this.onPick(task);
+    this.setValue("");
+    this.close();
   }
 }
 
@@ -490,14 +652,15 @@ function isSingleEmoji(text) {
 // 一覧の項目は kind で分ける: input（入力した絵文字を使う）/ emoji（決める絵文字）/ search-input（入力した文字から候補を探す）/
 // search-title（タイトルから候補を探す）/ remove（絵文字を外す）/ message（選べない案内）
 class EmojiSuggestModal extends SuggestModal {
-  constructor(app, { fileName, title, candidates, search, onChoose }) {
+  constructor(app, { label, title, candidates, search, onChoose, onClosed }) {
     super(app);
     // どのノートの絵文字を選んでいるかを、入力欄の上に小さく出す
-    this.modalEl.prepend(createDiv({ cls: "task-board-emoji-target", text: fileName }));
+    this.modalEl.prepend(createDiv({ cls: "task-board-emoji-target", text: label }));
     this.title = title;
     this.candidates = candidates ?? [];
     this.search = search;
     this.onChoose = onChoose;
+    this.onClosed = onClosed;
     this.message = null;
     this.searchingKind = null;
     this.lastQuery = "";
@@ -570,6 +733,10 @@ class EmojiSuggestModal extends SuggestModal {
     }
     if (item.kind === "message" || item.disabled) return;
     if (item.kind === "search-title") {
+      if (!this.title) {
+        this.showError("先にタイトルを入力してください");
+        return;
+      }
       this.runSearch(this.title, item.kind);
       return;
     }
@@ -623,6 +790,11 @@ class EmojiSuggestModal extends SuggestModal {
 
   onChooseSuggestion(item) {
     this.onChoose(item.kind === "remove" ? "" : item.emoji);
+  }
+
+  onClose() {
+    super.onClose();
+    this.onClosed?.();
   }
 }
 
@@ -1478,7 +1650,7 @@ module.exports = class TaskBoardPlugin extends Plugin {
   }
 
   // Bases のツールバーの「新規」は、表示に関係なく「無題のファイル」を作る。
-  // task-board の表示を出しているときだけ、カンバンの「+ 新規ページ」と同じタイトル入力に置き換える。
+  // task-board の表示を出しているときだけ、カンバンの「+ 新規ページ」と同じ入力画面に置き換える。
   // ボタンは公開 API ではない controller.viewHeaderEl の中から探し、見つからなければ何もしない
   takeOverNewButton(controller) {
     this.controllersWithNewButton ??= new WeakSet();
@@ -1503,13 +1675,26 @@ module.exports = class TaskBoardPlugin extends Plugin {
     });
   }
 
-  // タイトルか入力した文字をキーワードにして emoji コマンドで候補を出し、選んだ絵文字を icon に入れる
-  // 一度出した候補はキーワードごとに覚えておき、同じキーワードでもう一度探したときは Claude を呼ばずに出す
+  // ノートの絵文字を選ぶ画面を開き、選んだ絵文字を icon に入れる
   pickEmoji(file) {
+    this.openEmojiPicker({
+      label: file.basename,
+      title: taskTitle(file),
+      onChoose: (emoji) => {
+        this.app.fileManager.processFrontMatter(file, (frontmatter) => {
+          frontmatter.icon = emoji;
+        });
+      }
+    });
+  }
+
+  // 絵文字を選ぶ画面を開く。label は画面の上に出す文字、title は「タイトルから検索」で使うキーワード。
+  // 候補はタイトルか入力した文字をキーワードにして emoji コマンドで出す。
+  // 一度出した候補はキーワードごとに覚えておき、同じキーワードでもう一度探したときは Claude を呼ばずに出す
+  openEmojiPicker({ label, title, onChoose, onClosed }) {
     this.emojiCache ??= new Map();
-    const title = taskTitle(file);
     new EmojiSuggestModal(this.app, {
-      fileName: file.basename,
+      label,
       title,
       candidates: this.emojiCache.get(title),
       search: Platform.isDesktopApp
@@ -1520,11 +1705,8 @@ module.exports = class TaskBoardPlugin extends Plugin {
             return candidates;
           }
         : null,
-      onChoose: (emoji) => {
-        this.app.fileManager.processFrontMatter(file, (frontmatter) => {
-          frontmatter.icon = emoji;
-        });
-      }
+      onChoose,
+      onClosed
     }).open();
   }
 
@@ -1544,10 +1726,11 @@ module.exports = class TaskBoardPlugin extends Plugin {
   }
 
   promptNewTask(status) {
-    new TaskTitleModal(this.app, `新しいタスク（${status}）`, (title) => this.createTask(title, status)).open();
+    new NewTaskModal(this, status).open();
   }
 
-  async createTask(title, status) {
+  // blockedBy / blocking はつなぐカードのパスの一覧。相手のカードの逆側は、作った後に LinkSync が書き足す
+  async createTask(title, status, { icon = "", blockedBy = [], blocking = [] } = {}) {
     if (!this.app.vault.getFolderByPath(TASK_FOLDER)) {
       await this.app.vault.createFolder(TASK_FOLDER);
     }
@@ -1558,8 +1741,13 @@ module.exports = class TaskBoardPlugin extends Plugin {
       path = `${TASK_FOLDER}/${base} ${n}.md`;
     }
 
-    const content = ["---", `status: ${status}`, "icon: \"\"", "blocked_by: []", "blocking: []", "---", ""].join("\n");
-    return this.app.vault.create(path, content);
+    const linksTo = (paths) =>
+      paths
+        .map((linkedPath) => this.app.vault.getFileByPath(linkedPath))
+        .filter(Boolean)
+        .map((file) => formatLink(this.app, file, path));
+    const frontmatter = { status, icon, blocked_by: linksTo(blockedBy), blocking: linksTo(blocking) };
+    return this.app.vault.create(path, `---\n${stringifyYaml(frontmatter)}---\n`);
   }
 
   // Notion のサイドピークのように、ボードの右側の同じ場所にノートを開く

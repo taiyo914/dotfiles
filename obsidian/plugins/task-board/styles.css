@@ -268,6 +268,140 @@
   width: 100%;
 }
 
+/* 新しいタスクの画面。絵文字のボタンとタイトルを横に並べ、その下に blocked_by と blocking の入力欄を並べる */
+.task-board-new-task .modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-board-new-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 絵文字のボタン。灰色だと押せないボタンに見えるので、入力欄と同じ背景と枠にする。
+   Obsidian 本体のボタンの色（button:not(.clickable-icon)）より優先させるため、button と画面のクラスも付けて指定する */
+.task-board-new-task button.task-board-new-icon,
+.task-board-new-task button.task-board-new-icon:hover {
+  flex: none;
+  width: var(--input-height);
+  padding: 0;
+  border: var(--input-border-width) solid var(--background-modifier-border);
+  background: var(--background-modifier-form-field);
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: 1.3em;
+  --icon-size: 18px;
+}
+
+.task-board-new-task button.task-board-new-icon:hover {
+  border-color: var(--background-modifier-border-hover);
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* 「作成」ボタンの上の余白を詰める */
+.task-board-new-task .modal-button-container {
+  margin-top: 4px;
+}
+
+.task-board-new-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-board-new-field-label {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+/* 選んだカードの札と入力欄を、枠の中に折り返して並べる。入力欄そのものの枠は消して、外側の枠を入力欄に見せる */
+.task-board-new-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  min-height: var(--input-height);
+  border: var(--input-border-width) solid var(--background-modifier-border);
+  border-radius: var(--input-radius);
+  background: var(--background-modifier-form-field);
+  cursor: text;
+}
+
+.task-board-new-links:focus-within {
+  border-color: var(--background-modifier-border-focus);
+}
+
+.task-board-new-links input,
+.task-board-new-links input:focus,
+.task-board-new-links input:hover {
+  flex: 1 1 120px;
+  min-width: 120px;
+  height: auto;
+  padding: 2px 4px;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.task-board-new-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  padding: 2px 4px 2px 8px;
+  border-radius: 999px;
+  background: var(--background-modifier-hover);
+  font-size: var(--font-ui-small);
+  cursor: default;
+}
+
+.task-board-new-chip-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.task-board-new-chip-remove {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 50%;
+  color: var(--text-faint);
+  cursor: pointer;
+  --icon-size: 12px;
+}
+
+.task-board-new-chip-remove:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-border);
+}
+
+/* blocked_by / blocking の候補。絵文字、タイトル、status の順に並べる */
+.task-board-link-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.task-board-link-suggestion-icon {
+  flex: none;
+  min-width: 1.2em;
+}
+
+.task-board-link-suggestion-title {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.task-board-link-suggestion .task-board-pill {
+  flex: none;
+  align-self: center;
+}
+
 /* DEPENDENCIES: つながりのまとまりを縦に並べ、カードと矢印は位置を指定して置く */
 .task-board-dependencies {
   display: flex;
