@@ -6,7 +6,7 @@ const layerUsed = 'space_used'
 const pressedAt = 'space_down_ms'
 const tappedAt = 'space_tap_ms'
 
-// Space を押している間に左手のキーを押したときに出すキー
+// Space を押している間にキーを押したときに出すキー。左手はカーソル移動と削除、右手は数字
 const layerKeys = {
   e: toKey('up_arrow'),
   s: toKey('left_arrow'),
@@ -18,6 +18,17 @@ const layerKeys = {
   r: toKey('right_arrow', 'left_option'),
   q: toKey('delete_or_backspace', 'left_option'),
   t: toKey('delete_forward'),
+  h: toKey('0'),
+  j: toKey('1'),
+  k: toKey('2'),
+  l: toKey('3'),
+  // L の右のキー。物理キーを受け取る段なので、印字や入れ替えに関係なく semicolon として届く
+  semicolon: toKey('4'),
+  y: toKey('5'),
+  u: toKey('6'),
+  i: toKey('7'),
+  o: toKey('8'),
+  p: toKey('9'),
 }
 
 // Space をタップしたときに出すキー。Space を入力して英数に切り替える
