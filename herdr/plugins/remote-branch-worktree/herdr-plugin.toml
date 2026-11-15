@@ -1,0 +1,13 @@
+# herdr で worktree を作ったとき、GitHub 上に同じ名前のブランチがあれば、作ったブランチをそのブランチと同じ中身にするプラグイン
+# herdr はローカルにないブランチ名を入れると、GitHub 上のブランチを見ずに今の HEAD から新しくブランチを作るため
+id = "dotfiles.remote-branch-worktree"
+name = "Remote branch worktree"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Reset a newly created worktree branch to origin/<branch> when it exists"
+platforms = ["macos", "linux"]
+
+# worktree が作られた後に、ブランチを GitHub 上のブランチに合わせるスクリプトを動かす
+[[events]]
+on = "worktree.created"
+command = ["sh", "sync_remote_branch.sh"]
