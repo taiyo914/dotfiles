@@ -7,6 +7,7 @@ import builtinTabHoldToOption from './rules/builtin-tab-hold-to-option.ts'
 import chromeArrowTabSwitch from './rules/chrome-arrow-tab-switch.ts'
 import chromeImgWidth from './rules/chrome-img-width.ts'
 import chromeSplitView from './rules/chrome-split-view.ts'
+import chromeZoomIn from './rules/chrome-zoom-in.ts'
 import ctrlEmacs from './rules/ctrl-emacs.ts'
 import imeComposing from './rules/ime-composing.ts'
 import keyboardCleaner from './rules/keyboard-cleaner.ts'
@@ -31,7 +32,7 @@ export const stages: Stage[] = [
   builtinJisSymbols,
   builtinSwapSemicolonHyphen,
   [ctrlEmacs, shiftBackspaceToDelete],
-  [chromeArrowTabSwitch, chromeSplitView],
+  [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn],
   slackDisableEsc,
   imeComposing,
 ]
