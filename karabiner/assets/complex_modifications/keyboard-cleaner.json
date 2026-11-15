@@ -1,0 +1,26 @@
+{
+  "title": "keyboard-cleaner",
+  "rules": [
+    {
+      "description": "keyboard-cleaner (💡Turn on only while cleaning)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "any": "key_code",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "vk_none" }]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "any": "consumer_key_code",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [{ "key_code": "vk_none" }]
+        }
+      ]
+    }
+  ]
+}

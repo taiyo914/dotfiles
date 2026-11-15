@@ -39,6 +39,7 @@ JSON にはコメントが書けない & description も短く保ちたいので
 
 | ルール名 | 概要 |
 | - | - |
+| `keyboard-cleaner` | 掃除用に全キーを無効化。Karabiner の画面で都度 ON / OFF する |
 | `magic-keyboard-disabled` | Magic Keyboard with Touch ID のキーを Touch ID 以外すべて無効化 |
 | `space-layer` | Space 長押しで矢印・削除レイヤー。タップで Space ＋ 英数 |
 | `builtin-fn-to-option` | fn（地球儀）キー → 右 Option |
@@ -178,3 +179,15 @@ Chrome で `Cmd+↓` を押すと次のタブ（`Ctrl+Tab`）、`Cmd+↑` を押
 Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブを移る。Karabiner はあるルールが出したキーを別のルールに通さないため、この動作は `space-layer` の中に書いている。
 
 注意: Chrome 本来の `Cmd+↓` / `Cmd+↑`（ページの一番下 / 一番上まで移る）は使えなくなる。
+
+### 3-14. `keyboard-cleaner`
+
+キーボードを掃除するときに、すべてのキーボードのキーをすべて無効にする。
+
+普段は OFF にしておく。掃除するときだけ、Karabiner-Elements の設定画面の Complex Modifications でこのルールを ON にし、終わったら OFF に戻す。キーボードが使えない間も、トラックパッドとマウスで OFF に戻せる。
+
+ほかのルールより先に判定させるため、ルール一覧の一番上に置く。
+
+このルールだけは、`description` を `keyboard-cleaner (💡Turn on only while cleaning)` にしている。Karabiner の画面で、掃除のときだけ ON にするルールだとわかるようにするため。ファイル名と `title` は `keyboard-cleaner` のまま。
+
+注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。トラックパッドとマウスは無効にならない。
