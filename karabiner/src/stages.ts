@@ -9,6 +9,7 @@ import chromeImgWidth from './rules/chrome-img-width.ts'
 import chromeSplitView from './rules/chrome-split-view.ts'
 import chromeZoomIn from './rules/chrome-zoom-in.ts'
 import ctrlEmacs from './rules/ctrl-emacs.ts'
+import ctrlJToEnter from './rules/ctrl-j-to-enter.ts'
 import imeComposing from './rules/ime-composing.ts'
 import keyboardCleaner from './rules/keyboard-cleaner.ts'
 import magicKeyboardDisabled from './rules/magic-keyboard-disabled.ts'
@@ -32,7 +33,7 @@ export const stages: Stage[] = [
   ],
   [builtinJisSymbols, magicKeyboardUsLayout],
   builtinSwapSemicolonHyphen,
-  [ctrlEmacs, shiftBackspaceToDelete],
+  [ctrlEmacs, ctrlJToEnter, shiftBackspaceToDelete],
   [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn],
   slackDisableEsc,
   imeComposing,

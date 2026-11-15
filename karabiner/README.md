@@ -78,6 +78,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `slack-disable-esc` | Slack で Esc を無効にする |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
+| `ctrl-j-to-enter` | `Ctrl+J` → Enter |
 | `ime-composing` | 日本語の入力途中かどうかを変数 `ime_composing` に記録する |
 
 ## 3. 各ルールの使い方
@@ -256,3 +257,11 @@ US 配列のキーの位置のままにして、次の 2 つだけを変える�
 | `;` | `-` / `_`（`-` のキーと入れ替え） |
 
 ほかのキーは US 配列の同じ位置のキーとして扱う。たとえば `^` のキーは `=` / `+`、`@` のキーは `[` / `{`、`:` のキーは `'` / `"`、`]` のキーは `\` / `|` になる。`_` のキーには何も割り当てていない。
+
+### 3-18. `ctrl-j-to-enter`
+
+左 Ctrl を押しながら `J` を押すと、Enter を入力する。
+
+Enter は下の段の `ime-composing` にも渡るので、日本語の入力途中に `Ctrl+J` で確定したときも、入力途中ではなくなったと記録される。
+
+注意: 日本語入力の `Ctrl+J`（ひらがなに変換）は使えなくなる。
