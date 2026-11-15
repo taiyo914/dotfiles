@@ -12,6 +12,7 @@ import ctrlEmacs from './rules/ctrl-emacs.ts'
 import imeComposing from './rules/ime-composing.ts'
 import keyboardCleaner from './rules/keyboard-cleaner.ts'
 import magicKeyboardDisabled from './rules/magic-keyboard-disabled.ts'
+import magicKeyboardUsLayout from './rules/magic-keyboard-us-layout.ts'
 import shiftBackspaceToDelete from './rules/shift-backspace-to-delete.ts'
 import slackDisableEsc from './rules/slack-disable-esc.ts'
 import spaceLayer from './rules/space-layer.ts'
@@ -29,7 +30,7 @@ export const stages: Stage[] = [
     builtinTabHoldToOption,
     chromeImgWidth,
   ],
-  builtinJisSymbols,
+  [builtinJisSymbols, magicKeyboardUsLayout],
   builtinSwapSemicolonHyphen,
   [ctrlEmacs, shiftBackspaceToDelete],
   [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn],

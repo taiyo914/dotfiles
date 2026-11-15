@@ -1,5 +1,5 @@
 import { map, rule, toKey, type ToEvent } from 'karabiner.ts'
-import { ifBuiltinKeyboard } from '../conditions.ts'
+import { ifInternalKeyboard } from '../conditions.ts'
 
 // 内蔵 JIS キーボードの記号のキーを押したときに出す記号。仮想キーボードを ANSI にしたことでずれた記号を印字どおりに直す
 const unshifted: Record<string, ToEvent> = {
@@ -36,7 +36,7 @@ const shifted: Record<string, ToEvent> = {
 }
 
 // 内蔵 JIS キーボードの記号を印字どおりに入力する
-export default rule('builtin-jis-symbols', ifBuiltinKeyboard).manipulators([
+export default rule('builtin-jis-symbols', ifInternalKeyboard).manipulators([
   ...Object.entries(unshifted).map(([key, event]) => map(key as 'a', null, 'caps_lock').to(event)),
   ...Object.entries(shifted).map(([key, event]) => map(key as 'a', 'shift', 'caps_lock').to(event)),
 ])

@@ -73,7 +73,8 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `chrome-arrow-tab-switch` | Chrome で `Cmd+↓` / `Cmd+↑` → 次 / 前のタブ |
 | `chrome-zoom-in` | Chrome で `Cmd+Shift+;` / `Cmd+Shift+-` → 拡大 |
 | `builtin-jis-symbols` | 内蔵 JIS キーボードの記号を印字どおりに入力 |
-| `builtin-swap-semicolon-hyphen` | `;` と `-` を入れ替え |
+| `builtin-swap-semicolon-hyphen` | 内蔵キーボードで `;` と `-` を入れ替え |
+| `magic-keyboard-us-layout` | JIS の Magic Keyboard を US 配列として使う |
 | `slack-disable-esc` | Slack で Esc を無効にする |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
@@ -83,9 +84,11 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 
 前提として、外付けキーボードとの互換性を保つために、**仮想キーボードは ANSI（US 配列）にしている。** 
 
-そのままだと内蔵の JIS キーボードの記号がずれるので、 `builtin-jis-symbols` で直している。
+そのままだと内蔵の JIS キーボードの記号がずれるので、 `builtin-jis-symbols` で直している。JIS の Magic Keyboard は、試しに印字を直さず US 配列として使っている（`magic-keyboard-us-layout`）。
 
-`builtin-` で始まるルールは、内蔵キーボードと Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）に適用する。ただし、今は `magic-keyboard-disabled` が先に Magic Keyboard のキーを無効にしているので、Magic Keyboard では `builtin-` のルールは動かない。
+`builtin-` で始まるルールは、内蔵キーボードと Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）に適用する。ただし、`builtin-jis-symbols` と `builtin-swap-semicolon-hyphen` は内蔵キーボードだけに適用する。
+
+`magic-keyboard-disabled` を ON にしたときは、Magic Keyboard のキーが先に無効になるので、Magic Keyboard ではほかのルールは動かない。
 
 ### 3-1. `space-layer`
 
@@ -146,7 +149,7 @@ Chrome の分割ビューを `Cmd+D` で開く。Chrome でのみ適用。
 
 ### 3-7. `builtin-jis-symbols`
 
-内蔵 JIS キーボードのキーに書かれている記号がそのまま入力されるようにする。仮想キーボードを ANSI にしたことでずれた記号を、JIS の印字どおりに直す。
+内蔵 JIS キーボードのキーに書かれている記号がそのまま入力されるようにする。仮想キーボードを ANSI にしたことでずれた記号を、JIS の印字どおりに直す。内蔵キーボードのみ適用。
 
 ### 3-8. `builtin-swap-semicolon-hyphen`
 
@@ -239,3 +242,17 @@ Chrome で `Cmd+Shift+;` か `Cmd+Shift+-` を押すと、ページを拡大す�
 | 外付けキーボード | `Cmd+-` | `Cmd+Shift+-` |
 
 注意: Chrome で `Cmd+Shift+-` を押したときの本来の動きは使えなくなる。
+
+### 3-17. `magic-keyboard-us-layout`
+
+JIS の Magic Keyboard with Touch ID（外付け。Vendor ID 1452 / Product ID 666）を、印字を直さずに US 配列として使う。試しに使っている設定。
+
+US 配列のキーの位置のままにして、次の 2 つだけを変える。修飾キーと一緒に押しても同じように変わる。
+
+| 押すキー（JIS の印字） | US 配列のどのキーとして扱うか |
+| - | - |
+| `¥` | `` ` `` / `~`（JIS には US 配列の `` ` `` / `~` のキーがないため） |
+| `-` | `;` / `:`（`;` のキーと入れ替え） |
+| `;` | `-` / `_`（`-` のキーと入れ替え） |
+
+ほかのキーは US 配列の同じ位置のキーとして扱う。たとえば `^` のキーは `=` / `+`、`@` のキーは `[` / `{`、`:` のキーは `'` / `"`、`]` のキーは `\` / `|` になる。`_` のキーには何も割り当てていない。
