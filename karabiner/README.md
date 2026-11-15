@@ -1,16 +1,22 @@
 # Karabiner
 
-JSON にはコメントが書けない & description も短く保ちたいので、ルールの詳細はこのファイルに記録する。ルールを追加・変更するときはこのファイルを編集する。
+ルールは [karabiner.ts](https://karabiner.ts.evanliu.dev/) を使って TypeScript で書き、`npm run build` で `karabiner.json` を作る。ルールの使い方はこのファイルに記録する。ルールを追加・変更するときはこのファイルも編集する。
 
 ## 1. 追加・変更するとき
 
 ### 1-1. フォルダ構成
 
+- `src/rules/`
+	- ルールのソースファイル。1 つのファイルに 1 つの機能を書く
+- `src/stages.ts`
+	- どのルールの出力をどのルールに渡すかを決める場所（「1-3. ルールのつなぎ方」）
+- `src/pipe.ts`
+	- ルールをつなぐ仕組み
+- `src/conditions.ts`
+	- 複数のルールで使う条件（キーボードの種類、アプリ）
 - `karabiner.json`
 	- 実際に karabiner が読み込む設定ファイル
-- `assets/complex_modifications/`
-	- ルールのソースファイルを保存する場所
-	- `karabiner.json` にコピーされて初めて有効になる
+	- Complex Modifications のルールは `npm run build` で作り直すので、直接編集しない。デバイスの設定など、ほかの部分は Karabiner の画面で変えてよい
 - `scripts/`
 	- ルールから呼ぶスクリプト
 - `automatic_backups/`
@@ -19,20 +25,37 @@ JSON にはコメントが書けない & description も短く保ちたいので
 
 ### 1-2. ルール名の付け方
 
-- assets/ におくソースファイルは次の 3 つを統一する
-	- ファイル名（`.json` を除く）
-	- `title`
-	- `description`
+- ファイル名（`.ts` を除く）と `rule()` に渡す名前（Karabiner の画面に出る名前）を揃える
 - ルール名はなるべく短くシンプルにする
 - 特定の場面で有効なルールは、名前の頭に範囲を付ける
 	- 例 ：`builtin-` （内蔵キーボードと Magic Keyboard with Touch ID だけ）
 
-### 1-3. ルールを追加・変更する手順
+### 1-3. ルールのつなぎ方
 
-1. `assets/complex_modifications/<ルール名>.json` を作成・更新する
-2. `karabiner.json` にも同じ内容を入れる
-	- assets と `karabiner.json` は必ず内容を揃える
-3. この README の「2. ルール一覧」と「3. 各ルールの使い方」を追記・更新する
+Karabiner-Elements は、あるルールが出したキーをほかのルールに通さない。そのため、`src/pipe.ts` の `pipe()` が、前の段のルールが出したキーを次の段のルールに通した結果を `npm run build` のときに計算して、1 つのルールにまとめる。
+
+各ルールは、ほかのルールのことを書かずに「このキーが来たらこのキーを出す」だけを書く。どのルールの出力をどのルールに渡すかは、`src/stages.ts` に並べる順番だけで決める。
+
+- 上の段のルールが出したキーは、下の段のルールに渡る
+- 同じ段に並べたルールは、上にあるものが先に判定され、お互いの出力は受け取らない
+- 1 段目は物理キーを受け取る
+- タップと長押しで動きを変えるルール（`to_if_alone` などを使うルール）は 1 段目にしか置けない。Karabiner には、ほかのルールが出したキーを押した時間や離したタイミングを調べる方法がないため
+- 2 段目以降のルールは Karabiner の画面で ON / OFF を切り替えられない。前の段のルールに組み込まれるため
+
+`pipe()` は、押されていた修飾キーを出し直すときに左右を区別できない。たとえば右 Cmd を押していても、組み合わせたルールからは左 Cmd として出る。
+
+`npm test` で、`pipe()` が作ったルールの動きが、段ごとに順番にルールを通したときの動きと同じになるかを確かめられる。
+
+### 1-4. ルールを追加・変更する手順
+
+1. はじめて使うときは `npm install` を実行する
+2. `src/rules/<ルール名>.ts` を作成・更新する
+3. 新しいルールなら `src/stages.ts` に追加する
+4. `npm test` を実行して、テストが通るか確かめる
+5. `npm run build` を実行して、`karabiner.json` に書き込む
+	- `npm run dry-run` なら、書き込まずに結果を表示する
+	- `npm run build` を実行するたびに、Karabiner の画面で切り替えたルールの ON / OFF は `src/` に書いてある状態に戻る
+6. この README の「2. ルール一覧」と「3. 各ルールの使い方」を追記・更新する
 
 
 ## 2. ルール一覧
@@ -50,9 +73,10 @@ JSON にはコメントが書けない & description も短く保ちたいので
 | `chrome-arrow-tab-switch` | Chrome で `Cmd+↓` / `Cmd+↑` → 次 / 前のタブ |
 | `builtin-jis-symbols` | 内蔵 JIS キーボードの記号を印字どおりに入力 |
 | `builtin-swap-semicolon-hyphen` | `;` と `-` を入れ替え |
-| `slack-disable-esc` | Slack で Esc と左 Ctrl タップの Esc を無効にする |
+| `slack-disable-esc` | Slack で Esc を無効にする |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
+| `ime-composing` | 日本語の入力途中かどうかを変数 `ime_composing` に記録する |
 
 ## 3. 各ルールの使い方
 
@@ -78,7 +102,9 @@ Space を押しながら左手のキーを押すと、カーソル移動や削�
 
 注意: Space を押してから 0.1 秒以内にほかのキーを押すと、文章を速く打っているとみなして、Space とそのキーを順番に入力する（qmk ファームウェアのデフォルト）
 
-日本語の入力途中かどうかは、変数 `ime_composing` で判断している。日本語入力でアルファベットを打つと `ime_composing` を 1 にし、Enter・英数・かなキーで 0 に戻す。Space を単独で押したときは、この変数が 0 のときだけ英数に切り替える。
+日本語の入力途中かどうかは、`ime-composing` が記録する変数 `ime_composing` で判断している。Space を単独で押したときは、この変数が 0 のときだけ英数に切り替える。
+
+Space を押している間に、レイヤーのキー以外のキーを押したときは、そのキーをそのまま出す。そのキーは下の段のルールにも渡るので、たとえば Space を押しながら内蔵キーボードの記号のキーを押しても、`builtin-jis-symbols` で印字どおりの記号になる。
 
 ### 3-2. `builtin-fn-to-option`
 
@@ -123,7 +149,7 @@ Chrome の分割ビューを `Cmd+D` で開く。Chrome でのみ適用。
 
 ### 3-8. `builtin-swap-semicolon-hyphen`
 
-`;` と `-` だけを入れ替える。Shift を押したときの `=` と `+` は印字どおりのまま。 `builtin-jis-symbols` には依存していないが、一緒に使う場合は `builtin-jis-symbols` より上に置かないと無視される。
+`-` と `;` だけを入れ替える。Shift を押したときは入れ替えず、`builtin-jis-symbols` が出す印字どおりの記号（`=` と `+`）のままにする。`src/stages.ts` では `builtin-jis-symbols` の下の段に置く。
 
 | 押すキー（印字） | 入力される記号 |
 | - | - |
@@ -132,10 +158,9 @@ Chrome の分割ビューを `Cmd+D` で開く。Chrome でのみ適用。
 | `Shift` + `-` | `=` |
 | `Shift` + `;` | `+` |
 
-Cmd や Ctrl を一緒に押しても同じ記号に変わる。たとえば Ghostty で文字の大きさを変えるときは次のキーを押す。
+Cmd や Ctrl を一緒に押しても入れ替える。たとえば Ghostty では `Cmd+;`（印字）で文字を縮小できる（`Cmd+-` が送られる）。
 
-- `Cmd+;`（印字）で縮小（`Cmd+-` が送られる）
-- `Cmd+Shift+;`（印字）で拡大（`Cmd++` が送られる）
+注意: `Cmd+Shift+;`（印字）や `Cmd+Shift+-`（印字）は、このルールも `builtin-jis-symbols` も何もしないので、押したキーのまま送られる。Ghostty の `cmd+shift+minus`（文字を拡大）が動くのは `Cmd+Shift+-`（印字）のほう。
 
 ### 3-9. `slack-disable-esc`
 
@@ -143,7 +168,7 @@ Slack が前面にあるときは、Esc キーを押しても何も起きない�
 
 Shift や Cmd と一緒に押したとき（たとえば `Shift+Esc` で全チャンネルを既読にする操作）は、そのまま使える。
 
-`builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も出さない。Slack では左 Ctrl はただの Ctrl になる。このため、`karabiner.json` では `builtin-ctrl-tap-to-esc` より上に置く。
+`builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡るので出なくなる。
 
 ### 3-10. `shift-backspace-to-delete`
 
@@ -168,7 +193,9 @@ Shift や Cmd と一緒に押したとき（たとえば `Shift+Esc` で全チ�
 
 Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）のキーをすべて無効にする。Touch ID の指紋認証は使える。
 
-通常のキー（`key_code`）と、音量や明るさなどのメディアキー（`consumer_key_code`）を何も入力しないキー（`vk_none`）に変える。ほかのルールより先に判定させるため、ルール一覧の一番上に置く。
+通常のキー（`key_code`）と、音量や明るさなどのメディアキー（`consumer_key_code`）を何も入力しないキー（`vk_none`）に変える。ほかのルールより先に判定させるため、`src/stages.ts` の 1 段目の一番上に置く。
+
+普段は OFF。`npm run build` を実行すると OFF に戻る。
 
 注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。
 
@@ -176,7 +203,7 @@ Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）のキーをす
 
 Chrome で `Cmd+↓` を押すと次のタブ（`Ctrl+Tab`）、`Cmd+↑` を押すと前のタブ（`Ctrl+Shift+Tab`）に移る。herdr でスペースを移るキー（`Cmd+↓` / `Cmd+↑`）とそろえるため。Chrome でのみ適用。
 
-Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブを移る。Karabiner はあるルールが出したキーを別のルールに通さないため、この動作は `space-layer` の中に書いている。
+Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブを移る。`space-layer` が出した `Cmd+↓` / `Cmd+↑` がこのルールに渡るため。
 
 注意: Chrome 本来の `Cmd+↓` / `Cmd+↑`（ページの一番下 / 一番上まで移る）は使えなくなる。
 
@@ -186,8 +213,17 @@ Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブ�
 
 普段は OFF にしておく。掃除するときだけ、Karabiner-Elements の設定画面の Complex Modifications でこのルールを ON にし、終わったら OFF に戻す。キーボードが使えない間も、トラックパッドとマウスで OFF に戻せる。
 
-ほかのルールより先に判定させるため、ルール一覧の一番上に置く。
+ほかのルールより先に判定させるため、`src/stages.ts` の 1 段目の一番上に置く。`npm run build` を実行すると OFF に戻る。
 
-このルールだけは、`description` を `keyboard-cleaner (💡Turn on only while cleaning)` にしている。Karabiner の画面で、掃除のときだけ ON にするルールだとわかるようにするため。ファイル名と `title` は `keyboard-cleaner` のまま。
+このルールだけは、Karabiner の画面に出る名前を `keyboard-cleaner (💡Turn on only while cleaning)` にしている。掃除のときだけ ON にするルールだとわかるようにするため。ファイル名は `keyboard-cleaner` のまま。
 
 注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。トラックパッドとマウスは無効にならない。
+
+### 3-15. `ime-composing`
+
+日本語の入力途中（変換が確定する前）かどうかを、変数 `ime_composing` に記録する。`space-layer` がこの変数を使う。
+
+- 日本語入力でアルファベットを打つと 1 にする
+- Enter・英数・かなキーを押すと 0 にする
+
+ほかのルールが出したアルファベットや英数キーも見て記録するため、`src/stages.ts` の一番下の段に置く。

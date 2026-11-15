@@ -1,0 +1,16 @@
+{
+  "name": "karabiner-config",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node src/index.ts",
+    "dry-run": "node src/index.ts --dry-run",
+    "check": "tsc --noEmit",
+    "test": "node --test 'src/**/*.test.ts'"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "karabiner.ts": "^1.38.0",
+    "typescript": "^5"
+  }
+}
