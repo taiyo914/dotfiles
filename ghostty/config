@@ -20,8 +20,10 @@ background-opacity = 0.95
 window-save-state = always
 scrollback-limit = 100000000
 window-inherit-working-directory = false
-# cmd + shift + - で文字を拡大する
+# cmd + shift + - と cmd + shift + ; で文字を拡大する。
+# hint: ; は karabiner で内蔵キーボードの - と ; を入れ替えたキーでも拡大するため
 keybind = cmd+shift+minus=increase_font_size:1
+keybind = cmd+shift+semicolon=increase_font_size:1
 # cmd + z で ctrl + _ と同じ文字を送り、zsh で入力中の編集を1つ元に戻す
 keybind = cmd+z=text:\x1f
 
