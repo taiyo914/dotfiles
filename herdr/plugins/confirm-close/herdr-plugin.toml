@@ -1,5 +1,5 @@
 # スペースを閉じる前に「本当に閉じますか？」を popup で聞くプラグイン
-# herdr/close-or-confirm.sh から開く。keys.command の popup と違って、確認が要るときだけ開けるので、確認しないときに popup の枠が一瞬出ない
+# herdr/scripts/close-or-confirm.sh から開く。keys.command の popup と違って、確認が要るときだけ開けるので、確認しないときに popup の枠が一瞬出ない
 id = "dotfiles.confirm-close"
 name = "Confirm close"
 version = "0.1.0"

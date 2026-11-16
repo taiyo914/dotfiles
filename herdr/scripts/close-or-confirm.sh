@@ -14,7 +14,7 @@ esac
 # ペインを閉じてもスペースに他のペインが残るときは、聞かずにすぐ閉じる
 pane_count=$("$herdr" workspace get "$HERDR_ACTIVE_WORKSPACE_ID" | jq '.result.workspace.pane_count')
 if [ "$target" = pane ] && [ "$pane_count" -gt 1 ]; then
-  exec sh "$HOME/dotfiles/herdr/close.sh" pane
+  exec sh "$HOME/dotfiles/herdr/scripts/close.sh" pane
 fi
 
 # 確認の popup を開く。popup には HERDR_ACTIVE_* が渡されないので、close.sh が使う値を --env で渡す

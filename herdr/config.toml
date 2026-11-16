@@ -54,7 +54,7 @@ close_workspace = ""
 [[keys.command]]
 key = "prefix+x"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close.sh" pane'
+command = 'sh "$HOME/dotfiles/herdr/scripts/close.sh" pane'
 description = "close pane after quitting nvim"
 
 # cmd + w でスペースの最後のペインを閉じるときは、スペースごと消えるので、本当に閉じるかを popup で聞いてから閉じる
@@ -62,46 +62,46 @@ description = "close pane after quitting nvim"
 [[keys.command]]
 key = "cmd+w"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close-or-confirm.sh" pane'
+command = 'sh "$HOME/dotfiles/herdr/scripts/close-or-confirm.sh" pane'
 description = "close pane after quitting nvim, confirm if it closes the space"
 
 [[keys.command]]
 key = "prefix+shift+x"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close.sh" tab'
+command = 'sh "$HOME/dotfiles/herdr/scripts/close.sh" tab'
 description = "close tab after quitting nvim"
 
 [[keys.command]]
 key = "cmd+alt+w"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close.sh" tab'
+command = 'sh "$HOME/dotfiles/herdr/scripts/close.sh" tab'
 description = "close tab after quitting nvim"
 
 # スペースを閉じるときは、間違えて閉じないように、本当に閉じるかを popup で聞いてから閉じる
 [[keys.command]]
 key = "prefix+shift+d"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close-or-confirm.sh" workspace'
+command = 'sh "$HOME/dotfiles/herdr/scripts/close-or-confirm.sh" workspace'
 description = "confirm, then close workspace after quitting nvim"
 
 [[keys.command]]
 key = "cmd+shift+w"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close-or-confirm.sh" workspace'
+command = 'sh "$HOME/dotfiles/herdr/scripts/close-or-confirm.sh" workspace'
 description = "confirm, then close workspace after quitting nvim"
 
 # フォーカスしている pane と隣の pane の並びを左右 ⇄ 上下で切り替える
 [[keys.command]]
 key = "prefix+space"
 type = "shell"
-command = '"$HOME/dotfiles/herdr/toggle-split.sh"'
+command = '"$HOME/dotfiles/herdr/scripts/toggle-split.sh"'
 description = "toggle pane split direction"
 
 # フォーカスしている pane を、fzf で選んだタブか新しいタブに移す
 [[keys.command]]
 key = "prefix+m"
 type = "popup"
-command = '"$HOME/dotfiles/herdr/move-pane.sh"'
+command = '"$HOME/dotfiles/herdr/scripts/move-pane.sh"'
 description = "move pane to another tab"
 width = "80%"
 height = "60%"
@@ -110,7 +110,7 @@ height = "60%"
 [[keys.command]]
 key = "alt+g"
 type = "popup"
-command = 'sh "$HOME/dotfiles/herdr/lazygit.sh"'
+command = 'sh "$HOME/dotfiles/herdr/scripts/lazygit.sh"'
 description = "lazygit in focused pane's cwd"
 width = "90%"
 height = "90%"
@@ -118,7 +118,7 @@ height = "90%"
 [[keys.command]]
 key = "alt+s"
 type = "popup"
-command = 'sh "$HOME/dotfiles/herdr/sessions.sh"'
+command = 'sh "$HOME/dotfiles/herdr/scripts/sessions.sh"'
 description = "list claude sessions"
 width = "90%"
 height = "90%"
