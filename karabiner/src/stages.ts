@@ -6,6 +6,7 @@ import builtinSwapSemicolonHyphen from './rules/builtin-swap-semicolon-hyphen.ts
 import builtinTabHoldToOption from './rules/builtin-tab-hold-to-option.ts'
 import chromeArrowTabSwitch from './rules/chrome-arrow-tab-switch.ts'
 import chromeImgWidth from './rules/chrome-img-width.ts'
+import chromeNewTabInGroup from './rules/chrome-new-tab-in-group.ts'
 import chromeSplitView from './rules/chrome-split-view.ts'
 import chromeZoomIn from './rules/chrome-zoom-in.ts'
 import ctrlEmacs from './rules/ctrl-emacs.ts'
@@ -34,7 +35,7 @@ export const stages: Stage[] = [
   [builtinJisSymbols, magicKeyboardUsLayout],
   builtinSwapSemicolonHyphen,
   [ctrlEmacs, ctrlJToEnter, shiftBackspaceToDelete],
-  [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn],
+  [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn, chromeNewTabInGroup],
   slackDisableEsc,
   imeComposing,
 ]

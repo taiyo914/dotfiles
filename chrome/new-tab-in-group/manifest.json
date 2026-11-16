@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "New Tab in Group",
+  "version": "1.0.0",
+  "description": "ショートカットで、タブグループの中か外かを選んで新しいタブを開く",
+  "permissions": ["tabs", "tabGroups"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "new-tab-in-group": {
+      "suggested_key": {
+        "default": "Alt+Shift+T"
+      },
+      "description": "今のタブと同じタブグループに新しいタブを開く"
+    },
+    "new-tab-outside-group": {
+      "suggested_key": {
+        "default": "Alt+Shift+Y"
+      },
+      "description": "タブグループの外に新しいタブを開く"
+    }
+  }
+}

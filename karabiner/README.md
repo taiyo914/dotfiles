@@ -72,6 +72,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `chrome-img-width` | Chrome で `Cmd+Ctrl+I` → `<img>` の width を 800 に |
 | `chrome-arrow-tab-switch` | Chrome で `Cmd+↓` / `Cmd+↑` → 次 / 前のタブ |
 | `chrome-zoom-in` | Chrome で `Cmd+Shift+;` / `Cmd+Shift+-` → 拡大 |
+| `chrome-new-tab-in-group` | Chrome で `Cmd+T` / `Cmd+Ctrl+T` → タブグループの中 / 外に新しいタブ |
 | `builtin-jis-symbols` | 内蔵 JIS キーボードの記号を印字どおりに入力 |
 | `builtin-swap-semicolon-hyphen` | 内蔵キーボードで `;` と `-` を入れ替え |
 | `magic-keyboard-us-layout` | JIS の Magic Keyboard を US 配列として使う |
@@ -271,3 +272,14 @@ US 配列のキーの位置のままにして、次の 2 つだけを変える�
 Enter は下の段の `ime-composing` にも渡るので、日本語の入力途中に `Ctrl+J` で確定したときも、入力途中ではなくなったと記録される。
 
 注意: 日本語入力の `Ctrl+J`（ひらがなに変換）は使えなくなる。
+
+### 3-19. `chrome-new-tab-in-group`
+
+Chrome で新しいタブを開くときに、タブグループに入れるかどうかを選べるようにする。Chrome でのみ適用。
+
+| 操作 | 今のタブがタブグループに入っているとき | 入っていないとき |
+| - | - | - |
+| `Cmd+T` | 今のタブのすぐ右に開き、同じタブグループに入れる | 今のタブのすぐ右に開く |
+| `Cmd+Ctrl+T` | タブグループのすぐ右（グループの外）に開く | 今のタブのすぐ右に開く |
+
+Karabiner は今のタブがタブグループに入っているかどうかを調べられないので、拡張機能 `chrome/new-tab-in-group` のショートカット（`Option+Shift+T` / `Option+Shift+Y`）を送り、タブを開く処理は拡張機能が行う。この拡張機能を読み込んでいないと、`Cmd+T` / `Cmd+Ctrl+T` で何も起きない。ショートカットは `chrome://extensions/shortcuts` で確かめられる。
