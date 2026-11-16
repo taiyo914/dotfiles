@@ -1,0 +1,20 @@
+# タブの名前を、タブの中のペインで動いているプログラムから自動で付けるプラグイン
+# claude が動いていれば claude、nvim なら nvim、それ以外は term にする。ペインが複数あれば「claude|term*2」のように並べる
+id = "dotfiles.tab-names"
+name = "Tab names"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Name tabs after the programs running in their panes"
+platforms = ["macos", "linux"]
+
+# herdr が起動したときに、タブの名前を付け直し続けるスクリプトを立ち上げる
+[[startup]]
+command = ["node", "tab_names.mjs"]
+
+# herdr を再起動せずにスクリプトを立ち上げ直す。動いているスクリプトがあれば止めて入れ替える
+# アクションのコマンドが終わってもスクリプトが動き続けるように、nohup でバックグラウンドに切り離す
+[[actions]]
+id = "restart"
+title = "Tab names: restart"
+contexts = ["workspace"]
+command = ["sh", "-c", "nohup node tab_names.mjs --replace >/dev/null 2>&1 &"]
