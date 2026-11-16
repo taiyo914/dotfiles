@@ -1,0 +1,17 @@
+# スペースを閉じる前に「本当に閉じますか？」を popup で聞くプラグイン
+# herdr/close-or-confirm.sh から開く。keys.command の popup と違って、確認が要るときだけ開けるので、確認しないときに popup の枠が一瞬出ない
+id = "dotfiles.confirm-close"
+name = "Confirm close"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Ask before closing a space, then close it after quitting nvim"
+platforms = ["macos", "linux"]
+
+# 確認の popup を、画面の幅の 60%、高さ 5 行で開く
+[[panes]]
+id = "confirm"
+title = "Close space"
+placement = "popup"
+width = "60%"
+height = 5
+command = ["sh", "confirm.sh"]

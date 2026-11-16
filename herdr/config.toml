@@ -57,11 +57,13 @@ type = "shell"
 command = 'sh "$HOME/dotfiles/herdr/close.sh" pane'
 description = "close pane after quitting nvim"
 
+# cmd + w でスペースの最後のペインを閉じるときは、スペースごと消えるので、本当に閉じるかを popup で聞いてから閉じる
+# 最後のペインでなければ聞かずにすぐ閉じる
 [[keys.command]]
 key = "cmd+w"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close.sh" pane'
-description = "close pane after quitting nvim"
+command = 'sh "$HOME/dotfiles/herdr/close-or-confirm.sh" pane'
+description = "close pane after quitting nvim, confirm if it closes the space"
 
 [[keys.command]]
 key = "prefix+shift+x"
@@ -75,17 +77,18 @@ type = "shell"
 command = 'sh "$HOME/dotfiles/herdr/close.sh" tab'
 description = "close tab after quitting nvim"
 
+# スペースを閉じるときは、間違えて閉じないように、本当に閉じるかを popup で聞いてから閉じる
 [[keys.command]]
 key = "prefix+shift+d"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close.sh" workspace'
-description = "close workspace after quitting nvim"
+command = 'sh "$HOME/dotfiles/herdr/close-or-confirm.sh" workspace'
+description = "confirm, then close workspace after quitting nvim"
 
 [[keys.command]]
 key = "cmd+shift+w"
 type = "shell"
-command = 'sh "$HOME/dotfiles/herdr/close.sh" workspace'
-description = "close workspace after quitting nvim"
+command = 'sh "$HOME/dotfiles/herdr/close-or-confirm.sh" workspace'
+description = "confirm, then close workspace after quitting nvim"
 
 # フォーカスしている pane と隣の pane の並びを左右 ⇄ 上下で切り替える
 [[keys.command]]
