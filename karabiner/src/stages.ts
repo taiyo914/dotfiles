@@ -1,9 +1,8 @@
 import type { Stage } from './pipe.ts'
 import builtinCtrlTapToEsc from './rules/builtin-ctrl-tap-to-esc.ts'
 import builtinFnToOption from './rules/builtin-fn-to-option.ts'
-import builtinJisSymbols from './rules/builtin-jis-symbols.ts'
-import builtinSwapSemicolonHyphen from './rules/builtin-swap-semicolon-hyphen.ts'
 import builtinTabHoldToOption from './rules/builtin-tab-hold-to-option.ts'
+import builtinCustomUsLayout from './rules/builtin-custom-us-layout.ts'
 import chromeArrowTabSwitch from './rules/chrome-arrow-tab-switch.ts'
 import chromeImgWidth from './rules/chrome-img-width.ts'
 import chromeNewTabInGroup from './rules/chrome-new-tab-in-group.ts'
@@ -14,7 +13,6 @@ import imeComposing from './rules/ime-composing.ts'
 import imeDisableEsc from './rules/ime-disable-esc.ts'
 import keyboardCleaner from './rules/keyboard-cleaner.ts'
 import magicKeyboardDisabled from './rules/magic-keyboard-disabled.ts'
-import magicKeyboardUsLayout from './rules/magic-keyboard-us-layout.ts'
 import shiftBackspaceToDelete from './rules/shift-backspace-to-delete.ts'
 import slackDisableEsc from './rules/slack-disable-esc.ts'
 import spaceLayer from './rules/space-layer.ts'
@@ -32,8 +30,7 @@ export const stages: Stage[] = [
     builtinTabHoldToOption,
     chromeImgWidth,
   ],
-  [builtinJisSymbols, magicKeyboardUsLayout],
-  builtinSwapSemicolonHyphen,
+  builtinCustomUsLayout,
   [ctrlEmacs, shiftBackspaceToDelete],
   [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn, chromeNewTabInGroup],
   [slackDisableEsc, imeDisableEsc],

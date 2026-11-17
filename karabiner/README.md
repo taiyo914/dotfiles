@@ -73,9 +73,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `chrome-arrow-tab-switch` | Chrome で `Cmd+↓` / `Cmd+↑` → 次 / 前のタブ |
 | `chrome-zoom-in` | Chrome で `Cmd+Shift+;` / `Cmd+Shift+-` → 拡大 |
 | `chrome-new-tab-in-group` | Chrome で `Cmd+T` / `Cmd+Ctrl+T` → タブグループの中 / 外に新しいタブ |
-| `builtin-jis-symbols` | 内蔵 JIS キーボードの記号を印字どおりに入力 |
-| `builtin-swap-semicolon-hyphen` | 内蔵キーボードで `;` と `-` を入れ替え |
-| `magic-keyboard-us-layout` | JIS の Magic Keyboard を US 配列として使う |
+| `builtin-custom-us-layout` | 内蔵と Magic Keyboard の JIS キーボードを、少し手を加えた US 配列として使う |
 | `slack-disable-esc` | Slack で Esc を無効にする |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
@@ -86,9 +84,9 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 
 前提として、外付けキーボードとの互換性を保つために、**仮想キーボードは ANSI（US 配列）にしている。** 
 
-そのままだと内蔵の JIS キーボードの記号がずれるので、 `builtin-jis-symbols` で直している。JIS の Magic Keyboard は、試しに印字を直さず US 配列として使っている（`magic-keyboard-us-layout`）。
+内蔵キーボードと Magic Keyboard は JIS 配列だが、印字どおりの記号には直さず、US 配列として使っている（`builtin-custom-us-layout`）。
 
-`builtin-` で始まるルールは、内蔵キーボードと Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）に適用する。ただし、`builtin-jis-symbols` と `builtin-swap-semicolon-hyphen` は内蔵キーボードだけに適用する。
+`builtin-` で始まるルールは、内蔵キーボードと Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）に適用する。
 
 `magic-keyboard-disabled` を ON にしたときは、Magic Keyboard のキーが先に無効になるので、Magic Keyboard ではほかのルールは動かない。
 
@@ -108,15 +106,15 @@ Space を押しながら左手のキーを押すとカーソル移動や削除�
 | Space + `H` / `J` / `K` / `L` / L の右のキー | `0` / `1` / `2` / `3` / `4`                 |
 | Space + `Y` / `U` / `I` / `O` / `P` | `5` / `6` / `7` / `8` / `9`                 |
 
-L の右のキーは、内蔵キーボードでは `-` が出るキー（JIS の印字は `;`）。
+L の右のキーは、内蔵キーボードと Magic Keyboard では `-` が出るキー（JIS の印字は `;`）。
 
-数字は下の段のルールにも渡るので、Space と一緒に Shift を押すと、そのキーボードで Shift と数字を押したときの記号になる。たとえば内蔵キーボードで Space + Shift + `K` を押すと、`builtin-jis-symbols` によって `"` になる。
+数字は下の段のルールにも渡るので、Space と一緒に Shift を押すと、Shift と数字を押したときの記号になる。たとえば Space + Shift + `K` を押すと `@` になる。
 
 注意: Space を押してから 0.1 秒以内にほかのキーを押すと、文章を速く打っているとみなして、Space とそのキーを順番に入力する（qmk ファームウェアのデフォルト）
 
 日本語の入力途中かどうかは、`ime-composing` が記録する変数 `ime_composing` で判断している。Space を単独で押したときは、この変数が 0 のときだけ英数に切り替える。
 
-Space を押している間に、レイヤーのキー以外のキーを押したときは、そのキーをそのまま出す。そのキーは下の段のルールにも渡るので、たとえば Space を押しながら内蔵キーボードの記号のキーを押しても、`builtin-jis-symbols` で印字どおりの記号になる。
+Space を押している間に、レイヤーのキー以外のキーを押したときは、そのキーをそのまま出す。そのキーは下の段のルールにも渡るので、たとえば Space を押しながら内蔵キーボードの `¥` のキーを押しても、`builtin-custom-us-layout` によって `` ` `` になる。
 
 ### 3-2. `builtin-fn-to-option`
 
@@ -155,26 +153,32 @@ Chrome の分割ビューを `Cmd+D` で開く。Chrome でのみ適用。
 
 `<img>` タグを含む文章を選択して `Cmd+Ctrl+I` を押すと、選択した文章の中の `<img>` タグの width を 800 にし、height を消す。GitHub に貼った画像の大きさをそろえるために使う。Chrome でのみ適用。
 
-### 3-7. `builtin-jis-symbols`
+### 3-7. `builtin-custom-us-layout`
 
-内蔵 JIS キーボードのキーに書かれている記号がそのまま入力されるようにする。仮想キーボードを ANSI にしたことでずれた記号を、JIS の印字どおりに直す。内蔵キーボードのみ適用。
+内蔵キーボードと JIS の Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）を、印字を直さずに US 配列として使う。US 配列から少しだけ手を加えている。
 
-### 3-8. `builtin-swap-semicolon-hyphen`
+US 配列のキーの位置のままにして、次の 3 つだけを変える。修飾キーと一緒に押しても同じように変わる。
 
-`-` と `;` だけを入れ替える。Shift を押したときは入れ替えず、`builtin-jis-symbols` が出す印字どおりの記号（`=` と `+`）のままにする。`src/stages.ts` では `builtin-jis-symbols` の下の段に置く。
-
-| 押すキー（印字） | 入力される記号 |
+| 押すキー（JIS の印字） | US 配列のどのキーとして扱うか |
 | - | - |
-| `-` | `;` |
-| `;` | `-` |
-| `Shift` + `-` | `=` |
-| `Shift` + `;` | `+` |
+| `¥` | `` ` `` / `~`（JIS には US 配列の `` ` `` / `~` のキーがないため） |
+| `-` | `;` / `:`（`;` のキーと入れ替え） |
+| `;` | `-` / `_`（`-` のキーと入れ替え） |
 
-Cmd や Ctrl を一緒に押しても入れ替える。たとえば Ghostty では `Cmd+;`（印字）で文字を縮小できる（`Cmd+-` が送られる）。
+さらに、JIS の `-` のキーは、文字を打つときだけ `:` を先にする。Cmd・Ctrl・Option と一緒に押したときは US 配列の `;` のキーのまま送るので、ショートカットはアプリの説明どおりのキーで使える。
 
-注意: `Cmd+Shift+;`（印字）や `Cmd+Shift+-`（印字）は、このルールも `builtin-jis-symbols` も何もしないので、押したキーのまま送られる。Ghostty の `cmd+shift+minus`（文字を拡大）が動くのは `Cmd+Shift+-`（印字）のほう。
+| 押し方（JIS の `-` のキー） | 入力されるもの |
+| - | - |
+| 単独 | `:` |
+| `Shift` と一緒 | `;` |
+| `Cmd` と一緒 | `Cmd+;` |
+| `Cmd+Shift` と一緒 | `Cmd+Shift+;`（= `Cmd+:`） |
 
-### 3-9. `slack-disable-esc`
+ほかのキーは US 配列の同じ位置のキーとして扱う。たとえば `^` のキーは `=` / `+`、`@` のキーは `[` / `{`、`:` のキーは `'` / `"`、`]` のキーは `\` / `|` になる。`_` のキーには何も割り当てていない。
+
+Cmd と一緒に押しても入れ替えるので、たとえば Ghostty では `Cmd+;`（印字）で文字を縮小できる（`Cmd+-` が送られる）。
+
+### 3-8. `slack-disable-esc`
 
 Slack が前面にあるときは、Esc キーを押しても何も起きないようにする。Esc でスレッドが閉じないようにするため。
 
@@ -182,11 +186,11 @@ Shift や Cmd と一緒に押したとき（たとえば `Shift+Esc` で全チ�
 
 `builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡るので出なくなる。
 
-### 3-10. `shift-backspace-to-delete`
+### 3-9. `shift-backspace-to-delete`
 
 `Shift+Backspace` で、カーソルの右の 1 文字を消す（Delete forward）。
 
-### 3-11. `ctrl-emacs`
+### 3-10. `ctrl-emacs`
 
 左 Ctrl を押しながらキーを押すと、矢印キーや削除キーになる。
 
@@ -201,7 +205,7 @@ Shift や Cmd と一緒に押したとき（たとえば `Shift+Esc` で全チ�
 
 注意： vim では cmd をうまく認識してくれないため、 ctrl A/E/U はうまくうごかない
 
-### 3-12. `magic-keyboard-disabled`
+### 3-11. `magic-keyboard-disabled`
 
 Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）のキーをすべて無効にする。Touch ID の指紋認証は使える。
 
@@ -211,7 +215,7 @@ Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）のキーをす
 
 注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。
 
-### 3-13. `chrome-arrow-tab-switch`
+### 3-12. `chrome-arrow-tab-switch`
 
 Chrome で `Cmd+↓` を押すと次のタブ（`Ctrl+Tab`）、`Cmd+↑` を押すと前のタブ（`Ctrl+Shift+Tab`）に移る。herdr でスペースを移るキー（`Cmd+↓` / `Cmd+↑`）とそろえるため。Chrome でのみ適用。
 
@@ -219,7 +223,7 @@ Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブ�
 
 注意: Chrome 本来の `Cmd+↓` / `Cmd+↑`（ページの一番下 / 一番上まで移る）は使えなくなる。
 
-### 3-14. `keyboard-cleaner`
+### 3-13. `keyboard-cleaner`
 
 キーボードを掃除するときに、すべてのキーボードのキーをすべて無効にする。
 
@@ -231,7 +235,7 @@ Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブ�
 
 注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。トラックパッドとマウスは無効にならない。
 
-### 3-15. `ime-composing`
+### 3-14. `ime-composing`
 
 日本語の入力途中（変換が確定する前）かどうかを、変数 `ime_composing` に記録する。`space-layer` がこの変数を使う。
 
@@ -240,32 +244,18 @@ Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブ�
 
 ほかのルールが出したアルファベットや英数キーも見て記録するため、`src/stages.ts` の一番下の段に置く。
 
-### 3-16. `chrome-zoom-in`
+### 3-15. `chrome-zoom-in`
 
 Chrome で `Cmd+Shift+;` か `Cmd+Shift+-` を押すと、ページを拡大する（Chrome の拡大のキー `Cmd+=` を送る）。Chrome でのみ適用。Ghostty の `cmd+shift+semicolon` / `cmd+shift+minus` の設定と同じ使い方になる。
 
 | キーボード | 縮小 | 拡大 |
 | - | - | - |
-| 内蔵キーボード | `Cmd+;`（印字。`builtin-swap-semicolon-hyphen` で `Cmd+-` になる） | `Cmd+Shift+;`（印字） |
+| 内蔵キーボード / Magic Keyboard | `Cmd+;`（印字。`builtin-custom-us-layout` で `Cmd+-` になる） | `Cmd+Shift+;`（印字） |
 | 外付けキーボード | `Cmd+-` | `Cmd+Shift+-` |
 
 注意: Chrome で `Cmd+Shift+-` を押したときの本来の動きは使えなくなる。
 
-### 3-17. `magic-keyboard-us-layout`
-
-JIS の Magic Keyboard with Touch ID（外付け。Vendor ID 1452 / Product ID 666）を、印字を直さずに US 配列として使う。試しに使っている設定。
-
-US 配列のキーの位置のままにして、次の 2 つだけを変える。修飾キーと一緒に押しても同じように変わる。
-
-| 押すキー（JIS の印字） | US 配列のどのキーとして扱うか |
-| - | - |
-| `¥` | `` ` `` / `~`（JIS には US 配列の `` ` `` / `~` のキーがないため） |
-| `-` | `;` / `:`（`;` のキーと入れ替え） |
-| `;` | `-` / `_`（`-` のキーと入れ替え） |
-
-ほかのキーは US 配列の同じ位置のキーとして扱う。たとえば `^` のキーは `=` / `+`、`@` のキーは `[` / `{`、`:` のキーは `'` / `"`、`]` のキーは `\` / `|` になる。`_` のキーには何も割り当てていない。
-
-### 3-18. `chrome-new-tab-in-group`
+### 3-16. `chrome-new-tab-in-group`
 
 Chrome で新しいタブを開くときに、タブグループに入れるかどうかを選べるようにする。Chrome でのみ適用。
 
@@ -276,7 +266,7 @@ Chrome で新しいタブを開くときに、タブグループに入れるか�
 
 Karabiner は今のタブがタブグループに入っているかどうかを調べられないので、拡張機能 `chrome/new-tab-in-group` のショートカット（`Option+Shift+T` / `Option+Shift+Y`）を送り、タブを開く処理は拡張機能が行う。この拡張機能を読み込んでいないと、`Cmd+T` / `Cmd+Ctrl+T` で何も起きない。ショートカットは `chrome://extensions/shortcuts` で確かめられる。
 
-### 3-19. `ime-disable-esc`
+### 3-17. `ime-disable-esc`
 
 日本語の入力途中（`ime-composing` の変数 `ime_composing` が 1 のとき）に Esc を押しても、何も起きないようにする。IME が Esc で入力途中の文字をすべて消してしまうのを防ぐため。
 
