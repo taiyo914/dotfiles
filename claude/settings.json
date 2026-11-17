@@ -89,6 +89,17 @@
           }
         ]
       }
+    ],
+    "ConfigChange": [
+      {
+        "matcher": "user_settings",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/scripts/strip-effort-from-settings.sh"
+          }
+        ]
+      }
     ]
   },
   "enableArtifact": false,
@@ -98,19 +109,13 @@
     "padding": 2,
     "refreshInterval": 1
   },
-  "effortLevel": "medium",
-  "modelSettings": {
-    "claude-fable-5-1": {
-      "effortLevel": "medium"
-    }
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
   },
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
   "preferredNotifChannel": "notifications_disabled",
   "skipAutoPermissionPrompt": true,
-  "notifications": "notifications_disabled",
-  "enabledPlugins": {
-    "ruby-lsp@claude-plugins-official": true
-  }
+  "notifications": "notifications_disabled"
 }
