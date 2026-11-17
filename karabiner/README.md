@@ -81,6 +81,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
 | `ctrl-j-to-enter` | `Ctrl+J` → Enter |
 | `ime-composing` | 日本語の入力途中かどうかを変数 `ime_composing` に記録する |
+| `ime-disable-esc` | 日本語の入力途中に Esc を押しても文字が消えないようにする |
 
 ## 3. 各ルールの使い方
 
@@ -283,3 +284,11 @@ Chrome で新しいタブを開くときに、タブグループに入れるか�
 | `Cmd+Ctrl+T` | タブグループのすぐ右（グループの外）に開く | 今のタブのすぐ右に開く |
 
 Karabiner は今のタブがタブグループに入っているかどうかを調べられないので、拡張機能 `chrome/new-tab-in-group` のショートカット（`Option+Shift+T` / `Option+Shift+Y`）を送り、タブを開く処理は拡張機能が行う。この拡張機能を読み込んでいないと、`Cmd+T` / `Cmd+Ctrl+T` で何も起きない。ショートカットは `chrome://extensions/shortcuts` で確かめられる。
+
+### 3-20. `ime-disable-esc`
+
+日本語の入力途中（`ime-composing` の変数 `ime_composing` が 1 のとき）に Esc を押しても、何も起きないようにする。IME が Esc で入力途中の文字をすべて消してしまうのを防ぐため。
+
+Esc を押すと `ime_composing` を 0 に戻すので、続けてもう一度 Esc を押すと、その Esc はそのまま出る。`ime_composing` は、マウスのクリックで確定したときや、Backspace で入力途中の文字を全部消したときなどに 1 のまま残る。そのときに Esc がずっと使えなくならないようにするため。
+
+`builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡る。

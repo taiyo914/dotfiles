@@ -12,6 +12,7 @@ import chromeZoomIn from './rules/chrome-zoom-in.ts'
 import ctrlEmacs from './rules/ctrl-emacs.ts'
 import ctrlJToEnter from './rules/ctrl-j-to-enter.ts'
 import imeComposing from './rules/ime-composing.ts'
+import imeDisableEsc from './rules/ime-disable-esc.ts'
 import keyboardCleaner from './rules/keyboard-cleaner.ts'
 import magicKeyboardDisabled from './rules/magic-keyboard-disabled.ts'
 import magicKeyboardUsLayout from './rules/magic-keyboard-us-layout.ts'
@@ -36,6 +37,6 @@ export const stages: Stage[] = [
   builtinSwapSemicolonHyphen,
   [ctrlEmacs, ctrlJToEnter, shiftBackspaceToDelete],
   [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn, chromeNewTabInGroup],
-  slackDisableEsc,
+  [slackDisableEsc, imeDisableEsc],
   imeComposing,
 ]
