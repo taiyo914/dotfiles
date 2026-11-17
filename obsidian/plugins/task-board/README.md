@@ -2,7 +2,7 @@
 
 `tasks/` フォルダのノートを1枚ずつのカードとして、Bases に次の3つの表示を追加するプラグイン。
 
-- **Kanban**: status ごとの列にカードを並べる。終わっていない `blocked_by` があるカードは自動で BLOCKED 列に表示する
+- **Kanban**: status ごとの列にカードを並べる。終わっていない `blocked_by` があるカードは自動で BLOCKED 列に表示する。WANT 列は TODO 列の下に表示する
 - **Dependencies**: `blocked_by` / `blocking` のつながりがあるカードだけを、先にやるカードから後でやるカードへ矢印でつないで表示する
 - **Task table**: Obsidian 本体の表と同じく、ノートを1行ずつ並べる。行は中身に合わせて伸び、長い文字は必要な分だけ折り返す
 
@@ -60,7 +60,7 @@
 
 ```yaml
 ---
-status: TODO        # BLOCKED / TODO / WIP / DONE / ARCHIVE
+status: TODO        # BLOCKED / TODO / WANT / WIP / DONE / ARCHIVE
 icon: 🛒            # カードのタイトルの前に表示する。空のままでもよい
 blocked_by:         # 先に終わらせる必要があるカード
   - "[[261108_作り方を調べる]]"
@@ -86,5 +86,5 @@ order: 1.5          # 列の中の順番。ドラッグで自動で書き換わ�
   - つながっているノートを削除すると、相手のノートからそのリンクが消える
   - リンクはファイル名だけの形（`[[261108_作り方を調べる]]`）にそろえる。表示名付きのリンク（`[[ファイル名|タイトル]]`）を入れると、ファイル名だけの形に自動で書き直す
 - DONE と ARCHIVE のカードは「終わったカード」として扱う
-- `blocked_by` に終わっていないカードがあると、status が TODO や WIP のままでも BLOCKED 列に表示する。`blocked_by` のカードが全部終わると、status の列に戻る
+- `blocked_by` に終わっていないカードがあると、status が WANT や TODO や WIP のままでも BLOCKED 列に表示する。`blocked_by` のカードが全部終わると、status の列に戻る
 - 依存カードがなくても、外部の都合で待っているカードは手で `status: BLOCKED` にできる

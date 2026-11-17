@@ -26,8 +26,11 @@ const TASK_FOLDER = "tasks";
 const BOARD_PATH = "tasks.base";
 const BOARD_TEMPLATE_FILE = "template.base";
 
-// カンバンの列。この順番で左から並べる
-const STATUSES = ["BLOCKED", "TODO", "WIP", "DONE", "ARCHIVE"];
+// status の一覧。メニューや選択肢はこの順番で並べる。WANT は「やりたいが TODO ほど急がない」カード
+const STATUSES = ["BLOCKED", "TODO", "WANT", "WIP", "DONE", "ARCHIVE"];
+
+// KANBAN の列の置き方。外側の1つが横に並ぶ1か所で、その中の status の列を上から下に積む
+const KANBAN_LANES = [["BLOCKED"], ["TODO", "WANT"], ["WIP"], ["DONE"], ["ARCHIVE"]];
 
 // この status のカードは「終わったカード」として扱い、他のカードをブロックしない
 const FINISHED_STATUSES = new Set(["DONE", "ARCHIVE"]);
@@ -927,13 +930,14 @@ class TaskKanbanView extends BasesView {
     this.columns = columns;
 
     this.rootEl.empty();
-    for (const status of STATUSES) {
-      this.renderColumn(status, columns.get(status), index);
+    for (const lane of KANBAN_LANES) {
+      const laneEl = this.rootEl.createDiv({ cls: "task-board-lane" });
+      for (const status of lane) this.renderColumn(laneEl, status, columns.get(status), index);
     }
   }
 
-  renderColumn(status, tasks, index) {
-    const columnEl = this.rootEl.createDiv({ cls: "task-board-column" });
+  renderColumn(laneEl, status, tasks, index) {
+    const columnEl = laneEl.createDiv({ cls: "task-board-column" });
     columnEl.dataset.status = status;
 
     const headerEl = columnEl.createDiv({ cls: "task-board-column-header" });

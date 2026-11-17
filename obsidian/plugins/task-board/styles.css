@@ -1,5 +1,6 @@
-/* 列ごとの色。BLOCKED はオレンジ、TODO はグレー、WIP は青、DONE は緑、ARCHIVE は赤 */
+/* 列ごとの色。BLOCKED はオレンジ、TODO はグレー、WANT は紫がかったグレー、WIP は青、DONE は緑、ARCHIVE は赤 */
 [data-status="BLOCKED"] { --tb-color: var(--color-orange); }
+[data-status="WANT"] { --tb-color: color-mix(in srgb, var(--text-muted) 50%, var(--color-purple)); }
 [data-status="TODO"] { --tb-color: var(--text-muted); }
 [data-status="WIP"] { --tb-color: var(--color-blue); }
 [data-status="DONE"] { --tb-color: var(--color-green); }
@@ -20,8 +21,16 @@
   height: 100%;
 }
 
+/* 横に並ぶ1か所。TODO と WANT のように、この中に列を縦に積む */
+.task-board-lane {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .task-board-column {
-  flex: 0 0 272px;
+  width: 272px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -64,7 +73,7 @@
 
 /* ARCHIVE 列はカードを表示しないので、幅を狭くして落とす場所だけを見せる */
 .task-board-column.is-hidden-column {
-  flex-basis: 180px;
+  width: 180px;
 }
 
 .task-board-hidden-hint {
