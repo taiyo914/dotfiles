@@ -87,6 +87,7 @@ https://brew.sh/ja/
 | bat                     | https://github.com/sharkdp/bat                       |
 | fd                      | https://github.com/sharkdp/fd                        |
 | ripgrep                 | https://github.com/BurntSushi/ripgrep                |
+| ast-grep                | https://ast-grep.github.io/                          |
 | jq                      | https://github.com/jqlang/jq                         |
 | ov                      | https://github.com/noborus/ov                        |
 | lazygit                 | https://github.com/jesseduffield/lazygit             |
