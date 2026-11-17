@@ -60,9 +60,9 @@ const DEPENDENCY_VIEW_TYPE = "task-dependencies";
 const TABLE_VIEW_TYPE = "task-table";
 const TASK_VIEW_TYPES = new Set([KANBAN_VIEW_TYPE, DEPENDENCY_VIEW_TYPE, TABLE_VIEW_TYPE]);
 
-// カードの右クリックメニューの区切り。task-board の項目を MENU_SECTION にまとめて一番上に出し、
+// カードの右クリックメニューの区切り。task-kanban の項目を MENU_SECTION にまとめて一番上に出し、
 // その下は Obsidian のファイル一覧のメニューと同じ並び（Obsidian 1.15 の中身から写したもの）にする
-const MENU_SECTION = "task-board";
+const MENU_SECTION = "task-kanban";
 const FILE_MENU_SECTIONS = ["title", "open", "action-primary", "action", "info", "info.copy", "view", "system", "", "danger"];
 
 // DEPENDENCIES の図のカードの幅と間隔（px）。高さが測れなかったときは GRAPH_CARD_MIN_HEIGHT として扱う
@@ -102,7 +102,7 @@ const LINK_SUGGESTION_LIMIT = 20;
 // ボードの右側のプレビューの幅（px）。ドラッグで変えた幅は、このパソコンの Obsidian に PREVIEW_WIDTH_KEY の名前で覚えておく
 const PREVIEW_DEFAULT_WIDTH = 520;
 const PREVIEW_MIN_WIDTH = 320;
-const PREVIEW_WIDTH_KEY = "task-board-preview-width";
+const PREVIEW_WIDTH_KEY = "task-kanban-preview-width";
 
 
 function isTaskFile(file) {
@@ -488,16 +488,16 @@ class NewTaskModal extends Modal {
 
   onOpen() {
     this.titleEl.setText(`新しいタスク（${this.status}）`);
-    this.modalEl.addClass("task-board-new-task");
+    this.modalEl.addClass("task-kanban-new-task");
 
     // 絵文字のボタンとタイトルの入力欄
-    const titleRowEl = this.contentEl.createDiv({ cls: "task-board-new-title-row" });
-    this.iconButtonEl = titleRowEl.createEl("button", { cls: "task-board-new-icon", attr: { "aria-label": "絵文字を選ぶ" } });
+    const titleRowEl = this.contentEl.createDiv({ cls: "task-kanban-new-title-row" });
+    this.iconButtonEl = titleRowEl.createEl("button", { cls: "task-kanban-new-icon", attr: { "aria-label": "絵文字を選ぶ" } });
     this.iconButtonEl.addEventListener("click", () => this.pickIcon());
     this.renderIconButton();
     this.titleInputEl = titleRowEl.createEl("input", {
       type: "text",
-      cls: "task-board-title-input",
+      cls: "task-kanban-title-input",
       attr: { placeholder: "タイトル" }
     });
 
@@ -515,9 +515,9 @@ class NewTaskModal extends Modal {
     });
 
     // 本文の入力欄。Enter では作成せず改行する
-    const bodyFieldEl = this.contentEl.createDiv({ cls: "task-board-new-field" });
-    bodyFieldEl.createDiv({ cls: "task-board-new-field-label", text: "content" });
-    this.bodyInputEl = bodyFieldEl.createEl("textarea", { cls: "task-board-new-body", attr: { rows: 5 } });
+    const bodyFieldEl = this.contentEl.createDiv({ cls: "task-kanban-new-field" });
+    bodyFieldEl.createDiv({ cls: "task-kanban-new-field-label", text: "content" });
+    this.bodyInputEl = bodyFieldEl.createEl("textarea", { cls: "task-kanban-new-body", attr: { rows: 5 } });
 
     // 作成ボタンと、キーボードで作る操作。日本語入力の変換を確定する Enter では作成しない
     const buttonsEl = this.contentEl.createDiv({ cls: "modal-button-container" });
@@ -577,9 +577,9 @@ class TaskLinkInput {
     this.app = app;
     this.paths = [];
 
-    const fieldEl = containerEl.createDiv({ cls: "task-board-new-field" });
-    fieldEl.createDiv({ cls: "task-board-new-field-label", text: label });
-    this.boxEl = fieldEl.createDiv({ cls: "task-board-new-links" });
+    const fieldEl = containerEl.createDiv({ cls: "task-kanban-new-field" });
+    fieldEl.createDiv({ cls: "task-kanban-new-field-label", text: label });
+    this.boxEl = fieldEl.createDiv({ cls: "task-kanban-new-links" });
     this.inputEl = this.boxEl.createEl("input", { type: "text", attr: { placeholder } });
     // 札の横の空いているところを押しても入力欄に入れるようにする
     this.boxEl.addEventListener("click", (evt) => {
@@ -607,16 +607,16 @@ class TaskLinkInput {
   }
 
   renderChips() {
-    this.boxEl.querySelectorAll(".task-board-new-chip").forEach((el) => el.remove());
+    this.boxEl.querySelectorAll(".task-kanban-new-chip").forEach((el) => el.remove());
     for (const path of this.paths) {
       const file = this.app.vault.getFileByPath(path);
       if (!file) continue;
       const task = readTask(this.app, file);
 
-      const chipEl = createDiv({ cls: "task-board-new-chip" });
+      const chipEl = createDiv({ cls: "task-kanban-new-chip" });
       if (task.icon) chipEl.createSpan({ text: task.icon });
-      chipEl.createSpan({ cls: "task-board-new-chip-text", text: task.title });
-      const removeEl = chipEl.createSpan({ cls: "task-board-new-chip-remove", attr: { "aria-label": "外す" } });
+      chipEl.createSpan({ cls: "task-kanban-new-chip-text", text: task.title });
+      const removeEl = chipEl.createSpan({ cls: "task-kanban-new-chip-remove", attr: { "aria-label": "外す" } });
       setIcon(removeEl, "x");
       removeEl.addEventListener("click", () => {
         this.remove(path);
@@ -653,11 +653,11 @@ class TaskFileSuggest extends AbstractInputSuggest {
   }
 
   renderSuggestion(task, el) {
-    el.addClass("task-board-link-suggestion");
-    el.createSpan({ cls: "task-board-link-suggestion-icon", text: task.icon });
-    el.createSpan({ cls: "task-board-link-suggestion-title", text: task.title });
+    el.addClass("task-kanban-link-suggestion");
+    el.createSpan({ cls: "task-kanban-link-suggestion-icon", text: task.icon });
+    el.createSpan({ cls: "task-kanban-link-suggestion-title", text: task.title });
     const status = displayStatus(task, this.taskIndex);
-    const pillEl = el.createSpan({ cls: "task-board-pill is-small" });
+    const pillEl = el.createSpan({ cls: "task-kanban-pill is-small" });
     pillEl.dataset.status = status;
     pillEl.createSpan({ text: status });
   }
@@ -703,7 +703,7 @@ class EmojiSuggestModal extends SuggestModal {
   constructor(app, { label, title, candidates, search, onChoose, onClosed }) {
     super(app);
     // どのノートの絵文字を選んでいるかを、入力欄の上に小さく出す
-    this.modalEl.prepend(createDiv({ cls: "task-board-emoji-target", text: label }));
+    this.modalEl.prepend(createDiv({ cls: "task-kanban-emoji-target", text: label }));
     this.title = title;
     this.candidates = candidates ?? [];
     this.search = search;
@@ -756,20 +756,20 @@ class EmojiSuggestModal extends SuggestModal {
   }
 
   renderSuggestion(item, el) {
-    el.addClass("task-board-emoji-suggestion");
+    el.addClass("task-kanban-emoji-suggestion");
     el.toggleClass("is-message", item.kind === "message");
     el.toggleClass("is-error", Boolean(item.isError));
     // 検索中の項目は押せないが、押した項目を選んだままに見せるため、薄い表示にはしない
     el.toggleClass("is-disabled", Boolean(item.disabled && !item.loading));
-    const markEl = el.createSpan({ cls: "task-board-emoji-suggestion-emoji" });
-    if (item.loading) markEl.createSpan({ cls: "task-board-spinner" });
+    const markEl = el.createSpan({ cls: "task-kanban-emoji-suggestion-emoji" });
+    if (item.loading) markEl.createSpan({ cls: "task-kanban-spinner" });
     else if (item.kind === "emoji") markEl.setText(item.emoji);
     else if (item.kind === "input" && isSingleEmoji(item.emoji)) markEl.setText(item.emoji);
     else if (item.kind === "input") setIcon(markEl, "corner-down-left");
     else if (item.kind === "search-input") setIcon(markEl, "search");
     else if (item.kind === "search-title") setIcon(markEl, "sparkles");
     else if (item.kind === "remove") setIcon(markEl, "x");
-    el.createSpan({ cls: "task-board-emoji-suggestion-name", text: item.name });
+    el.createSpan({ cls: "task-kanban-emoji-suggestion-name", text: item.name });
   }
 
   // 入力した絵文字を使うとき、候補を探すとき、案内の行では画面を閉じない。それ以外は通常どおり閉じて onChooseSuggestion に進む
@@ -847,9 +847,9 @@ class EmojiSuggestModal extends SuggestModal {
 }
 
 function renderCardTitle(containerEl, task) {
-  const titleEl = containerEl.createDiv({ cls: "task-board-card-title" });
-  if (task.icon) titleEl.createSpan({ cls: "task-board-card-icon", text: task.icon });
-  titleEl.createSpan({ cls: "task-board-card-text", text: task.title });
+  const titleEl = containerEl.createDiv({ cls: "task-kanban-card-title" });
+  if (task.icon) titleEl.createSpan({ cls: "task-kanban-card-icon", text: task.icon });
+  titleEl.createSpan({ cls: "task-kanban-card-text", text: task.title });
 }
 
 function renderRelations(plugin, preview, containerEl, task, index) {
@@ -859,18 +859,18 @@ function renderRelations(plugin, preview, containerEl, task, index) {
   ];
   if (relations.length === 0) return;
 
-  const listEl = containerEl.createDiv({ cls: "task-board-relations" });
+  const listEl = containerEl.createDiv({ cls: "task-kanban-relations" });
   for (const { path, kind } of relations) {
     const other = index.get(path);
     if (!other) continue;
 
-    const rowEl = listEl.createDiv({ cls: "task-board-relation" });
+    const rowEl = listEl.createDiv({ cls: "task-kanban-relation" });
     rowEl.toggleClass("is-finished", isFinished(other));
     rowEl.setAttr("aria-label", kind === "blocked_by" ? "先にやるカード" : "このカードを待っているカード");
-    const markEl = rowEl.createSpan({ cls: "task-board-relation-mark" });
+    const markEl = rowEl.createSpan({ cls: "task-kanban-relation-mark" });
     setIcon(markEl, kind === "blocked_by" ? (isFinished(other) ? "check" : "lock") : "arrow-right");
     if (other.icon) rowEl.createSpan({ text: other.icon });
-    rowEl.createSpan({ cls: "task-board-relation-text", text: other.title });
+    rowEl.createSpan({ cls: "task-kanban-relation-text", text: other.title });
 
     rowEl.addEventListener("click", (evt) => {
       evt.stopPropagation();
@@ -916,10 +916,10 @@ function addStatusItems(menu, currentStatus, writeStatus) {
 function showTaskMenu(plugin, file, evt, setStatus) {
   evt.preventDefault();
   const menu = new Menu();
-  // task-board の項目を一番上に出すため、ファイル一覧のメニューと同じ並びの先頭に task-board の区切りを足す。
+  // task-kanban の項目を一番上に出すため、ファイル一覧のメニューと同じ並びの先頭に task-kanban の区切りを足す。
   // addSections は公開 API ではないので、無いときは Obsidian の決めた順番のままにする
   menu.addSections?.([MENU_SECTION, ...FILE_MENU_SECTIONS]);
-  plugin.app.workspace.trigger("file-menu", menu, file, "task-board");
+  plugin.app.workspace.trigger("file-menu", menu, file, "task-kanban");
   if (isTaskFile(file)) {
     const writeStatus =
       setStatus ??
@@ -955,13 +955,13 @@ class TaskPreview extends Component {
     this.content = null;
 
     // プレビューの枠、幅を変えるつまみ、上のボタン、ノートの中身を出す場所
-    this.paneEl = splitEl.createDiv({ cls: "task-board-preview" });
+    this.paneEl = splitEl.createDiv({ cls: "task-kanban-preview" });
     this.paneEl.hide();
-    this.attachResizer(this.paneEl.createDiv({ cls: "task-board-preview-resizer" }));
-    const headerEl = this.paneEl.createDiv({ cls: "task-board-preview-header" });
+    this.attachResizer(this.paneEl.createDiv({ cls: "task-kanban-preview-resizer" }));
+    const headerEl = this.paneEl.createDiv({ cls: "task-kanban-preview-header" });
     this.addHeaderButton(headerEl, "maximize-2", "フルページで開く", () => this.openFullPage());
     this.addHeaderButton(headerEl, "x", "閉じる", () => this.close());
-    this.bodyEl = this.paneEl.createDiv({ cls: "task-board-preview-body" });
+    this.bodyEl = this.paneEl.createDiv({ cls: "task-kanban-preview-body" });
     this.attachLinkHandler();
   }
 
@@ -1126,7 +1126,7 @@ class TaskPreview extends Component {
 
 // ボードの表示を描く場所と、その右側のプレビューを横に並べ、ボードの表示を描く要素を返す
 function createBoardLayout(view, containerEl, rootAttrs) {
-  const splitEl = containerEl.createDiv({ cls: "task-board-split" });
+  const splitEl = containerEl.createDiv({ cls: "task-kanban-split" });
   const rootEl = splitEl.createDiv(rootAttrs);
   view.preview = view.addChild(new TaskPreview(view, splitEl));
   return rootEl;
@@ -1141,8 +1141,8 @@ class TaskKanbanView extends BasesView {
     super(controller);
     this.type = KANBAN_VIEW_TYPE;
     this.plugin = plugin;
-    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-board-kanban" });
-    this.dropIndicatorEl = createDiv({ cls: "task-board-drop-indicator" });
+    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-kanban-kanban" });
+    this.dropIndicatorEl = createDiv({ cls: "task-kanban-drop-indicator" });
   }
 
   onDataUpdated() {
@@ -1162,39 +1162,39 @@ class TaskKanbanView extends BasesView {
 
     this.rootEl.empty();
     for (const lane of KANBAN_LANES) {
-      const laneEl = this.rootEl.createDiv({ cls: "task-board-lane" });
+      const laneEl = this.rootEl.createDiv({ cls: "task-kanban-lane" });
       for (const status of lane) this.renderColumn(laneEl, status, columns.get(status), index);
     }
   }
 
   renderColumn(laneEl, status, tasks, index) {
-    const columnEl = laneEl.createDiv({ cls: "task-board-column" });
+    const columnEl = laneEl.createDiv({ cls: "task-kanban-column" });
     columnEl.dataset.status = status;
 
-    const headerEl = columnEl.createDiv({ cls: "task-board-column-header" });
-    const pillEl = headerEl.createSpan({ cls: "task-board-pill" });
+    const headerEl = columnEl.createDiv({ cls: "task-kanban-column-header" });
+    const pillEl = headerEl.createSpan({ cls: "task-kanban-pill" });
     pillEl.dataset.status = status;
-    pillEl.createSpan({ cls: "task-board-pill-dot" });
+    pillEl.createSpan({ cls: "task-kanban-pill-dot" });
     pillEl.createSpan({ text: status });
-    headerEl.createSpan({ cls: "task-board-column-count", text: String(tasks.length) });
+    headerEl.createSpan({ cls: "task-kanban-column-count", text: String(tasks.length) });
 
     // ARCHIVE は片付け済みのカードの置き場所なので、カードは表示せず、落とす場所としてだけ使う
     if (status === HIDDEN_STATUS) {
       columnEl.addClass("is-hidden-column");
-      columnEl.createDiv({ cls: "task-board-hidden-hint", text: "Drop here" });
+      columnEl.createDiv({ cls: "task-kanban-hidden-hint", text: "Drop here" });
       this.attachDropTarget(columnEl, null, status, index);
       return;
     }
 
     if (status === "DONE" && tasks.length > 0) {
-      const archiveEl = headerEl.createSpan({ cls: "task-board-header-button", attr: { "aria-label": "全部アーカイブ" } });
+      const archiveEl = headerEl.createSpan({ cls: "task-kanban-header-button", attr: { "aria-label": "全部アーカイブ" } });
       setIcon(archiveEl, "archive");
       archiveEl.addEventListener("click", () => this.archiveAll(tasks));
     }
 
     for (const task of tasks) this.renderCard(columnEl, task, index);
 
-    const addEl = columnEl.createDiv({ cls: "task-board-add" });
+    const addEl = columnEl.createDiv({ cls: "task-kanban-add" });
     setIcon(addEl.createSpan(), "plus");
     addEl.createSpan({ text: "新規ページ" });
     addEl.addEventListener("click", () => this.plugin.promptNewTask(status));
@@ -1212,7 +1212,7 @@ class TaskKanbanView extends BasesView {
   }
 
   renderCard(columnEl, task, index) {
-    const cardEl = columnEl.createDiv({ cls: "task-board-card" });
+    const cardEl = columnEl.createDiv({ cls: "task-kanban-card" });
     cardEl.dataset.path = task.file.path;
     cardEl.toggleClass("is-waiting", unfinishedBlockers(task, index).length > 0);
     cardEl.toggleClass("is-stale", isStaleDone(task));
@@ -1243,7 +1243,7 @@ class TaskKanbanView extends BasesView {
       columnEl.addClass("is-drop-target");
       if (status === HIDDEN_STATUS) return;
 
-      const cardEls = [...columnEl.querySelectorAll(".task-board-card")].filter(
+      const cardEls = [...columnEl.querySelectorAll(".task-kanban-card")].filter(
         (el) => el.dataset.path !== this.draggingPath
       );
       const insertAt = cardEls.findIndex((el) => {
@@ -1397,7 +1397,7 @@ class TaskDependencyView extends BasesView {
     super(controller);
     this.type = DEPENDENCY_VIEW_TYPE;
     this.plugin = plugin;
-    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-board-dependencies" });
+    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-kanban-dependencies" });
   }
 
   onDataUpdated() {
@@ -1434,7 +1434,7 @@ class TaskDependencyView extends BasesView {
 
     this.rootEl.empty();
     if (groups.length === 0) {
-      this.rootEl.createDiv({ cls: "task-board-empty", text: "依存関係のあるカードはありません" });
+      this.rootEl.createDiv({ cls: "task-kanban-empty", text: "依存関係のあるカードはありません" });
       return;
     }
     for (const group of groups) {
@@ -1447,7 +1447,7 @@ class TaskDependencyView extends BasesView {
   // タイトルの長さでカードの高さが変わるので、先にカードを置いて高さを測ってから位置を決める
   renderGroup(nodes, edges, order, index) {
     const layers = assignLayers(nodes, edges, order);
-    const groupEl = this.rootEl.createDiv({ cls: "task-board-graph" });
+    const groupEl = this.rootEl.createDiv({ cls: "task-kanban-graph" });
 
     const cardEls = new Map();
     const heights = new Map();
@@ -1481,9 +1481,9 @@ class TaskDependencyView extends BasesView {
   }
 
   renderArrows(groupEl, edges, positions, index, width, height) {
-    const svg = createSvgElement("svg", { class: "task-board-arrows", width, height });
+    const svg = createSvgElement("svg", { class: "task-kanban-arrows", width, height });
     const defs = createSvgElement("defs", {});
-    for (const id of ["task-board-arrowhead", "task-board-arrowhead-finished"]) {
+    for (const id of ["task-kanban-arrowhead", "task-kanban-arrowhead-finished"]) {
       const marker = createSvgElement("marker", {
         id,
         class: id,
@@ -1510,8 +1510,8 @@ class TaskDependencyView extends BasesView {
       const finished = isFinished(index.get(from));
       const path = createSvgElement("path", {
         d: `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`,
-        class: finished ? "task-board-arrow is-finished" : "task-board-arrow",
-        "marker-end": finished ? "url(#task-board-arrowhead-finished)" : "url(#task-board-arrowhead)"
+        class: finished ? "task-kanban-arrow is-finished" : "task-kanban-arrow",
+        "marker-end": finished ? "url(#task-kanban-arrowhead-finished)" : "url(#task-kanban-arrowhead)"
       });
       svg.appendChild(path);
     }
@@ -1519,15 +1519,15 @@ class TaskDependencyView extends BasesView {
   }
 
   renderNode(groupEl, task, index) {
-    const cardEl = groupEl.createDiv({ cls: "task-board-card task-board-graph-card" });
+    const cardEl = groupEl.createDiv({ cls: "task-kanban-card task-kanban-graph-card" });
     cardEl.style.width = `${GRAPH_CARD_WIDTH}px`;
     cardEl.toggleClass("is-waiting", unfinishedBlockers(task, index).length > 0);
     cardEl.toggleClass("is-finished", isFinished(task));
 
     const status = displayStatus(task, index);
-    const pillEl = cardEl.createSpan({ cls: "task-board-pill is-small" });
+    const pillEl = cardEl.createSpan({ cls: "task-kanban-pill is-small" });
     pillEl.dataset.status = status;
-    pillEl.createSpan({ cls: "task-board-pill-dot" });
+    pillEl.createSpan({ cls: "task-kanban-pill-dot" });
     pillEl.createSpan({ text: status });
 
     renderCardTitle(cardEl, task);
@@ -1547,7 +1547,7 @@ class TaskTableView extends BasesView {
     this.type = TABLE_VIEW_TYPE;
     this.plugin = plugin;
     // 表のどこかをクリックしたら表にフォーカスが移り、cmd + z を受け取れるようにする
-    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-board-table-wrap", attr: { tabIndex: 0 } });
+    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-kanban-table-wrap", attr: { tabIndex: 0 } });
     this.renderPending = false;
     this.undoStack = [];
     this.redoStack = [];
@@ -1628,7 +1628,7 @@ class TaskTableView extends BasesView {
     const widths = this.columnWidths(properties);
 
     this.rootEl.empty();
-    const tableEl = this.rootEl.createEl("table", { cls: "task-board-table" });
+    const tableEl = this.rootEl.createEl("table", { cls: "task-kanban-table" });
     const setTableWidth = () => {
       tableEl.style.width = `${properties.reduce((sum, property) => sum + widths[property], 0)}px`;
     };
@@ -1649,7 +1649,7 @@ class TaskTableView extends BasesView {
       // 行のどこを右クリックしても、その行のノートのメニューを出す。
       // ただし入力欄の中は、そこに並んだ別のノートへのリンクを消してしまわないように、入力欄のメニューに任せる
       rowEl.addEventListener("contextmenu", (evt) => {
-        if (evt.defaultPrevented || evt.target.closest?.(".task-board-table-editor")) return;
+        if (evt.defaultPrevented || evt.target.closest?.(".task-kanban-table-editor")) return;
         showTaskMenu(this.plugin, entry.file, evt, (status) => this.writeProperty(entry.file, "status", status));
       });
       for (const property of properties) {
@@ -1672,7 +1672,7 @@ class TaskTableView extends BasesView {
 
   // 見出しの右端をドラッグして列の幅を変え、離したときに .base ファイルに保存する
   attachResizeHandle(thEl, colEl, property, widths, setTableWidth) {
-    const handleEl = thEl.createDiv({ cls: "task-board-table-resize" });
+    const handleEl = thEl.createDiv({ cls: "task-kanban-table-resize" });
     handleEl.addEventListener("pointerdown", (evt) => {
       evt.preventDefault();
       handleEl.setPointerCapture(evt.pointerId);
@@ -1700,10 +1700,10 @@ class TaskTableView extends BasesView {
     const { type, name } = parsePropertyId(property);
 
     if (type === "file" && (name === "name" || name === "basename")) {
-      const nameEl = cellEl.createDiv({ cls: "task-board-table-name" });
+      const nameEl = cellEl.createDiv({ cls: "task-kanban-table-name" });
       if (task) this.renderIconButton(nameEl, task);
       // 右クリックは行のメニュー（status の変更を cmd + z で戻せる）に任せるので、ここではクリックだけ受け取る
-      const linkEl = nameEl.createSpan({ cls: "task-board-table-link", text: entry.file.basename });
+      const linkEl = nameEl.createSpan({ cls: "task-kanban-table-link", text: entry.file.basename });
       linkEl.addEventListener("click", (evt) => this.plugin.openTask(entry.file, evt, this.preview));
       return;
     }
@@ -1735,7 +1735,7 @@ class TaskTableView extends BasesView {
     const widget = this.app.metadataTypeManager?.getTypeInfo?.(key, value)?.inferred;
     if (typeof widget?.render !== "function") return false;
 
-    const editorEl = cellEl.createDiv({ cls: "metadata-property-value task-board-table-editor" });
+    const editorEl = cellEl.createDiv({ cls: "metadata-property-value task-kanban-table-editor" });
     editorEl.setAttr("data-property-type", widget.type);
     let savedJson = JSON.stringify(value);
     try {
@@ -1763,7 +1763,7 @@ class TaskTableView extends BasesView {
 
   // ファイル名の前の絵文字。クリックすると絵文字を選ぶ画面を開く。絵文字がない行は、マウスを乗せたときだけ選ぶボタンを出す
   renderIconButton(nameEl, task) {
-    const iconEl = nameEl.createSpan({ cls: "task-board-table-icon", attr: { "aria-label": "絵文字を選ぶ" } });
+    const iconEl = nameEl.createSpan({ cls: "task-kanban-table-icon", attr: { "aria-label": "絵文字を選ぶ" } });
     if (task.icon) {
       iconEl.setText(task.icon);
     } else {
@@ -1778,7 +1778,7 @@ class TaskTableView extends BasesView {
 
   renderStatusSelect(cellEl, task) {
     cellEl.addClass("is-compact");
-    const selectEl = cellEl.createEl("select", { cls: "dropdown task-board-table-status" });
+    const selectEl = cellEl.createEl("select", { cls: "dropdown task-kanban-table-status" });
     selectEl.dataset.status = task.status;
     for (const status of STATUSES) selectEl.createEl("option", { value: status, text: status });
     selectEl.value = task.status;
@@ -1787,16 +1787,16 @@ class TaskTableView extends BasesView {
 
   // つながりのあるノートを、クリックで開けるリンクと小さい × ボタンの組で並べる
   renderLinkChips(cellEl, task, key) {
-    const listEl = cellEl.createDiv({ cls: "task-board-table-chips" });
+    const listEl = cellEl.createDiv({ cls: "task-kanban-table-chips" });
     for (const path of task[key]) {
       const other = this.app.vault.getFileByPath(path);
       if (!other) continue;
 
-      const chipEl = listEl.createDiv({ cls: "task-board-table-chip" });
-      const linkEl = chipEl.createSpan({ cls: "task-board-table-link", text: other.basename });
+      const chipEl = listEl.createDiv({ cls: "task-kanban-table-chip" });
+      const linkEl = chipEl.createSpan({ cls: "task-kanban-table-link", text: other.basename });
       attachCardActions(this.plugin, this.preview, linkEl, other);
 
-      const removeEl = chipEl.createSpan({ cls: "task-board-table-chip-remove", attr: { "aria-label": "つながりを外す" } });
+      const removeEl = chipEl.createSpan({ cls: "task-kanban-table-chip-remove", attr: { "aria-label": "つながりを外す" } });
       setIcon(removeEl, "x");
       removeEl.addEventListener("click", (evt) => {
         evt.stopPropagation();
@@ -1812,7 +1812,7 @@ class TaskTableView extends BasesView {
 // プラグイン
 // ---------------------------------------------------------------------------
 
-module.exports = class TaskBoardPlugin extends Plugin {
+module.exports = class TaskKanbanPlugin extends Plugin {
   async onload() {
     this.sync = new LinkSync(this.app);
 
@@ -1901,7 +1901,7 @@ module.exports = class TaskBoardPlugin extends Plugin {
   }
 
   // Bases のツールバーの「新規」は、表示に関係なく「無題のファイル」を作る。
-  // task-board の表示を出しているときだけ、カンバンの「+ 新規ページ」と同じ入力画面に置き換える。
+  // task-kanban の表示を出しているときだけ、カンバンの「+ 新規ページ」と同じ入力画面に置き換える。
   // ボタンは公開 API ではない controller.viewHeaderEl の中から探し、見つからなければ何もしない
   takeOverNewButton(controller) {
     this.controllersWithNewButton ??= new WeakSet();

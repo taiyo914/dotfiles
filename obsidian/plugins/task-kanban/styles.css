@@ -21,18 +21,18 @@
 }
 
 /* ボードの表示と右側のプレビューを横に並べる。ボードの表示は、プレビューの残りの幅いっぱいに広げる */
-.task-board-split {
+.task-kanban-split {
   display: flex;
   height: 100%;
 }
 
-.task-board-split > :not(.task-board-preview) {
+.task-kanban-split > :not(.task-kanban-preview) {
   flex: 1 1 auto;
   min-width: 0;
 }
 
 /* プレビュー。幅はドラッグで変えられるが、ボードが見えなくならないように全体の 70% までにする */
-.task-board-preview {
+.task-kanban-preview {
   position: relative;
   flex: none;
   display: flex;
@@ -43,7 +43,7 @@
 }
 
 /* プレビューの左端の、幅を変えるつまみ */
-.task-board-preview-resizer {
+.task-kanban-preview-resizer {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -53,13 +53,13 @@
   z-index: 1;
 }
 
-.task-board-preview-resizer:hover,
-.task-board-preview-resizer.is-dragging {
+.task-kanban-preview-resizer:hover,
+.task-kanban-preview-resizer.is-dragging {
   background: var(--interactive-accent);
 }
 
 /* 「フルページで開く」と「閉じる」のボタンを右上に並べる */
-.task-board-preview-header {
+.task-kanban-preview-header {
   display: flex;
   justify-content: flex-end;
   gap: 4px;
@@ -68,58 +68,58 @@
 
 /* ふつうのノートの画面と同じく、ノートの部品をプレビューの高さいっぱいに広げ、スクロールはノートの部品の中でさせる。
    外側でスクロールさせると、本文が短いときにノートの部品がスクロールを受け取ってしまい、スクロールできなくなる */
-.task-board-preview-body {
+.task-kanban-preview-body {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
 }
 
-.task-board-preview-body > div {
+.task-kanban-preview-body > div {
   flex: 1 1 auto;
   min-height: 0;
 }
 
 /* ノートの埋め込みの枠と高さの上限を外して、ふつうのノートの画面のように見せる */
-.task-board-preview-body .markdown-embed {
+.task-kanban-preview-body .markdown-embed {
   border: none;
   padding: 0;
 }
 
-.task-board-preview-body .markdown-embed-content {
+.task-kanban-preview-body .markdown-embed-content {
   height: 100%;
   max-height: none;
 }
 
-.task-board-preview-body .markdown-embed .markdown-preview-view,
-.task-board-preview-body .markdown-embed .cm-scroller {
+.task-kanban-preview-body .markdown-embed .markdown-preview-view,
+.task-kanban-preview-body .markdown-embed .cm-scroller {
   padding: 0 32px;
 }
 
 /* ノートの最後の下に、画面の高さの半分の余白を付ける。本文が短くても下にスクロールでき、最後の行を画面の真ん中まで上げられる */
-.task-board-preview-body .markdown-embed .cm-sizer,
-.task-board-preview-body .markdown-embed .markdown-preview-sizer {
+.task-kanban-preview-body .markdown-embed .cm-sizer,
+.task-kanban-preview-body .markdown-embed .markdown-preview-sizer {
   padding-bottom: 50vh;
 }
 
 /* 書き換えられないときの表示（ノートの埋め込みが使えないとき） */
-.task-board-preview-body > .markdown-rendered {
+.task-kanban-preview-body > .markdown-rendered {
   overflow: auto;
   padding: 0 32px 32px;
 }
 
 /* ノートの埋め込みでは本体がタイトルを隠すので、プレビューでは出してその場で名前を変えられるようにする */
-.task-board-preview-body .inline-title {
+.task-kanban-preview-body .inline-title {
   display: block;
 }
 
 /* 埋め込みの右上の「リンクを開く」ボタンは、ボードのタブの中身をノートに入れ替えてしまうので隠す。代わりにプレビューの右上の「フルページで開く」を使う */
-.task-board-preview-body .markdown-embed-link {
+.task-kanban-preview-body .markdown-embed-link {
   display: none;
 }
 
 /* KANBAN: 列を横に並べ、入りきらないときは横にスクロールする */
-.task-board-kanban {
+.task-kanban-kanban {
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -129,14 +129,14 @@
 }
 
 /* 横に並ぶ1か所。TODO と WANT のように、この中に列を縦に積む */
-.task-board-lane {
+.task-kanban-lane {
   flex: none;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.task-board-column {
+.task-kanban-column {
   width: 272px;
   display: flex;
   flex-direction: column;
@@ -146,24 +146,24 @@
   background: color-mix(in srgb, var(--tb-color) 7%, transparent);
 }
 
-.task-board-column.is-drop-target {
+.task-kanban-column.is-drop-target {
   outline: 2px solid color-mix(in srgb, var(--tb-color) 60%, transparent);
 }
 
-.task-board-column-header {
+.task-kanban-column-header {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 2px 4px 4px;
 }
 
-.task-board-column-count {
+.task-kanban-column-count {
   color: var(--tb-color);
   font-size: var(--font-ui-small);
 }
 
 /* 列名の右端に置くボタン（DONE の「全部アーカイブ」） */
-.task-board-header-button {
+.task-kanban-header-button {
   display: inline-flex;
   margin-left: auto;
   padding: 4px;
@@ -173,17 +173,17 @@
   --icon-size: 14px;
 }
 
-.task-board-header-button:hover {
+.task-kanban-header-button:hover {
   background: color-mix(in srgb, var(--tb-color) 15%, transparent);
   color: var(--text-normal);
 }
 
 /* ARCHIVE 列はカードを表示しないので、幅を狭くして落とす場所だけを見せる */
-.task-board-column.is-hidden-column {
+.task-kanban-column.is-hidden-column {
   width: 180px;
 }
 
-.task-board-hidden-hint {
+.task-kanban-hidden-hint {
   padding: 16px 8px;
   border: 1px dashed color-mix(in srgb, var(--tb-color) 40%, transparent);
   border-radius: 6px;
@@ -194,7 +194,7 @@
 
 /* 列名やカードの status を表す丸付きのラベル */
 /* 文字の上下のすき間がフォントによって偏るので、行の高さを文字の高さちょうどにして、上下の余白を同じにする */
-.task-board-pill {
+.task-kanban-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -206,13 +206,13 @@
   background: color-mix(in srgb, var(--tb-color) 15%, transparent);
 }
 
-.task-board-pill.is-small {
+.task-kanban-pill.is-small {
   padding: 3px 8px;
   font-size: var(--font-ui-smaller);
   align-self: flex-start;
 }
 
-.task-board-pill-dot {
+.task-kanban-pill-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -220,7 +220,7 @@
 }
 
 /* カード。終わっていない blocked_by があるカードだけ赤っぽくする */
-.task-board-card {
+.task-kanban-card {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -232,34 +232,34 @@
   cursor: pointer;
 }
 
-.task-board-card:hover {
+.task-kanban-card:hover {
   background: var(--background-primary-alt);
 }
 
-.task-board-card.is-waiting {
+.task-kanban-card.is-waiting {
   background: color-mix(in srgb, var(--color-red) 8%, var(--background-primary));
 }
 
 /* DONE になってから7日たったカード（アーカイブし忘れ）。BLOCKED の薄い赤と見分けられるように、枠も赤くする */
-.task-board-card.is-stale {
+.task-kanban-card.is-stale {
   background: color-mix(in srgb, var(--color-red) 10%, var(--background-primary));
   border-color: color-mix(in srgb, var(--color-red) 35%, var(--background-modifier-border));
 }
 
 
-.task-board-card.is-dragging {
+.task-kanban-card.is-dragging {
   opacity: 0.4;
 }
 
 /* ドラッグ中に、カードが入る位置に表示する線 */
-.task-board-drop-indicator {
+.task-kanban-drop-indicator {
   height: 3px;
   margin: -5px 4px;
   border-radius: 2px;
   background: var(--interactive-accent);
 }
 
-.task-board-card-title {
+.task-kanban-card-title {
   display: flex;
   gap: 6px;
   font-weight: var(--font-medium);
@@ -267,18 +267,18 @@
   overflow-wrap: anywhere;
 }
 
-.task-board-card-icon {
+.task-kanban-card-icon {
   flex: none;
 }
 
 /* カードの下に並べる blocked_by / blocking のカード */
-.task-board-relations {
+.task-kanban-relations {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.task-board-relation {
+.task-kanban-relation {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -288,26 +288,26 @@
   padding: 1px 2px;
 }
 
-.task-board-relation:hover {
+.task-kanban-relation:hover {
   background: var(--background-modifier-hover);
   color: var(--text-normal);
 }
 
-.task-board-relation.is-finished .task-board-relation-text {
+.task-kanban-relation.is-finished .task-kanban-relation-text {
   text-decoration: line-through;
 }
 
-.task-board-relation-mark {
+.task-kanban-relation-mark {
   display: inline-flex;
   --icon-size: 12px;
 }
 
-.task-board-relation-text {
+.task-kanban-relation-text {
   text-decoration: underline;
   text-decoration-color: var(--background-modifier-border);
 }
 
-.task-board-add {
+.task-kanban-add {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -319,12 +319,12 @@
   --icon-size: 14px;
 }
 
-.task-board-add:hover {
+.task-kanban-add:hover {
   background: color-mix(in srgb, var(--tb-color) 12%, transparent);
 }
 
 /* 絵文字を選ぶ画面の一番上に出す、選んでいるノートのファイル名 */
-.task-board-emoji-target {
+.task-kanban-emoji-target {
   padding: 10px 16px 0;
   color: var(--text-faint);
   font-size: var(--font-ui-smaller);
@@ -334,13 +334,13 @@
 }
 
 /* 絵文字の候補の一覧。絵文字を大きめに出し、その右に英語名を薄く出す */
-.task-board-emoji-suggestion {
+.task-kanban-emoji-suggestion {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.task-board-emoji-suggestion-emoji {
+.task-kanban-emoji-suggestion-emoji {
   display: inline-flex;
   justify-content: center;
   min-width: 1.4em;
@@ -349,10 +349,10 @@
 }
 
 /* 「候補が見つかりませんでした」などの選べない案内の行と、検索している間の検索の項目。選べないので、選んでいる行の色も付けない */
-.task-board-emoji-suggestion.is-message,
-.task-board-emoji-suggestion.is-message.is-selected,
-.task-board-emoji-suggestion.is-disabled,
-.task-board-emoji-suggestion.is-disabled.is-selected {
+.task-kanban-emoji-suggestion.is-message,
+.task-kanban-emoji-suggestion.is-message.is-selected,
+.task-kanban-emoji-suggestion.is-disabled,
+.task-kanban-emoji-suggestion.is-disabled.is-selected {
   color: var(--text-faint);
   background: none;
   box-shadow: none;
@@ -361,43 +361,43 @@
 }
 
 /* 「絵文字を1つ入力してください」などのエラーの案内を赤くする */
-.task-board-emoji-suggestion.is-message.is-error,
-.task-board-emoji-suggestion.is-message.is-error .task-board-emoji-suggestion-name {
+.task-kanban-emoji-suggestion.is-message.is-error,
+.task-kanban-emoji-suggestion.is-message.is-error .task-kanban-emoji-suggestion-name {
   color: var(--text-error);
 }
 
 /* 候補を探している間に回し続ける丸。一部だけ色を抜いた円を回す */
-.task-board-spinner {
+.task-kanban-spinner {
   width: 18px;
   height: 18px;
   border: 2px solid var(--text-faint);
   border-top-color: transparent;
   border-radius: 50%;
-  animation: task-board-spin 0.8s linear infinite;
+  animation: task-kanban-spin 0.8s linear infinite;
 }
 
-@keyframes task-board-spin {
+@keyframes task-kanban-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-.task-board-emoji-suggestion-name {
+.task-kanban-emoji-suggestion-name {
   color: var(--text-muted);
 }
 
-.task-board-title-input {
+.task-kanban-title-input {
   width: 100%;
 }
 
 /* 新しいタスクの画面。絵文字のボタンとタイトルを横に並べ、その下に blocked_by、blocking、本文の入力欄を並べる */
-.task-board-new-task .modal-content {
+.task-kanban-new-task .modal-content {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.task-board-new-title-row {
+.task-kanban-new-title-row {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -405,8 +405,8 @@
 
 /* 絵文字のボタン。灰色だと押せないボタンに見えるので、入力欄と同じ背景と枠にする。
    Obsidian 本体のボタンの色（button:not(.clickable-icon)）より優先させるため、button と画面のクラスも付けて指定する */
-.task-board-new-task button.task-board-new-icon,
-.task-board-new-task button.task-board-new-icon:hover {
+.task-kanban-new-task button.task-kanban-new-icon,
+.task-kanban-new-task button.task-kanban-new-icon:hover {
   flex: none;
   width: var(--input-height);
   padding: 0;
@@ -418,37 +418,37 @@
   --icon-size: 18px;
 }
 
-.task-board-new-task button.task-board-new-icon:hover {
+.task-kanban-new-task button.task-kanban-new-icon:hover {
   border-color: var(--background-modifier-border-hover);
   background: var(--background-modifier-hover);
   color: var(--text-normal);
 }
 
 /* 「作成」ボタンの上の余白を詰める */
-.task-board-new-task .modal-button-container {
+.task-kanban-new-task .modal-button-container {
   margin-top: 4px;
 }
 
-.task-board-new-field {
+.task-kanban-new-field {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.task-board-new-field-label {
+.task-kanban-new-field-label {
   color: var(--text-muted);
   font-size: var(--font-ui-small);
 }
 
 /* 本文の入力欄。横幅いっぱいに広げ、高さだけドラッグで変えられるようにする */
-.task-board-new-body {
+.task-kanban-new-body {
   width: 100%;
   min-height: 5em;
   resize: vertical;
 }
 
 /* 選んだカードの札と入力欄を、枠の中に折り返して並べる。入力欄そのものの枠は消して、外側の枠を入力欄に見せる */
-.task-board-new-links {
+.task-kanban-new-links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -461,13 +461,13 @@
   cursor: text;
 }
 
-.task-board-new-links:focus-within {
+.task-kanban-new-links:focus-within {
   border-color: var(--background-modifier-border-focus);
 }
 
-.task-board-new-links input,
-.task-board-new-links input:focus,
-.task-board-new-links input:hover {
+.task-kanban-new-links input,
+.task-kanban-new-links input:focus,
+.task-kanban-new-links input:hover {
   flex: 1 1 120px;
   min-width: 120px;
   height: auto;
@@ -477,7 +477,7 @@
   box-shadow: none;
 }
 
-.task-board-new-chip {
+.task-kanban-new-chip {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -489,13 +489,13 @@
   cursor: default;
 }
 
-.task-board-new-chip-text {
+.task-kanban-new-chip-text {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.task-board-new-chip-remove {
+.task-kanban-new-chip-remove {
   display: inline-flex;
   padding: 2px;
   border-radius: 50%;
@@ -504,35 +504,35 @@
   --icon-size: 12px;
 }
 
-.task-board-new-chip-remove:hover {
+.task-kanban-new-chip-remove:hover {
   color: var(--text-normal);
   background: var(--background-modifier-border);
 }
 
 /* blocked_by / blocking の候補。絵文字、タイトル、status の順に並べる */
-.task-board-link-suggestion {
+.task-kanban-link-suggestion {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.task-board-link-suggestion-icon {
+.task-kanban-link-suggestion-icon {
   flex: none;
   min-width: 1.2em;
 }
 
-.task-board-link-suggestion-title {
+.task-kanban-link-suggestion-title {
   flex: 1;
   overflow-wrap: anywhere;
 }
 
-.task-board-link-suggestion .task-board-pill {
+.task-kanban-link-suggestion .task-kanban-pill {
   flex: none;
   align-self: center;
 }
 
 /* DEPENDENCIES: つながりのまとまりを縦に並べ、カードと矢印は位置を指定して置く */
-.task-board-dependencies {
+.task-kanban-dependencies {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -541,33 +541,33 @@
   height: 100%;
 }
 
-.task-board-graph {
+.task-kanban-graph {
   position: relative;
   flex: none;
 }
 
-.task-board-arrows {
+.task-kanban-arrows {
   position: absolute;
   inset: 0;
   overflow: visible;
   pointer-events: none;
 }
 
-.task-board-arrow {
+.task-kanban-arrow {
   fill: none;
   stroke: var(--color-orange);
   stroke-width: 1.5;
 }
 
-.task-board-arrow.is-finished {
+.task-kanban-arrow.is-finished {
   stroke: var(--text-faint);
   stroke-dasharray: 4 3;
 }
 
-.task-board-arrowhead path { fill: var(--color-orange); }
-.task-board-arrowhead-finished path { fill: var(--text-faint); }
+.task-kanban-arrowhead path { fill: var(--color-orange); }
+.task-kanban-arrowhead-finished path { fill: var(--text-faint); }
 
-.task-board-graph-card {
+.task-kanban-graph-card {
   position: absolute;
   top: 0;
   left: 0;
@@ -576,30 +576,30 @@
   padding: 8px 12px;
 }
 
-.task-board-graph-card.is-finished {
+.task-kanban-graph-card.is-finished {
   opacity: 0.55;
 }
 
 /* TABLE: 行は中身に合わせて伸び、長い文字は必要な分だけ折り返す */
-.task-board-table-wrap {
+.task-kanban-table-wrap {
   height: 100%;
   overflow: auto;
   padding: 0 12px 16px;
 }
 
 /* cmd + z を受け取るために表にフォーカスできるようにしているが、表全体を囲む枠は出さない */
-.task-board-table-wrap:focus {
+.task-kanban-table-wrap:focus {
   outline: none;
 }
 
 /* 列の幅は main.js が col に指定する。table-layout: fixed にして、中身の長さで幅が変わらないようにする */
-.task-board-table {
+.task-kanban-table {
   table-layout: fixed;
   border-collapse: collapse;
   font-size: var(--font-ui-small);
 }
 
-.task-board-table th {
+.task-kanban-table th {
   position: sticky;
   top: 0;
   z-index: 1;
@@ -615,7 +615,7 @@
 }
 
 /* 見出しの右端の、列の幅を変えるためにドラッグする場所 */
-.task-board-table-resize {
+.task-kanban-table-resize {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -624,39 +624,39 @@
   cursor: col-resize;
 }
 
-.task-board-table-resize:hover,
-.task-board-table-resize.is-dragging {
+.task-kanban-table-resize:hover,
+.task-kanban-table-resize.is-dragging {
   background: var(--interactive-accent);
 }
 
-.task-board-table td {
+.task-kanban-table td {
   padding: 6px 8px;
   vertical-align: top;
   overflow-wrap: anywhere;
   border-bottom: 1px solid var(--background-modifier-border);
 }
 
-.task-board-table td.is-compact {
+.task-kanban-table td.is-compact {
   white-space: nowrap;
 }
 
-.task-board-table tbody tr:hover {
+.task-kanban-table tbody tr:hover {
   background: var(--background-modifier-hover);
 }
 
-.task-board-table-link {
+.task-kanban-table-link {
   color: var(--link-color);
   cursor: pointer;
 }
 
 /* name 列。ファイル名の前に絵文字を置き、絵文字をクリックすると選び直せる */
-.task-board-table-name {
+.task-kanban-table-name {
   display: flex;
   align-items: flex-start;
   gap: 6px;
 }
 
-.task-board-table-icon {
+.task-kanban-table-icon {
   display: inline-flex;
   flex: none;
   justify-content: center;
@@ -666,38 +666,38 @@
   --icon-size: 14px;
 }
 
-.task-board-table-icon:hover {
+.task-kanban-table-icon:hover {
   background: var(--background-modifier-hover);
 }
 
-.task-board-table-icon.is-empty {
+.task-kanban-table-icon.is-empty {
   color: var(--text-faint);
   padding-top: 2px;
   opacity: 0;
 }
 
-.task-board-table tr:hover .task-board-table-icon.is-empty {
+.task-kanban-table tr:hover .task-kanban-table-icon.is-empty {
   opacity: 1;
 }
 
-.task-board-table-link:hover {
+.task-kanban-table-link:hover {
   text-decoration: underline;
 }
 
-.task-board-table-chips {
+.task-kanban-table-chips {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.task-board-table-chip {
+.task-kanban-table-chip {
   display: flex;
   align-items: flex-start;
   gap: 2px;
 }
 
 /* × ボタンはリンクの文字のすぐ右に小さく置き、行にマウスを乗せたときだけ表示する */
-.task-board-table-chip-remove {
+.task-kanban-table-chip-remove {
   display: inline-flex;
   flex: none;
   margin-top: 2px;
@@ -709,33 +709,33 @@
   --icon-size: 12px;
 }
 
-.task-board-table tr:hover .task-board-table-chip-remove {
+.task-kanban-table tr:hover .task-kanban-table-chip-remove {
   opacity: 1;
 }
 
-.task-board-table-chip-remove:hover {
+.task-kanban-table-chip-remove:hover {
   color: var(--text-normal);
   background: var(--background-modifier-hover);
 }
 
 /* セルの中に置いたプロパティ欄の入力欄。リンクの入力欄はセルいっぱいに広げ、枠線や下線を消して、文字の大きさを他のセルとそろえる。
    日付などの入力欄は他のセルと同じ余白のままにして、status の選択肢と高さをそろえる */
-.task-board-table td:has(.task-board-table-editor .multi-select-container) {
+.task-kanban-table td:has(.task-kanban-table-editor .multi-select-container) {
   padding: 0;
 }
 
-.task-board-table td:focus-within {
+.task-kanban-table td:focus-within {
   box-shadow: inset 0 0 0 2px var(--interactive-accent);
 }
 
-.task-board-table .task-board-table-editor {
+.task-kanban-table .task-kanban-table-editor {
   --metadata-input-font-size: var(--font-ui-small);
   border-bottom: none;
   background: transparent;
   overflow: visible;
 }
 
-.task-board-table .task-board-table-editor .multi-select-container {
+.task-kanban-table .task-kanban-table-editor .multi-select-container {
   position: relative;
   flex-direction: column;
   align-items: flex-start;
@@ -748,7 +748,7 @@
 
 /* リンクを追加するための入力欄は、リンクがあるセルでは入力中だけ表示する。
    display: none にするとセルをクリックしても入力欄にフォーカスが移らないので、見えない大きさにして残す */
-.task-board-table .task-board-table-editor .multi-select-container:has(.multi-select-pill):not(:focus-within) .multi-select-input {
+.task-kanban-table .task-kanban-table-editor .multi-select-container:has(.multi-select-pill):not(:focus-within) .multi-select-input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -758,27 +758,27 @@
 }
 
 /* 折り返したリンクの文字と × を1つの文章として並べ、× が最後の文字のすぐ右に来るようにする */
-.task-board-table .task-board-table-editor .multi-select-pill {
+.task-kanban-table .task-kanban-table-editor .multi-select-pill {
   position: relative;
   display: block;
   max-width: 100%;
 }
 
 /* 選んだリンクを囲む枠。文字の並べ方を変えたので、枠もリンク全体に重ねる位置に置き直す */
-.task-board-table .task-board-table-editor .multi-select-pill:focus::after {
+.task-kanban-table .task-kanban-table-editor .multi-select-pill:focus::after {
   inset: -1px -4px;
   width: auto;
   height: auto;
 }
 
-.task-board-table .task-board-table-editor .multi-select-pill-content {
+.task-kanban-table .task-kanban-table-editor .multi-select-pill-content {
   display: inline;
   white-space: normal;
   overflow: visible;
   overflow-wrap: anywhere;
 }
 
-.task-board-table .task-board-table-editor .multi-select-pill-remove-button {
+.task-kanban-table .task-kanban-table-editor .multi-select-pill-remove-button {
   display: inline-flex;
   vertical-align: -2px;
   margin-inline-start: 2px;
@@ -786,15 +786,15 @@
 }
 
 /* status と、日付などの1つの値の入力欄は、行の縦の真ん中に置く。リンクの一覧と文字のセルは上にそろえたまま */
-.task-board-table td.is-compact,
-.task-board-table td:has(.task-board-table-editor):not(:has(.multi-select-container)),
-.task-board-table td:has(input[type="checkbox"]) {
+.task-kanban-table td.is-compact,
+.task-kanban-table td:has(.task-kanban-table-editor):not(:has(.multi-select-container)),
+.task-kanban-table td:has(input[type="checkbox"]) {
   vertical-align: middle;
 }
 
 /* 日付の入力欄。本体の表と同じく、枠線と上下の余白をなくして、セルの文字のように見せる */
-.task-board-table .task-board-table-editor input.mod-date,
-.task-board-table .task-board-table-editor input.mod-datetime {
+.task-kanban-table .task-kanban-table-editor input.mod-date,
+.task-kanban-table .task-kanban-table-editor input.mod-datetime {
   height: auto;
   padding-top: 0;
   padding-bottom: 0;
@@ -804,7 +804,7 @@
 }
 
 /* status の選択肢。Obsidian の標準の高さだと行が高くなりすぎるので、上下の余白を詰める */
-.task-board-table-status {
+.task-kanban-table-status {
   height: auto;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -813,7 +813,7 @@
   font-size: var(--font-ui-smaller);
 }
 
-.task-board-empty {
+.task-kanban-empty {
   color: var(--text-muted);
   padding: 24px;
 }
