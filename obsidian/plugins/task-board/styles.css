@@ -268,7 +268,7 @@
   width: 100%;
 }
 
-/* 新しいタスクの画面。絵文字のボタンとタイトルを横に並べ、その下に blocked_by と blocking の入力欄を並べる */
+/* 新しいタスクの画面。絵文字のボタンとタイトルを横に並べ、その下に blocked_by、blocking、本文の入力欄を並べる */
 .task-board-new-task .modal-content {
   display: flex;
   flex-direction: column;
@@ -316,6 +316,13 @@
 .task-board-new-field-label {
   color: var(--text-muted);
   font-size: var(--font-ui-small);
+}
+
+/* 本文の入力欄。横幅いっぱいに広げ、高さだけドラッグで変えられるようにする */
+.task-board-new-body {
+  width: 100%;
+  min-height: 5em;
+  resize: vertical;
 }
 
 /* 選んだカードの札と入力欄を、枠の中に折り返して並べる。入力欄そのものの枠は消して、外側の枠を入力欄に見せる */

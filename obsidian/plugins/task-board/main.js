@@ -434,7 +434,7 @@ class EditQueue {
 // カード
 // ---------------------------------------------------------------------------
 
-// 新しいタスクを作る画面。絵文字・タイトル・blocked_by・blocking をまとめて入れる。
+// 新しいタスクを作る画面。絵文字・タイトル・blocked_by・blocking・本文をまとめて入れる。
 // タイトルの入力欄で Enter、どこでも cmd + Enter、「作成」ボタンのどれかで作る
 class NewTaskModal extends Modal {
   constructor(plugin, status) {
@@ -471,6 +471,11 @@ class NewTaskModal extends Modal {
       placeholder: "このあと進めるタスク",
       excludedPaths: selectedPaths
     });
+
+    // 本文の入力欄。Enter では作成せず改行する
+    const bodyFieldEl = this.contentEl.createDiv({ cls: "task-board-new-field" });
+    bodyFieldEl.createDiv({ cls: "task-board-new-field-label", text: "content" });
+    this.bodyInputEl = bodyFieldEl.createEl("textarea", { cls: "task-board-new-body", attr: { rows: 5 } });
 
     // 作成ボタンと、キーボードで作る操作。日本語入力の変換を確定する Enter では作成しない
     const buttonsEl = this.contentEl.createDiv({ cls: "modal-button-container" });
@@ -514,7 +519,8 @@ class NewTaskModal extends Modal {
     this.plugin.createTask(title, this.status, {
       icon: this.icon,
       blockedBy: this.blockedByInput.paths,
-      blocking: this.blockingInput.paths
+      blocking: this.blockingInput.paths,
+      body: this.bodyInputEl.value
     });
   }
 
@@ -1730,7 +1736,7 @@ module.exports = class TaskBoardPlugin extends Plugin {
   }
 
   // blockedBy / blocking はつなぐカードのパスの一覧。相手のカードの逆側は、作った後に LinkSync が書き足す
-  async createTask(title, status, { icon = "", blockedBy = [], blocking = [] } = {}) {
+  async createTask(title, status, { icon = "", blockedBy = [], blocking = [], body = "" } = {}) {
     if (!this.app.vault.getFolderByPath(TASK_FOLDER)) {
       await this.app.vault.createFolder(TASK_FOLDER);
     }
@@ -1754,7 +1760,10 @@ module.exports = class TaskBoardPlugin extends Plugin {
       resume_cmd: [],
       session_cwd: []
     };
-    return this.app.vault.create(path, `---\n${stringifyYaml(frontmatter)}---\n`);
+    // 前後の空行は消すが、1行目の先頭の空白はインデントとして残す
+    const trimmedBody = body.replace(/^\s*\n/, "").trimEnd();
+    const content = trimmedBody ? `${trimmedBody}\n` : "";
+    return this.app.vault.create(path, `---\n${stringifyYaml(frontmatter)}---\n${content}`);
   }
 
   // Notion のサイドピークのように、ボードの右側の同じ場所にノートを開く
