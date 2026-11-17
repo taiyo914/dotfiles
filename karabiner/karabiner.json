@@ -415,101 +415,6 @@
                 "from": {
                   "key_code": "hyphen",
                   "modifiers": {
-                    "mandatory": [
-                      "command",
-                      "shift"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "spacebar",
-                    "modifiers": [
-                      "left_command",
-                      "left_shift"
-                    ]
-                  },
-                  {
-                    "key_code": "japanese_eisuu",
-                    "modifiers": [
-                      "left_command",
-                      "left_shift"
-                    ],
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 0
-                    },
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_layer",
-                      "value": 0
-                    }
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_used",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "key_code": "equal_sign",
-                    "modifiers": [
-                      "command"
-                    ]
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "space_layer",
-                    "value": 1
-                  },
-                  {
-                    "type": "expression_if",
-                    "expression": "system.now.milliseconds - space_down_ms < 100"
-                  },
-                  {
-                    "type": "device_if",
-                    "identifiers": [
-                      {
-                        "is_built_in_keyboard": true
-                      },
-                      {
-                        "vendor_id": 1452,
-                        "product_id": 666
-                      }
-                    ]
-                  },
-                  {
-                    "type": "frontmost_application_if",
-                    "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$"
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "hyphen",
-                  "modifiers": {
                     "optional": [
                       "any"
                     ]
@@ -1182,89 +1087,6 @@
                         "vendor_id": 1452,
                         "product_id": 666
                       }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "semicolon",
-                  "modifiers": {
-                    "mandatory": [
-                      "command",
-                      "shift"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "spacebar",
-                    "modifiers": [
-                      "left_command",
-                      "left_shift"
-                    ]
-                  },
-                  {
-                    "key_code": "japanese_eisuu",
-                    "modifiers": [
-                      "left_command",
-                      "left_shift"
-                    ],
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 0
-                    },
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_layer",
-                      "value": 0
-                    }
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_used",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "key_code": "equal_sign",
-                    "modifiers": [
-                      "command"
-                    ]
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "space_layer",
-                    "value": 1
-                  },
-                  {
-                    "type": "expression_if",
-                    "expression": "system.now.milliseconds - space_down_ms < 100"
-                  },
-                  {
-                    "type": "frontmost_application_if",
-                    "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$"
                     ]
                   }
                 ]
@@ -7861,57 +7683,6 @@
                 "from": {
                   "key_code": "hyphen",
                   "modifiers": {
-                    "mandatory": [
-                      "command",
-                      "shift"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "set_variable": {
-                      "name": "space_used",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "key_code": "equal_sign",
-                    "modifiers": [
-                      "command"
-                    ]
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "space_layer",
-                    "value": 1
-                  },
-                  {
-                    "type": "device_if",
-                    "identifiers": [
-                      {
-                        "is_built_in_keyboard": true
-                      },
-                      {
-                        "vendor_id": 1452,
-                        "product_id": 666
-                      }
-                    ]
-                  },
-                  {
-                    "type": "frontmost_application_if",
-                    "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$"
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "hyphen",
-                  "modifiers": {
                     "optional": [
                       "any"
                     ]
@@ -9648,46 +9419,6 @@
                 "from": {
                   "key_code": "hyphen",
                   "modifiers": {
-                    "mandatory": [
-                      "command",
-                      "shift"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "equal_sign",
-                    "modifiers": [
-                      "command"
-                    ]
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "device_if",
-                    "identifiers": [
-                      {
-                        "is_built_in_keyboard": true
-                      },
-                      {
-                        "vendor_id": 1452,
-                        "product_id": 666
-                      }
-                    ]
-                  },
-                  {
-                    "type": "frontmost_application_if",
-                    "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$"
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "hyphen",
-                  "modifiers": {
                     "optional": [
                       "any"
                     ]
@@ -10113,34 +9844,6 @@
           {
             "description": "chrome-zoom-in",
             "manipulators": [
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "semicolon",
-                  "modifiers": {
-                    "mandatory": [
-                      "command",
-                      "shift"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "equal_sign",
-                    "modifiers": [
-                      "command"
-                    ]
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "frontmost_application_if",
-                    "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$"
-                    ]
-                  }
-                ]
-              },
               {
                 "type": "basic",
                 "from": {

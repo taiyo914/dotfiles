@@ -71,7 +71,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `chrome-split-view` | Chrome で `Cmd+D` → 分割ビュー |
 | `chrome-img-width` | Chrome で `Cmd+Ctrl+I` → `<img>` の width を 800 に |
 | `chrome-arrow-tab-switch` | Chrome で `Cmd+↓` / `Cmd+↑` → 次 / 前のタブ |
-| `chrome-zoom-in` | Chrome で `Cmd+Shift+;` / `Cmd+Shift+-` → 拡大 |
+| `chrome-zoom-in` | Chrome で `Cmd+Shift+-` → 拡大 |
 | `chrome-new-tab-in-group` | Chrome で `Cmd+T` / `Cmd+Ctrl+T` → タブグループの中 / 外に新しいタブ |
 | `builtin-custom-us-layout` | 内蔵と Magic Keyboard の JIS キーボードを、少し手を加えた US 配列として使う |
 | `slack-disable-esc` | Slack で Esc を無効にする |
@@ -246,12 +246,14 @@ Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブ�
 
 ### 3-15. `chrome-zoom-in`
 
-Chrome で `Cmd+Shift+;` か `Cmd+Shift+-` を押すと、ページを拡大する（Chrome の拡大のキー `Cmd+=` を送る）。Chrome でのみ適用。Ghostty の `cmd+shift+semicolon` / `cmd+shift+minus` の設定と同じ使い方になる。
+Chrome で `Cmd+Shift+-` を押すと、ページを拡大する（Chrome の拡大のキー `Cmd+=` を送る）。縮小は Chrome にもともとある `Cmd+-` なので、同じキーで拡大と縮小ができる。Chrome でのみ適用。Ghostty の `cmd+shift+minus` の設定と同じ使い方になる。
 
-| キーボード | 縮小 | 拡大 |
-| - | - | - |
-| 内蔵キーボード / Magic Keyboard | `Cmd+;`（印字。`builtin-custom-us-layout` で `Cmd+-` になる） | `Cmd+Shift+;`（印字） |
-| 外付けキーボード | `Cmd+-` | `Cmd+Shift+-` |
+| 操作 | 結果 |
+| - | - |
+| `Cmd+-` | 縮小（Chrome にもともとあるショートカット） |
+| `Cmd+Shift+-` | 拡大 |
+
+内蔵キーボードと Magic Keyboard では、JIS の印字が `;` のキーが `-` になる（`builtin-custom-us-layout`）。
 
 注意: Chrome で `Cmd+Shift+-` を押したときの本来の動きは使えなくなる。
 
