@@ -65,6 +65,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `builtin-keyboard-cleaner` | 掃除用に MacBook の内蔵キーボードの全キーを無効化。Karabiner の画面で都度 ON / OFF する |
 | `magic-keyboard-disabled` | Magic Keyboard with Touch ID のキーを Touch ID 以外すべて無効化 |
 | `space-layer` | Space 長押しで矢印・削除レイヤー。タップで Space ＋ 英数 |
+| `builtin-kana-symbol-layer` | かな長押しで記号レイヤー。タップでかな |
 | `builtin-fn-to-option` | fn（地球儀）キー → 右 Option |
 | `builtin-ctrl-tap-to-esc` | 左 Ctrl タップ → Esc |
 | `builtin-tab-hold-to-option` | Tab ホールド → 左 Option |
@@ -275,3 +276,23 @@ Karabiner は今のタブがタブグループに入っているかどうかを�
 Esc を押すと `ime_composing` を 0 に戻すので、続けてもう一度 Esc を押すと、その Esc はそのまま出る。`ime_composing` は、マウスのクリックで確定したときや、Backspace で入力途中の文字を全部消したときなどに 1 のまま残る。そのときに Esc がずっと使えなくならないようにするため。
 
 `builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡る。
+
+### 3-18. `builtin-kana-symbol-layer`
+
+かなキーを押しながらキーを押すと記号になる。CLine46（`~/keyboards/cline46/zmk-config/config/CLine46.keymap` の `layer_2`）の記号レイヤーと同じ位置にしている。内蔵キーボードと Magic Keyboard のみ適用。
+
+| 段 | キーと記号 |
+| - | - |
+| 上段 | `Q` → `'`、`W` → `"`、`E` → `=`、`R` → `^`、`T` → `~`、`U` → `(`、`I` → `)`、`P` → `+` |
+| 中段 | `A` → `@`、`S` → `*`、`D` → `$`、`G` → `` ` ``、`H` → `#`、`J` → `[`、`K` → `]` |
+| 下段 | `X` → `!`、`C` → `:`（Shift と一緒なら `;`）、`V` → `\|`、`B` → `\`、`N` → `&`、`M` → `%` |
+
+位置は英語の呼び名の頭文字などで決めている（`A` は at、`S` は star、`D` は dollar、`X` は eXclamation、`C` は colon、`V` は vertical、`B` は backslash、`H` は hash、`N` は 'n（and）、`M` は mod、`P` は plus など）。
+
+かなキーを単独でタップすると、かなに切り替える。
+
+`C` で出す `:` / `;` は、`builtin-custom-us-layout` の JIS の `-` のキーと同じ動きにするため、下の段の `builtin-custom-us-layout` に変えてもらっている。
+
+注意: かなキーを押してから 0.1 秒以内にほかのキーを押すと、文章を速く打っているとみなして、かなとそのキーを順番に入力する（`space-layer` と同じ）。
+
+注意: 表にないキーを押したときは、そのキーをそのまま出す。

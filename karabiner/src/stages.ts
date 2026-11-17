@@ -2,6 +2,7 @@ import type { Stage } from './pipe.ts'
 import builtinCtrlTapToEsc from './rules/builtin-ctrl-tap-to-esc.ts'
 import builtinFnToOption from './rules/builtin-fn-to-option.ts'
 import builtinKeyboardCleaner from './rules/builtin-keyboard-cleaner.ts'
+import builtinKanaSymbolLayer from './rules/builtin-kana-symbol-layer.ts'
 import builtinTabHoldToOption from './rules/builtin-tab-hold-to-option.ts'
 import builtinCustomUsLayout from './rules/builtin-custom-us-layout.ts'
 import chromeArrowTabSwitch from './rules/chrome-arrow-tab-switch.ts'
@@ -25,6 +26,7 @@ export const stages: Stage[] = [
     builtinKeyboardCleaner,
     magicKeyboardDisabled,
     spaceLayer,
+    builtinKanaSymbolLayer,
     builtinFnToOption,
     builtinCtrlTapToEsc,
     builtinTabHoldToOption,

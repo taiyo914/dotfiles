@@ -154,21 +154,25 @@ function* worldsFor(expressions: string[]): Generator<World> {
   for (const app of ['com.google.Chrome', 'com.tinyspeck.slackmacgap', 'com.apple.Terminal'])
     for (const device of ['builtin', 'magic', 'external'] as const)
       for (const language of ['ja', 'en'])
-        for (const spaceLayer of [0, 1])
+        for (const [spaceLayer, kanaLayer] of [[0, 0], [1, 0], [0, 1]])
           for (const ime of [0, 1])
-            for (const exprMask of [0, 1, 2, 3])
+            for (let exprMask = 0; exprMask < 1 << expressions.length; exprMask++)
               yield {
                 app,
                 device,
                 language,
-                vars: { space_layer: spaceLayer, ime_composing: ime, space_used: 0 },
+                vars: { space_layer: spaceLayer, kana_layer: kanaLayer, ime_composing: ime, space_used: 0, kana_used: 0 },
                 expressions: Object.fromEntries(expressions.map((e, i) => [e, Boolean(exprMask & (1 << i))])),
               }
 }
 
 test('今の設定で、pipe() の結果が段ごとに順番に通した結果と同じになる', () => {
   const checked = checkSameAsStages(stages, [
-    ...worldsFor(['system.now.milliseconds - space_tap_ms < 200', 'system.now.milliseconds - space_down_ms < 100']),
+    ...worldsFor([
+      'system.now.milliseconds - space_tap_ms < 200',
+      'system.now.milliseconds - space_down_ms < 100',
+      'system.now.milliseconds - kana_down_ms < 100',
+    ]),
   ])
   assert.ok(checked > 0)
 })
