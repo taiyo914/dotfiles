@@ -1,5 +1,5 @@
 import { map, rule, type FromKeyCode, type ToKeyCode } from 'karabiner.ts'
-import { ifBuiltinKeyboard } from '../conditions.ts'
+import { ifAppleKeyboards } from '../conditions.ts'
 
 // JIS キーボードのキーを、US 配列のどのキーとして扱うか。ここに書いていないキーは US 配列の同じ位置のキーのまま
 const keys: Array<[FromKeyCode, ToKeyCode]> = [
@@ -19,7 +19,7 @@ const colonFirst = [
 ]
 
 // 内蔵と Magic Keyboard の JIS キーボードを、少し手を加えた US 配列として使う
-export default rule('builtin-custom-us-layout', ifBuiltinKeyboard).manipulators([
+export default rule('apple-keyboards-custom-us-layout', ifAppleKeyboards).manipulators([
   ...colonFirst,
   ...keys.map(([from, to]) => map(from, null, 'any').to(to)),
 ])

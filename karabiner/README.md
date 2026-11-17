@@ -28,7 +28,10 @@
 - ファイル名（`.ts` を除く）と `rule()` に渡す名前（Karabiner の画面に出る名前）を揃える
 - ルール名はなるべく短くシンプルにする
 - 特定の場面で有効なルールは、名前の頭に範囲を付ける
-	- 例 ：`builtin-` （内蔵キーボードと Magic Keyboard with Touch ID だけ）
+	- `apple-keyboards-` ：MacBook の内蔵キーボードと Magic Keyboard with Touch ID の両方
+	- `macbook-keyboard-` ：MacBook の内蔵キーボードだけ
+	- `magic-keyboard-` ：Magic Keyboard with Touch ID だけ
+	- `chrome-` や `slack-` ：そのアプリが前面にあるときだけ
 
 ### 1-3. ルールのつなぎ方
 
@@ -62,19 +65,19 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 
 | ルール名 | 概要 |
 | - | - |
-| `builtin-keyboard-cleaner` | 掃除用に MacBook の内蔵キーボードの全キーを無効化。Karabiner の画面で都度 ON / OFF する |
+| `macbook-keyboard-disabled` | 掃除用に MacBook の内蔵キーボードの全キーを無効化。Karabiner の画面で都度 ON / OFF する |
 | `magic-keyboard-disabled` | Magic Keyboard with Touch ID のキーを Touch ID 以外すべて無効化 |
 | `space-layer` | Space 長押しで矢印・削除レイヤー。タップで Space ＋ 英数 |
-| `builtin-kana-symbol-layer` | かな長押しで記号レイヤー。タップでかな |
-| `builtin-fn-to-option` | fn（地球儀）キー → 右 Option |
-| `builtin-ctrl-tap-to-esc` | 左 Ctrl タップ → Esc |
-| `builtin-tab-hold-to-option` | Tab ホールド → 左 Option |
+| `apple-keyboards-kana-symbol-layer` | かな長押しで記号レイヤー。タップでかな |
+| `apple-keyboards-fn-to-option` | fn（地球儀）キー → 右 Option |
+| `apple-keyboards-ctrl-tap-to-esc` | 左 Ctrl タップ → Esc |
+| `apple-keyboards-tab-hold-to-option` | Tab ホールド → 左 Option |
 | `chrome-split-view` | Chrome で `Cmd+D` → 分割ビュー |
 | `chrome-img-width` | Chrome で `Cmd+Ctrl+I` → `<img>` の width を 800 に |
 | `chrome-arrow-tab-switch` | Chrome で `Cmd+↓` / `Cmd+↑` → 次 / 前のタブ |
 | `chrome-zoom-in` | Chrome で `Cmd+Shift+-` → 拡大 |
 | `chrome-new-tab-in-group` | Chrome で `Cmd+T` / `Cmd+Ctrl+T` → タブグループの中 / 外に新しいタブ |
-| `builtin-custom-us-layout` | 内蔵と Magic Keyboard の JIS キーボードを、少し手を加えた US 配列として使う |
+| `apple-keyboards-custom-us-layout` | 内蔵と Magic Keyboard の JIS キーボードを、少し手を加えた US 配列として使う |
 | `slack-disable-esc` | Slack で Esc を無効にする |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
@@ -85,9 +88,9 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 
 前提として、外付けキーボードとの互換性を保つために、**仮想キーボードは ANSI（US 配列）にしている。** 
 
-内蔵キーボードと Magic Keyboard は JIS 配列だが、印字どおりの記号には直さず、US 配列として使っている（`builtin-custom-us-layout`）。
+内蔵キーボードと Magic Keyboard は JIS 配列だが、印字どおりの記号には直さず、US 配列として使っている（`apple-keyboards-custom-us-layout`）。
 
-`builtin-` で始まるルールは、内蔵キーボードと Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）に適用する。
+`apple-keyboards-` で始まるルールは、内蔵キーボードと Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）に適用する。`macbook-keyboard-` で始まるルールは内蔵キーボードだけ、`magic-keyboard-` で始まるルールは Magic Keyboard だけに適用する。
 
 `magic-keyboard-disabled` を ON にしたときは、Magic Keyboard のキーが先に無効になるので、Magic Keyboard ではほかのルールは動かない。
 
@@ -115,13 +118,13 @@ L の右のキーは、内蔵キーボードと Magic Keyboard では `-` が出
 
 日本語の入力途中かどうかは、`ime-composing` が記録する変数 `ime_composing` で判断している。Space を単独で押したときは、この変数が 0 のときだけ英数に切り替える。
 
-Space を押している間に、レイヤーのキー以外のキーを押したときは、そのキーをそのまま出す。そのキーは下の段のルールにも渡るので、たとえば Space を押しながら内蔵キーボードの `¥` のキーを押しても、`builtin-custom-us-layout` によって `` ` `` になる。
+Space を押している間に、レイヤーのキー以外のキーを押したときは、そのキーをそのまま出す。そのキーは下の段のルールにも渡るので、たとえば Space を押しながら内蔵キーボードの `¥` のキーを押しても、`apple-keyboards-custom-us-layout` によって `` ` `` になる。
 
-### 3-2. `builtin-fn-to-option`
+### 3-2. `apple-keyboards-fn-to-option`
 
 fn（地球儀）キーを右 Option にする。内蔵キーボードと Magic Keyboard のみ適用。
 
-### 3-3. `builtin-ctrl-tap-to-esc`
+### 3-3. `apple-keyboards-ctrl-tap-to-esc`
 
 左 Ctrl をタップで Esc にする。200 ms 以上長押しすると Ctrl になる。
 
@@ -129,7 +132,7 @@ hold-preferredで、200 ms 以内でも他のキーと組み合わさったと�
 
 内蔵キーボードと Magic Keyboard のみ適用。
 
-### 3-4. `builtin-tab-hold-to-option`
+### 3-4. `apple-keyboards-tab-hold-to-option`
 
 Tab をホールドで Option にする。200 ms 以上長押しすると Option になる。
 
@@ -154,7 +157,7 @@ Chrome の分割ビューを `Cmd+D` で開く。Chrome でのみ適用。
 
 `<img>` タグを含む文章を選択して `Cmd+Ctrl+I` を押すと、選択した文章の中の `<img>` タグの width を 800 にし、height を消す。GitHub に貼った画像の大きさをそろえるために使う。Chrome でのみ適用。
 
-### 3-7. `builtin-custom-us-layout`
+### 3-7. `apple-keyboards-custom-us-layout`
 
 内蔵キーボードと JIS の Magic Keyboard with Touch ID（Vendor ID 1452 / Product ID 666）を、印字を直さずに US 配列として使う。US 配列から少しだけ手を加えている。
 
@@ -185,7 +188,7 @@ Slack が前面にあるときは、Esc キーを押しても何も起きない�
 
 Shift や Cmd と一緒に押したとき（たとえば `Shift+Esc` で全チャンネルを既読にする操作）は、そのまま使える。
 
-`builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡るので出なくなる。
+`apple-keyboards-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡るので出なくなる。
 
 ### 3-9. `shift-backspace-to-delete`
 
@@ -224,15 +227,15 @@ Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブ�
 
 注意: Chrome 本来の `Cmd+↓` / `Cmd+↑`（ページの一番下 / 一番上まで移る）は使えなくなる。
 
-### 3-13. `builtin-keyboard-cleaner`
+### 3-13. `macbook-keyboard-disabled`
 
-MacBook のキーボードを掃除するときに、MacBook の内蔵キーボードのキーをすべて無効にする。ほかの `builtin-` のルールと違い、Magic Keyboard には適用しない。
+MacBook のキーボードを掃除するときに、MacBook の内蔵キーボードのキーをすべて無効にする。Magic Keyboard には適用しない。
 
 普段は OFF にしておく。掃除するときだけ、Karabiner-Elements の設定画面の Complex Modifications でこのルールを ON にし、終わったら OFF に戻す。内蔵キーボードが使えない間も、外付けのキーボード・トラックパッド・マウスで OFF に戻せる。
 
 ほかのルールより先に判定させるため、`src/stages.ts` の 1 段目の一番上に置く。`npm run build` を実行すると OFF に戻る。
 
-このルールだけは、Karabiner の画面に出る名前を `builtin-keyboard-cleaner (💡Turn on only while cleaning)` にしている。掃除のときだけ ON にするルールだとわかるようにするため。ファイル名は `builtin-keyboard-cleaner` のまま。
+このルールだけは、Karabiner の画面に出る名前を `macbook-keyboard-disabled (💡Turn on only while cleaning)` にしている。掃除のときだけ ON にするルールだとわかるようにするため。ファイル名は `macbook-keyboard-disabled` のまま。
 
 注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。トラックパッドとマウスは無効にならない。
 
@@ -254,7 +257,7 @@ Chrome で `Cmd+Shift+-` を押すと、ページを拡大する（Chrome の拡
 | `Cmd+-` | 縮小（Chrome にもともとあるショートカット） |
 | `Cmd+Shift+-` | 拡大 |
 
-内蔵キーボードと Magic Keyboard では、JIS の印字が `;` のキーが `-` になる（`builtin-custom-us-layout`）。
+内蔵キーボードと Magic Keyboard では、JIS の印字が `;` のキーが `-` になる（`apple-keyboards-custom-us-layout`）。
 
 注意: Chrome で `Cmd+Shift+-` を押したときの本来の動きは使えなくなる。
 
@@ -275,9 +278,9 @@ Karabiner は今のタブがタブグループに入っているかどうかを�
 
 Esc を押すと `ime_composing` を 0 に戻すので、続けてもう一度 Esc を押すと、その Esc はそのまま出る。`ime_composing` は、マウスのクリックで確定したときや、Backspace で入力途中の文字を全部消したときなどに 1 のまま残る。そのときに Esc がずっと使えなくならないようにするため。
 
-`builtin-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡る。
+`apple-keyboards-ctrl-tap-to-esc` で左 Ctrl をタップしたときの Esc も、このルールに渡る。
 
-### 3-18. `builtin-kana-symbol-layer`
+### 3-18. `apple-keyboards-kana-symbol-layer`
 
 かなキーを押しながらキーを押すと記号になる。CLine46（`~/keyboards/cline46/zmk-config/config/CLine46.keymap` の `layer_2`）の記号レイヤーと同じ位置にしている。内蔵キーボードと Magic Keyboard のみ適用。
 
@@ -291,7 +294,7 @@ Esc を押すと `ime_composing` を 0 に戻すので、続けてもう一度 E
 
 かなキーを単独でタップすると、かなに切り替える。
 
-`C` で出す `:` / `;` は、`builtin-custom-us-layout` の JIS の `-` のキーと同じ動きにするため、下の段の `builtin-custom-us-layout` に変えてもらっている。
+`C` で出す `:` / `;` は、`apple-keyboards-custom-us-layout` の JIS の `-` のキーと同じ動きにするため、下の段の `apple-keyboards-custom-us-layout` に変えてもらっている。
 
 注意: かなキーを押してから 0.1 秒以内にほかのキーを押すと、文章を速く打っているとみなして、かなとそのキーを順番に入力する（`space-layer` と同じ）。
 

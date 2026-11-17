@@ -4,7 +4,7 @@
       "complex_modifications": {
         "rules": [
           {
-            "description": "builtin-keyboard-cleaner (💡Turn on only while cleaning)",
+            "description": "macbook-keyboard-disabled (💡Turn on only while cleaning)",
             "manipulators": [
               {
                 "type": "basic",
@@ -8996,7 +8996,7 @@
             ]
           },
           {
-            "description": "builtin-kana-symbol-layer",
+            "description": "apple-keyboards-kana-symbol-layer",
             "manipulators": [
               {
                 "type": "basic",
@@ -17186,7 +17186,7 @@
             ]
           },
           {
-            "description": "builtin-fn-to-option",
+            "description": "apple-keyboards-fn-to-option",
             "manipulators": [
               {
                 "type": "basic",
@@ -17221,7 +17221,7 @@
             ]
           },
           {
-            "description": "builtin-ctrl-tap-to-esc",
+            "description": "apple-keyboards-ctrl-tap-to-esc",
             "manipulators": [
               {
                 "type": "basic",
@@ -17403,7 +17403,7 @@
             ]
           },
           {
-            "description": "builtin-tab-hold-to-option",
+            "description": "apple-keyboards-tab-hold-to-option",
             "manipulators": [
               {
                 "type": "basic",
@@ -17496,7 +17496,7 @@
             ]
           },
           {
-            "description": "builtin-custom-us-layout",
+            "description": "apple-keyboards-custom-us-layout",
             "manipulators": [
               {
                 "type": "basic",

@@ -1,10 +1,9 @@
 import type { Stage } from './pipe.ts'
-import builtinCtrlTapToEsc from './rules/builtin-ctrl-tap-to-esc.ts'
-import builtinFnToOption from './rules/builtin-fn-to-option.ts'
-import builtinKeyboardCleaner from './rules/builtin-keyboard-cleaner.ts'
-import builtinKanaSymbolLayer from './rules/builtin-kana-symbol-layer.ts'
-import builtinTabHoldToOption from './rules/builtin-tab-hold-to-option.ts'
-import builtinCustomUsLayout from './rules/builtin-custom-us-layout.ts'
+import appleKeyboardsCtrlTapToEsc from './rules/apple-keyboards-ctrl-tap-to-esc.ts'
+import appleKeyboardsCustomUsLayout from './rules/apple-keyboards-custom-us-layout.ts'
+import appleKeyboardsFnToOption from './rules/apple-keyboards-fn-to-option.ts'
+import appleKeyboardsKanaSymbolLayer from './rules/apple-keyboards-kana-symbol-layer.ts'
+import appleKeyboardsTabHoldToOption from './rules/apple-keyboards-tab-hold-to-option.ts'
 import chromeArrowTabSwitch from './rules/chrome-arrow-tab-switch.ts'
 import chromeImgWidth from './rules/chrome-img-width.ts'
 import chromeNewTabInGroup from './rules/chrome-new-tab-in-group.ts'
@@ -13,6 +12,7 @@ import chromeZoomIn from './rules/chrome-zoom-in.ts'
 import ctrlEmacs from './rules/ctrl-emacs.ts'
 import imeComposing from './rules/ime-composing.ts'
 import imeDisableEsc from './rules/ime-disable-esc.ts'
+import macbookKeyboardDisabled from './rules/macbook-keyboard-disabled.ts'
 import magicKeyboardDisabled from './rules/magic-keyboard-disabled.ts'
 import shiftBackspaceToDelete from './rules/shift-backspace-to-delete.ts'
 import slackDisableEsc from './rules/slack-disable-esc.ts'
@@ -23,16 +23,16 @@ import spaceLayer from './rules/space-layer.ts'
 // 1 段目は物理キーを受け取る。タップと長押しで動きを変えるルールは 1 段目にしか置けない
 export const stages: Stage[] = [
   [
-    builtinKeyboardCleaner,
+    macbookKeyboardDisabled,
     magicKeyboardDisabled,
     spaceLayer,
-    builtinKanaSymbolLayer,
-    builtinFnToOption,
-    builtinCtrlTapToEsc,
-    builtinTabHoldToOption,
+    appleKeyboardsKanaSymbolLayer,
+    appleKeyboardsFnToOption,
+    appleKeyboardsCtrlTapToEsc,
+    appleKeyboardsTabHoldToOption,
     chromeImgWidth,
   ],
-  builtinCustomUsLayout,
+  appleKeyboardsCustomUsLayout,
   [ctrlEmacs, shiftBackspaceToDelete],
   [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn, chromeNewTabInGroup],
   [slackDisableEsc, imeDisableEsc],

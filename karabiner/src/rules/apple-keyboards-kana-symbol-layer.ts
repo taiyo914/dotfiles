@@ -1,5 +1,5 @@
 import { ifExpression, ifVar, map, rule, toKey, type ToEvent } from 'karabiner.ts'
-import { ifBuiltinKeyboard } from '../conditions.ts'
+import { ifAppleKeyboards } from '../conditions.ts'
 
 const layerActive = 'kana_layer'
 const layerUsed = 'kana_used'
@@ -23,7 +23,7 @@ const layerKeys: Record<string, ToEvent> = {
   j: toKey('open_bracket'), // [
   k: toKey('close_bracket'), // ]
   x: toKey('1', 'left_shift'), // !
-  // : / ; のキー。semicolon ではなく hyphen を出すのは、下の段の builtin-custom-us-layout が hyphen を「単独なら :、Shift と一緒なら ;」に変えるため
+  // : / ; のキー。semicolon ではなく hyphen を出すのは、下の段の apple-keyboards-custom-us-layout が hyphen を「単独なら :、Shift と一緒なら ;」に変えるため
   c: toKey('hyphen'),
   v: toKey('backslash', 'left_shift'), // |
   b: toKey('backslash'), // \
@@ -38,7 +38,7 @@ const setNow = (name: string): ToEvent => ({ set_variable: { name, expression: '
 const ifLayerUnused = { type: 'variable_if', name: layerUsed, value: 0 } as const
 
 // かなキー長押しで記号レイヤー、タップでかなにする
-export default rule('builtin-kana-symbol-layer', ifBuiltinKeyboard).manipulators([
+export default rule('apple-keyboards-kana-symbol-layer', ifAppleKeyboards).manipulators([
   map('japanese_kana', null, 'any')
     .to([setVar(layerActive, 1), setVar(layerUsed, 0), setNow(pressedAt)])
     .toAfterKeyUp([setVar(layerActive, 0), { ...tapEvent, conditions: [ifLayerUnused] }]),

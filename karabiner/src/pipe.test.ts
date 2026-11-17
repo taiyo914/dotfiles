@@ -9,7 +9,7 @@ import { stages } from './stages.ts'
 
 type World = {
   app: string
-  device: 'builtin' | 'magic' | 'external'
+  device: 'macbook' | 'magic' | 'external'
   language: string
   vars: Record<string, number>
   expressions: Record<string, boolean>
@@ -32,7 +32,7 @@ function conditionHolds(c: Condition, world: World): boolean {
       case 'device_if':
       case 'device_unless':
         return c.identifiers.some((id) =>
-          id.is_built_in_keyboard ? world.device === 'builtin' : id.product_id === 666 && world.device === 'magic',
+          id.is_built_in_keyboard ? world.device === 'macbook' : id.product_id === 666 && world.device === 'magic',
         )
       case 'input_source_if':
       case 'input_source_unless':
@@ -152,7 +152,7 @@ function checkSameAsStages(input: Stage[], worlds: World[]) {
 
 function* worldsFor(expressions: string[]): Generator<World> {
   for (const app of ['com.google.Chrome', 'com.tinyspeck.slackmacgap', 'com.apple.Terminal'])
-    for (const device of ['builtin', 'magic', 'external'] as const)
+    for (const device of ['macbook', 'magic', 'external'] as const)
       for (const language of ['ja', 'en'])
         for (const [spaceLayer, kanaLayer] of [[0, 0], [1, 0], [0, 1]])
           for (const ime of [0, 1])
