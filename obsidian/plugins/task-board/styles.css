@@ -11,6 +11,113 @@
   display: none;
 }
 
+/* Bases の表示の枠に本体が付ける下の余白（60px）を消す。プレビューを下の端まで伸ばすため。
+   スクロールはボードの表示とプレビューの中でそれぞれするので、枠ではスクロールさせない */
+.bases-view[data-view-type="task-kanban"],
+.bases-view[data-view-type="task-dependencies"],
+.bases-view[data-view-type="task-table"] {
+  --bases-view-padding: 0;
+  overflow: hidden;
+}
+
+/* ボードの表示と右側のプレビューを横に並べる。ボードの表示は、プレビューの残りの幅いっぱいに広げる */
+.task-board-split {
+  display: flex;
+  height: 100%;
+}
+
+.task-board-split > :not(.task-board-preview) {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* プレビュー。幅はドラッグで変えられるが、ボードが見えなくならないように全体の 70% までにする */
+.task-board-preview {
+  position: relative;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  border-left: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
+/* プレビューの左端の、幅を変えるつまみ */
+.task-board-preview-resizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -3px;
+  width: 6px;
+  cursor: col-resize;
+  z-index: 1;
+}
+
+.task-board-preview-resizer:hover,
+.task-board-preview-resizer.is-dragging {
+  background: var(--interactive-accent);
+}
+
+/* 「フルページで開く」と「閉じる」のボタンを右上に並べる */
+.task-board-preview-header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 4px 8px;
+}
+
+/* ふつうのノートの画面と同じく、ノートの部品をプレビューの高さいっぱいに広げ、スクロールはノートの部品の中でさせる。
+   外側でスクロールさせると、本文が短いときにノートの部品がスクロールを受け取ってしまい、スクロールできなくなる */
+.task-board-preview-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-board-preview-body > div {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ノートの埋め込みの枠と高さの上限を外して、ふつうのノートの画面のように見せる */
+.task-board-preview-body .markdown-embed {
+  border: none;
+  padding: 0;
+}
+
+.task-board-preview-body .markdown-embed-content {
+  height: 100%;
+  max-height: none;
+}
+
+.task-board-preview-body .markdown-embed .markdown-preview-view,
+.task-board-preview-body .markdown-embed .cm-scroller {
+  padding: 0 32px;
+}
+
+/* ノートの最後の下に、画面の高さの半分の余白を付ける。本文が短くても下にスクロールでき、最後の行を画面の真ん中まで上げられる */
+.task-board-preview-body .markdown-embed .cm-sizer,
+.task-board-preview-body .markdown-embed .markdown-preview-sizer {
+  padding-bottom: 50vh;
+}
+
+/* 書き換えられないときの表示（ノートの埋め込みが使えないとき） */
+.task-board-preview-body > .markdown-rendered {
+  overflow: auto;
+  padding: 0 32px 32px;
+}
+
+/* ノートの埋め込みでは本体がタイトルを隠すので、プレビューでは出してその場で名前を変えられるようにする */
+.task-board-preview-body .inline-title {
+  display: block;
+}
+
+/* 埋め込みの右上の「リンクを開く」ボタンは、ボードのタブの中身をノートに入れ替えてしまうので隠す。代わりにプレビューの右上の「フルページで開く」を使う */
+.task-board-preview-body .markdown-embed-link {
+  display: none;
+}
+
 /* KANBAN: 列を横に並べ、入りきらないときは横にスクロールする */
 .task-board-kanban {
   display: flex;

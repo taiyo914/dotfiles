@@ -3,6 +3,8 @@
 const {
   Plugin,
   BasesView,
+  Component,
+  MarkdownRenderer,
   Modal,
   SuggestModal,
   AbstractInputSuggest,
@@ -90,6 +92,11 @@ const MIN_ORDER_GAP = 1e-6;
 
 // 新しいタスクの画面で、blocked_by / blocking の入力欄の下に出すカードの候補の最大数
 const LINK_SUGGESTION_LIMIT = 20;
+
+// ボードの右側のプレビューの幅（px）。ドラッグで変えた幅は、このパソコンの Obsidian に PREVIEW_WIDTH_KEY の名前で覚えておく
+const PREVIEW_DEFAULT_WIDTH = 520;
+const PREVIEW_MIN_WIDTH = 320;
+const PREVIEW_WIDTH_KEY = "task-board-preview-width";
 
 
 function isTaskFile(file) {
@@ -813,7 +820,7 @@ function renderCardTitle(containerEl, task) {
   titleEl.createSpan({ cls: "task-board-card-text", text: task.title });
 }
 
-function renderRelations(plugin, containerEl, task, index) {
+function renderRelations(plugin, preview, containerEl, task, index) {
   const relations = [
     ...[...task.blocked_by].map((path) => ({ path, kind: "blocked_by" })),
     ...[...task.blocking].map((path) => ({ path, kind: "blocking" }))
@@ -835,13 +842,13 @@ function renderRelations(plugin, containerEl, task, index) {
 
     rowEl.addEventListener("click", (evt) => {
       evt.stopPropagation();
-      plugin.openTask(other.file, evt);
+      plugin.openTask(other.file, evt, preview);
     });
   }
 }
 
-function attachCardActions(plugin, cardEl, file) {
-  cardEl.addEventListener("click", (evt) => plugin.openTask(file, evt));
+function attachCardActions(plugin, preview, cardEl, file) {
+  cardEl.addEventListener("click", (evt) => plugin.openTask(file, evt, preview));
   cardEl.addEventListener("contextmenu", (evt) => showTaskMenu(plugin, file, evt));
 }
 
@@ -902,6 +909,198 @@ function showTaskMenu(plugin, file, evt, setStatus) {
 }
 
 // ---------------------------------------------------------------------------
+// プレビュー
+// ---------------------------------------------------------------------------
+
+// Notion のサイドピークのように、クリックしたノートをボードと同じタブの中の右側に開く。
+// ノートの書き換えには、Obsidian 本体のリンクにマウスを乗せたときに出るプレビューと同じ部品（公開 API ではない app.embedRegistry）を使う。
+// その部品が使えないときは、ノートを表示するだけにする
+class TaskPreview extends Component {
+  constructor(view, splitEl) {
+    super();
+    this.app = view.app;
+    this.file = null;
+    this.content = null;
+
+    // プレビューの枠、幅を変えるつまみ、上のボタン、ノートの中身を出す場所
+    this.paneEl = splitEl.createDiv({ cls: "task-board-preview" });
+    this.paneEl.hide();
+    this.attachResizer(this.paneEl.createDiv({ cls: "task-board-preview-resizer" }));
+    const headerEl = this.paneEl.createDiv({ cls: "task-board-preview-header" });
+    this.addHeaderButton(headerEl, "maximize-2", "フルページで開く", () => this.openFullPage());
+    this.addHeaderButton(headerEl, "x", "閉じる", () => this.close());
+    this.bodyEl = this.paneEl.createDiv({ cls: "task-board-preview-body" });
+    this.attachLinkHandler();
+  }
+
+  // 開いているノートが消えたときや、ゴミ箱（.trash）に移って tasks フォルダから出たときは閉じる
+  onload() {
+    this.registerEvent(
+      this.app.vault.on("delete", (file) => {
+        if (file === this.file) this.close();
+      })
+    );
+    this.registerEvent(
+      this.app.vault.on("rename", (file) => {
+        if (file === this.file && !isTaskFile(file)) this.close();
+      })
+    );
+  }
+
+  onunload() {
+    this.unloadContent();
+  }
+
+  addHeaderButton(headerEl, icon, label, onClick) {
+    const buttonEl = headerEl.createDiv({ cls: "clickable-icon", attr: { "aria-label": label } });
+    setIcon(buttonEl, icon);
+    buttonEl.addEventListener("click", onClick);
+  }
+
+  async open(file) {
+    if (file === this.file) return;
+    this.unloadContent();
+    this.file = file;
+    this.applyWidth(Number(this.app.loadLocalStorage(PREVIEW_WIDTH_KEY)));
+    this.paneEl.show();
+    this.bodyEl.empty();
+    const containerEl = this.bodyEl.createDiv();
+    this.content = this.loadEditableNote(file, containerEl) ?? this.loadReadOnlyNote(file, containerEl);
+  }
+
+  close() {
+    this.unloadContent();
+    this.file = null;
+    this.bodyEl.empty();
+    this.paneEl.hide();
+  }
+
+  // ボードはこのタブに残したまま、プレビューのノートを新しいタブにふつうのノートとして開く
+  openFullPage() {
+    const file = this.file;
+    if (!file) return;
+    this.close();
+    this.app.workspace.getLeaf("tab").openFile(file);
+  }
+
+  // 書き換えた内容は2秒たってからまとめて保存されるので、閉じる前にすぐ保存させる
+  unloadContent() {
+    if (!this.content) return;
+    this.content.destroyEditor?.(true);
+    this.removeChild(this.content);
+    this.content = null;
+  }
+
+  // 公開 API ではない部品を使うので、部品が無いときや作れなかったときは null を返す
+  loadEditableNote(file, containerEl) {
+    let embed;
+    try {
+      const create = this.app.embedRegistry?.getEmbedCreator?.(file);
+      embed = create?.({ app: this.app, containerEl, state: {} }, file, "");
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+    if (typeof embed?.showEditor !== "function" || typeof embed.loadFile !== "function") return null;
+
+    embed.editable = true;
+    this.addChild(embed);
+    // ノートの埋め込みは、本体がプロパティを畳み、読むだけの表示で開く。
+    // ふつうのノートの画面と同じに見せるため、読み込んだ後にプロパティを開き、書き換えられる表示に切り替える。
+    // 読み込んでいる間に別のノートに切り替えたときは、もう使わないので何もしない
+    embed.loadFile().then(() => {
+      if (this.content !== embed) return;
+      embed.metadataEditor?.setCollapse?.(false, false);
+      this.app.workspace.activeEditor = embed;
+      embed.showEditor();
+    });
+    // 何かのはずみで読むだけの表示に戻ったときは、本体のマウスを乗せたときのプレビューと同じく、
+    // 本文をクリックしたら書き換えられる表示に切り替えて、クリックした位置にカーソルを置く
+    containerEl.addEventListener("click", (evt) => {
+      if (embed.editMode || evt.defaultPrevented) return;
+      if (evt.target.closest("a, button, input, .metadata-container, .inline-title, .collapse-indicator, .interactive-child")) return;
+      this.app.workspace.activeEditor = embed;
+      embed.showEditor(evt);
+    });
+    // 太字などのコマンドが、このプレビューの中のノートに効くようにする
+    containerEl.addEventListener("focusin", () => {
+      this.app.workspace.activeEditor = embed;
+    });
+    return embed;
+  }
+
+  loadReadOnlyNote(file, containerEl) {
+    const component = this.addChild(new Component());
+    containerEl.addClass("markdown-rendered");
+    const render = async () => {
+      const markdown = await this.app.vault.cachedRead(file);
+      containerEl.empty();
+      containerEl.createEl("h1", { text: file.basename });
+      await MarkdownRenderer.render(this.app, markdown, containerEl, file.path, component);
+    };
+    component.registerEvent(
+      this.app.vault.on("modify", (changed) => {
+        if (changed === file) render();
+      })
+    );
+    render();
+    return component;
+  }
+
+  // Obsidian 本体はノートの中のリンクを最後に使ったタブ（ボード）に開いてしまうので、
+  // 表示しているノートの中のリンクは、タスクならこのプレビューに、それ以外なら新しいタブに開く
+  attachLinkHandler() {
+    this.bodyEl.addEventListener(
+      "click",
+      (evt) => {
+        const linkEl = evt.target.closest?.("a.internal-link");
+        if (!linkEl || !this.file || Keymap.isModEvent(evt)) return;
+        const dest = this.app.metadataCache.getFirstLinkpathDest(linkpathOf(linkEl.dataset.href ?? ""), this.file.path);
+        if (!dest) return;
+        evt.preventDefault();
+        evt.stopPropagation();
+        if (isTaskFile(dest)) this.open(dest);
+        else this.app.workspace.getLeaf("tab").openFile(dest);
+      },
+      true
+    );
+  }
+
+  applyWidth(width) {
+    this.paneEl.style.width = `${Math.max(PREVIEW_MIN_WIDTH, width || PREVIEW_DEFAULT_WIDTH)}px`;
+  }
+
+  // プレビューの左端をドラッグして幅を変え、離したときに幅を覚えておく
+  attachResizer(handleEl) {
+    handleEl.addEventListener("pointerdown", (evt) => {
+      evt.preventDefault();
+      handleEl.setPointerCapture(evt.pointerId);
+      handleEl.addClass("is-dragging");
+      const startX = evt.clientX;
+      const startWidth = this.paneEl.offsetWidth;
+
+      const onMove = (moveEvt) => this.applyWidth(Math.round(startWidth + startX - moveEvt.clientX));
+      const onUp = () => {
+        handleEl.removeEventListener("pointermove", onMove);
+        handleEl.removeClass("is-dragging");
+        this.app.saveLocalStorage(PREVIEW_WIDTH_KEY, this.paneEl.offsetWidth);
+      };
+      handleEl.addEventListener("pointermove", onMove);
+      handleEl.addEventListener("pointerup", onUp, { once: true });
+      handleEl.addEventListener("pointercancel", onUp, { once: true });
+    });
+  }
+}
+
+// ボードの表示を描く場所と、その右側のプレビューを横に並べ、ボードの表示を描く要素を返す
+function createBoardLayout(view, containerEl, rootAttrs) {
+  const splitEl = containerEl.createDiv({ cls: "task-board-split" });
+  const rootEl = splitEl.createDiv(rootAttrs);
+  view.preview = view.addChild(new TaskPreview(view, splitEl));
+  return rootEl;
+}
+
+// ---------------------------------------------------------------------------
 // KANBAN
 // ---------------------------------------------------------------------------
 
@@ -910,7 +1109,7 @@ class TaskKanbanView extends BasesView {
     super(controller);
     this.type = KANBAN_VIEW_TYPE;
     this.plugin = plugin;
-    this.rootEl = containerEl.createDiv({ cls: "task-board-kanban" });
+    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-board-kanban" });
     this.dropIndicatorEl = createDiv({ cls: "task-board-drop-indicator" });
   }
 
@@ -987,8 +1186,8 @@ class TaskKanbanView extends BasesView {
     cardEl.draggable = true;
 
     renderCardTitle(cardEl, task);
-    renderRelations(this.plugin, cardEl, task, index);
-    attachCardActions(this.plugin, cardEl, task.file);
+    renderRelations(this.plugin, this.preview, cardEl, task, index);
+    attachCardActions(this.plugin, this.preview, cardEl, task.file);
 
     cardEl.addEventListener("dragstart", (evt) => {
       evt.dataTransfer.setData("text/plain", task.file.path);
@@ -1165,7 +1364,7 @@ class TaskDependencyView extends BasesView {
     super(controller);
     this.type = DEPENDENCY_VIEW_TYPE;
     this.plugin = plugin;
-    this.rootEl = containerEl.createDiv({ cls: "task-board-dependencies" });
+    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-board-dependencies" });
   }
 
   onDataUpdated() {
@@ -1299,7 +1498,7 @@ class TaskDependencyView extends BasesView {
     pillEl.createSpan({ text: status });
 
     renderCardTitle(cardEl, task);
-    attachCardActions(this.plugin, cardEl, task.file);
+    attachCardActions(this.plugin, this.preview, cardEl, task.file);
     return cardEl;
   }
 }
@@ -1315,7 +1514,7 @@ class TaskTableView extends BasesView {
     this.type = TABLE_VIEW_TYPE;
     this.plugin = plugin;
     // 表のどこかをクリックしたら表にフォーカスが移り、cmd + z を受け取れるようにする
-    this.rootEl = containerEl.createDiv({ cls: "task-board-table-wrap", attr: { tabIndex: 0 } });
+    this.rootEl = createBoardLayout(this, containerEl, { cls: "task-board-table-wrap", attr: { tabIndex: 0 } });
     this.renderPending = false;
     this.undoStack = [];
     this.redoStack = [];
@@ -1472,7 +1671,7 @@ class TaskTableView extends BasesView {
       if (task) this.renderIconButton(nameEl, task);
       // 右クリックは行のメニュー（status の変更を cmd + z で戻せる）に任せるので、ここではクリックだけ受け取る
       const linkEl = nameEl.createSpan({ cls: "task-board-table-link", text: entry.file.basename });
-      linkEl.addEventListener("click", (evt) => this.plugin.openTask(entry.file, evt));
+      linkEl.addEventListener("click", (evt) => this.plugin.openTask(entry.file, evt, this.preview));
       return;
     }
     if (task && type === "note" && name === "status") {
@@ -1562,7 +1761,7 @@ class TaskTableView extends BasesView {
 
       const chipEl = listEl.createDiv({ cls: "task-board-table-chip" });
       const linkEl = chipEl.createSpan({ cls: "task-board-table-link", text: other.basename });
-      attachCardActions(this.plugin, linkEl, other);
+      attachCardActions(this.plugin, this.preview, linkEl, other);
 
       const removeEl = chipEl.createSpan({ cls: "task-board-table-chip-remove", attr: { "aria-label": "つながりを外す" } });
       setIcon(removeEl, "x");
@@ -1583,7 +1782,6 @@ class TaskTableView extends BasesView {
 module.exports = class TaskBoardPlugin extends Plugin {
   async onload() {
     this.sync = new LinkSync(this.app);
-    this.sideLeaf = null;
 
     this.registerBasesView(KANBAN_VIEW_TYPE, {
       name: "Kanban",
@@ -1770,25 +1968,14 @@ module.exports = class TaskBoardPlugin extends Plugin {
     return this.app.vault.create(path, `---\n${stringifyYaml(frontmatter)}---\n${content}`);
   }
 
-  // Notion のサイドピークのように、ボードの右側の同じ場所にノートを開く
-  openTask(file, evt) {
+  // 普通のクリックはボードと同じタブの右側のプレビューに開き、cmd + クリックなどは Obsidian の決まりどおりの場所に開く。
+  // スマホは画面が狭いので、プレビューは使わずに今のタブで開く
+  openTask(file, evt, preview) {
     const modifier = Keymap.isModEvent(evt);
-    if (modifier) {
+    if (modifier || !preview || Platform.isPhone) {
       this.app.workspace.getLeaf(modifier).openFile(file);
       return;
     }
-    if (!this.isLeafOpen(this.sideLeaf)) {
-      this.sideLeaf = this.app.workspace.getLeaf("split", "vertical");
-    }
-    this.sideLeaf.openFile(file);
-  }
-
-  isLeafOpen(leaf) {
-    if (!leaf) return false;
-    let found = false;
-    this.app.workspace.iterateRootLeaves((other) => {
-      if (other === leaf) found = true;
-    });
-    return found;
+    preview.open(file);
   }
 };
