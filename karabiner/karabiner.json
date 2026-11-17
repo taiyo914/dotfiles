@@ -4,7 +4,7 @@
       "complex_modifications": {
         "rules": [
           {
-            "description": "keyboard-cleaner (💡Turn on only while cleaning)",
+            "description": "builtin-keyboard-cleaner (💡Turn on only while cleaning)",
             "manipulators": [
               {
                 "type": "basic",
@@ -19,6 +19,16 @@
                 "to": [
                   {
                     "key_code": "vk_none"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      }
+                    ]
                   }
                 ]
               },
@@ -35,6 +45,16 @@
                 "to": [
                   {
                     "key_code": "vk_none"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      }
+                    ]
                   }
                 ]
               }

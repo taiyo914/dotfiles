@@ -62,7 +62,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 
 | ルール名 | 概要 |
 | - | - |
-| `keyboard-cleaner` | 掃除用に全キーを無効化。Karabiner の画面で都度 ON / OFF する |
+| `builtin-keyboard-cleaner` | 掃除用に MacBook の内蔵キーボードの全キーを無効化。Karabiner の画面で都度 ON / OFF する |
 | `magic-keyboard-disabled` | Magic Keyboard with Touch ID のキーを Touch ID 以外すべて無効化 |
 | `space-layer` | Space 長押しで矢印・削除レイヤー。タップで Space ＋ 英数 |
 | `builtin-fn-to-option` | fn（地球儀）キー → 右 Option |
@@ -223,15 +223,15 @@ Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにタブ�
 
 注意: Chrome 本来の `Cmd+↓` / `Cmd+↑`（ページの一番下 / 一番上まで移る）は使えなくなる。
 
-### 3-13. `keyboard-cleaner`
+### 3-13. `builtin-keyboard-cleaner`
 
-キーボードを掃除するときに、すべてのキーボードのキーをすべて無効にする。
+MacBook のキーボードを掃除するときに、MacBook の内蔵キーボードのキーをすべて無効にする。ほかの `builtin-` のルールと違い、Magic Keyboard には適用しない。
 
-普段は OFF にしておく。掃除するときだけ、Karabiner-Elements の設定画面の Complex Modifications でこのルールを ON にし、終わったら OFF に戻す。キーボードが使えない間も、トラックパッドとマウスで OFF に戻せる。
+普段は OFF にしておく。掃除するときだけ、Karabiner-Elements の設定画面の Complex Modifications でこのルールを ON にし、終わったら OFF に戻す。内蔵キーボードが使えない間も、外付けのキーボード・トラックパッド・マウスで OFF に戻せる。
 
 ほかのルールより先に判定させるため、`src/stages.ts` の 1 段目の一番上に置く。`npm run build` を実行すると OFF に戻る。
 
-このルールだけは、Karabiner の画面に出る名前を `keyboard-cleaner (💡Turn on only while cleaning)` にしている。掃除のときだけ ON にするルールだとわかるようにするため。ファイル名は `keyboard-cleaner` のまま。
+このルールだけは、Karabiner の画面に出る名前を `builtin-keyboard-cleaner (💡Turn on only while cleaning)` にしている。掃除のときだけ ON にするルールだとわかるようにするため。ファイル名は `builtin-keyboard-cleaner` のまま。
 
 注意: fn（地球儀）キーは `any` で指定できない種類のキーなので、無効にならない。トラックパッドとマウスは無効にならない。
 
