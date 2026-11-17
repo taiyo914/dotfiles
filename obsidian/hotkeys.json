@@ -1,12 +1,4 @@
 {
-  "obsidian-plugin-toc:create-toc": [
-    {
-      "modifiers": [
-        "Ctrl"
-      ],
-      "key": "T"
-    }
-  ],
   "editor:toggle-source": [
     {
       "modifiers": [
@@ -66,15 +58,6 @@
         "Alt"
       ],
       "key": "ArrowDown"
-    }
-  ],
-  "editor:toggle-highlight": [
-    {
-      "modifiers": [
-        "Mod",
-        "Shift"
-      ],
-      "key": "H"
     }
   ],
   "editor:toggle-fold": [
@@ -143,8 +126,7 @@
   "auto-toc:insert-auto-toc": [
     {
       "modifiers": [
-        "Ctrl",
-        "Shift"
+        "Ctrl"
       ],
       "key": "T"
     }
@@ -169,16 +151,16 @@
   "editor:toggle-blockquote": [
     {
       "modifiers": [
-        "Mod",
-        "Shift"
+        "Ctrl"
       ],
-      "key": "'"
+      "key": "Q"
     }
   ],
   "question-callout:insert-question-callout": [
     {
       "modifiers": [
-        "Ctrl"
+        "Ctrl",
+        "Shift"
       ],
       "key": "Q"
     }
