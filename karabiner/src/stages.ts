@@ -10,7 +10,6 @@ import chromeNewTabInGroup from './rules/chrome-new-tab-in-group.ts'
 import chromeSplitView from './rules/chrome-split-view.ts'
 import chromeZoomIn from './rules/chrome-zoom-in.ts'
 import ctrlEmacs from './rules/ctrl-emacs.ts'
-import ctrlJToEnter from './rules/ctrl-j-to-enter.ts'
 import imeComposing from './rules/ime-composing.ts'
 import imeDisableEsc from './rules/ime-disable-esc.ts'
 import keyboardCleaner from './rules/keyboard-cleaner.ts'
@@ -35,7 +34,7 @@ export const stages: Stage[] = [
   ],
   [builtinJisSymbols, magicKeyboardUsLayout],
   builtinSwapSemicolonHyphen,
-  [ctrlEmacs, ctrlJToEnter, shiftBackspaceToDelete],
+  [ctrlEmacs, shiftBackspaceToDelete],
   [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn, chromeNewTabInGroup],
   [slackDisableEsc, imeDisableEsc],
   imeComposing,

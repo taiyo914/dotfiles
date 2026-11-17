@@ -7102,228 +7102,6 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "j",
-                  "modifiers": {
-                    "mandatory": [
-                      "left_control"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "spacebar",
-                    "modifiers": [
-                      "left_control"
-                    ]
-                  },
-                  {
-                    "key_code": "japanese_eisuu",
-                    "modifiers": [
-                      "left_control"
-                    ],
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 0
-                    },
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_layer",
-                      "value": 0
-                    }
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_used",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "key_code": "return_or_enter"
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 0
-                    }
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "space_layer",
-                    "value": 1
-                  },
-                  {
-                    "type": "expression_if",
-                    "expression": "system.now.milliseconds - space_down_ms < 100"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "j",
-                  "modifiers": {
-                    "optional": [
-                      "shift",
-                      "caps_lock"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "spacebar"
-                  },
-                  {
-                    "key_code": "japanese_eisuu",
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 0
-                    },
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_layer",
-                      "value": 0
-                    }
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_used",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "key_code": "j"
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 1
-                    }
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "space_layer",
-                    "value": 1
-                  },
-                  {
-                    "type": "expression_if",
-                    "expression": "system.now.milliseconds - space_down_ms < 100"
-                  },
-                  {
-                    "type": "input_source_if",
-                    "input_sources": [
-                      {
-                        "language": "^ja$"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "j",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "spacebar"
-                  },
-                  {
-                    "key_code": "japanese_eisuu",
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 0
-                    },
-                    "conditions": [
-                      {
-                        "type": "variable_if",
-                        "name": "ime_composing",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_layer",
-                      "value": 0
-                    }
-                  },
-                  {
-                    "set_variable": {
-                      "name": "space_used",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "key_code": "j"
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "space_layer",
-                    "value": 1
-                  },
-                  {
-                    "type": "expression_if",
-                    "expression": "system.now.milliseconds - space_down_ms < 100"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
                   "key_code": "delete_or_backspace",
                   "modifiers": {
                     "mandatory": [
@@ -8980,6 +8758,151 @@
                   },
                   {
                     "key_code": "i"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 100"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "j",
+                  "modifiers": {
+                    "optional": [
+                      "shift",
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "j"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 100"
+                  },
+                  {
+                    "type": "input_source_if",
+                    "input_sources": [
+                      {
+                        "language": "^ja$"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "j",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "j"
                   }
                 ],
                 "conditions": [
@@ -16387,33 +16310,6 @@
                     "modifiers": [
                       "left_command"
                     ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "description": "ctrl-j-to-enter",
-            "manipulators": [
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "j",
-                  "modifiers": {
-                    "mandatory": [
-                      "left_control"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "return_or_enter"
-                  },
-                  {
-                    "set_variable": {
-                      "name": "ime_composing",
-                      "value": 0
-                    }
                   }
                 ]
               }

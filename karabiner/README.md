@@ -79,7 +79,6 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `slack-disable-esc` | Slack で Esc を無効にする |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
-| `ctrl-j-to-enter` | `Ctrl+J` → Enter |
 | `ime-composing` | 日本語の入力途中かどうかを変数 `ime_composing` に記録する |
 | `ime-disable-esc` | 日本語の入力途中に Esc を押しても文字が消えないようにする |
 
@@ -266,15 +265,7 @@ US 配列のキーの位置のままにして、次の 2 つだけを変える�
 
 ほかのキーは US 配列の同じ位置のキーとして扱う。たとえば `^` のキーは `=` / `+`、`@` のキーは `[` / `{`、`:` のキーは `'` / `"`、`]` のキーは `\` / `|` になる。`_` のキーには何も割り当てていない。
 
-### 3-18. `ctrl-j-to-enter`
-
-左 Ctrl を押しながら `J` を押すと、Enter を入力する。
-
-Enter は下の段の `ime-composing` にも渡るので、日本語の入力途中に `Ctrl+J` で確定したときも、入力途中ではなくなったと記録される。
-
-注意: 日本語入力の `Ctrl+J`（ひらがなに変換）は使えなくなる。
-
-### 3-19. `chrome-new-tab-in-group`
+### 3-18. `chrome-new-tab-in-group`
 
 Chrome で新しいタブを開くときに、タブグループに入れるかどうかを選べるようにする。Chrome でのみ適用。
 
@@ -285,7 +276,7 @@ Chrome で新しいタブを開くときに、タブグループに入れるか�
 
 Karabiner は今のタブがタブグループに入っているかどうかを調べられないので、拡張機能 `chrome/new-tab-in-group` のショートカット（`Option+Shift+T` / `Option+Shift+Y`）を送り、タブを開く処理は拡張機能が行う。この拡張機能を読み込んでいないと、`Cmd+T` / `Cmd+Ctrl+T` で何も起きない。ショートカットは `chrome://extensions/shortcuts` で確かめられる。
 
-### 3-20. `ime-disable-esc`
+### 3-19. `ime-disable-esc`
 
 日本語の入力途中（`ime-composing` の変数 `ime_composing` が 1 のとき）に Esc を押しても、何も起きないようにする。IME が Esc で入力途中の文字をすべて消してしまうのを防ぐため。
 
