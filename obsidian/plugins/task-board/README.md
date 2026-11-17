@@ -74,12 +74,16 @@ blocking: []        # このカードが終わるのを待っているカード
 resume_cmd: []      # このタスクで使った Claude のセッションを開き直すコマンド（claude --resume ...）
 session_cwd: []     # そのセッションを始めたディレクトリ
 order: 1.5          # 列の中の順番。ドラッグで自動で書き換わる
+done_at: 2026-11-17 # 終わった日（DONE / ARCHIVE にした日）。自動で書き換わる
 ---
 ```
 
 ## DONE と ARCHIVE
 
 - DONE は最近終わったカードを置く列。Kanban に表示する
+  - DONE か ARCHIVE にしたカードには、その日の日付が `done_at` に自動で入る。DONE / ARCHIVE 以外に戻すと `done_at` は消える
+  - DONE になってから7日たったカードは、アーカイブし忘れの印として薄い赤色になる
+  - Obsidian を閉じている間に DONE にしたカードなど、`done_at` の無い終わったカードには、Obsidian を開いたときにノートの編集日を目安として入れる。違っていたら手で直してよい
 - ARCHIVE は片付け済みのカードの置き場所。Kanban ではカードを表示せず、枚数だけを表示する
   - カードを ARCHIVE 列にドラッグすると片付けられる
   - DONE 列の右上のボタンで、DONE のカードを全部 ARCHIVE に移せる

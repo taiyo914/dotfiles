@@ -37,6 +37,12 @@ const KANBAN_LANES = [["BLOCKED"], ["TODO", "WANT"], ["WIP"], ["DONE"], ["ARCHIV
 // この status のカードは「終わったカード」として扱い、他のカードをブロックしない
 const FINISHED_STATUSES = new Set(["DONE", "ARCHIVE"]);
 
+// 終わったカードに、終わった日を書くプロパティ。DONE になってから STALE_DONE_DAYS 日たったカードは、
+// アーカイブし忘れの印として KANBAN で薄い赤色にする
+const DONE_AT_KEY = "done_at";
+const DONE_AT_FORMAT = "YYYY-MM-DD";
+const STALE_DONE_DAYS = 7;
+
 // この status のカードは KANBAN に表示しない（記録として残すだけの片付け済みのカード）
 const HIDDEN_STATUS = "ARCHIVE";
 
@@ -166,6 +172,12 @@ function readOrder(value) {
   return Number.isFinite(order) ? order : null;
 }
 
+function readDate(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const date = value instanceof Date ? moment(value) : moment(String(value), DONE_AT_FORMAT, true);
+  return date.isValid() ? date : null;
+}
+
 function readTask(app, file) {
   const frontmatter = app.metadataCache.getFileCache(file)?.frontmatter;
   return {
@@ -173,6 +185,7 @@ function readTask(app, file) {
     title: taskTitle(file),
     status: normalizeStatus(frontmatter?.status),
     order: readOrder(frontmatter?.order),
+    doneAt: readDate(frontmatter?.[DONE_AT_KEY]),
     icon: typeof frontmatter?.icon === "string" ? frontmatter.icon.trim() : "",
     blocked_by: readLinkPaths(app, file, frontmatter, "blocked_by"),
     blocking: readLinkPaths(app, file, frontmatter, "blocking")
@@ -189,6 +202,25 @@ function buildTaskIndex(app) {
 
 function isFinished(task) {
   return FINISHED_STATUSES.has(task.status);
+}
+
+function isStaleDone(task) {
+  return task.status === "DONE" && task.doneAt !== null && moment().startOf("day").diff(task.doneAt, "days") >= STALE_DONE_DAYS;
+}
+
+// 終わった status（DONE / ARCHIVE）のカードには done_at を書き、終わっていない status に戻したカードからは消す。
+// done_at が無いときに書く日付は doneDate で渡す
+async function syncDoneDate(app, file, doneDate) {
+  if (!isTaskFile(file)) return;
+  const frontmatter = app.metadataCache.getFileCache(file)?.frontmatter;
+  const finished = FINISHED_STATUSES.has(normalizeStatus(frontmatter?.status));
+  const hasDate = (frontmatter?.[DONE_AT_KEY] ?? "") !== "";
+  if (finished === hasDate) return;
+
+  await app.fileManager.processFrontMatter(file, (frontmatter) => {
+    if (finished) frontmatter[DONE_AT_KEY] = doneDate.format(DONE_AT_FORMAT);
+    else delete frontmatter[DONE_AT_KEY];
+  });
 }
 
 function unfinishedBlockers(task, index) {
@@ -1183,6 +1215,7 @@ class TaskKanbanView extends BasesView {
     const cardEl = columnEl.createDiv({ cls: "task-board-card" });
     cardEl.dataset.path = task.file.path;
     cardEl.toggleClass("is-waiting", unfinishedBlockers(task, index).length > 0);
+    cardEl.toggleClass("is-stale", isStaleDone(task));
     cardEl.draggable = true;
 
     renderCardTitle(cardEl, task);
@@ -1850,11 +1883,21 @@ module.exports = class TaskBoardPlugin extends Plugin {
 
     // 起動時に読み込まれるノートで同期が走らないように、起動が終わってから同期を始める
     this.app.workspace.onLayoutReady(async () => {
+      await this.fillMissingDoneDates();
       await this.sync.reconcileAll();
       this.registerEvent(this.app.metadataCache.on("changed", (file) => this.sync.onChanged(file)));
+      this.registerEvent(this.app.metadataCache.on("changed", (file) => syncDoneDate(this.app, file, moment())));
       this.registerEvent(this.app.vault.on("delete", (file) => this.sync.onDelete(file)));
       this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.sync.onRename(file, oldPath)));
     });
+  }
+
+  // Obsidian を閉じている間に終わったカードや、done_at を書く前から終わっていたカードは、いつ終わったかわからない。
+  // ノートの編集日を終わった日の目安として書く。リンクの同期でノートを書き換えると編集日が変わるので、同期より先に書く
+  async fillMissingDoneDates() {
+    for (const file of this.app.vault.getMarkdownFiles()) {
+      await syncDoneDate(this.app, file, moment(file.stat.mtime));
+    }
   }
 
   // Bases のツールバーの「新規」は、表示に関係なく「無題のファイル」を作る。

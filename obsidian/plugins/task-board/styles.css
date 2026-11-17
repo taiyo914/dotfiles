@@ -240,6 +240,12 @@
   background: color-mix(in srgb, var(--color-red) 8%, var(--background-primary));
 }
 
+/* DONE になってから7日たったカード（アーカイブし忘れ）。BLOCKED の薄い赤と見分けられるように、枠も赤くする */
+.task-board-card.is-stale {
+  background: color-mix(in srgb, var(--color-red) 10%, var(--background-primary));
+  border-color: color-mix(in srgb, var(--color-red) 35%, var(--background-modifier-border));
+}
+
 
 .task-board-card.is-dragging {
   opacity: 0.4;
