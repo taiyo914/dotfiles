@@ -11,3 +11,6 @@ vim.opt.virtualedit = "all"
 
 -- マウスホイール1段で、縦に1行、横に4列スクロールする
 vim.opt.mousescroll = "ver:1,hor:4"
+
+-- ファイルツリーやファイル検索で、.git がある上のフォルダではなく、nvim を起動したフォルダを使う
+vim.g.root_spec = { "cwd" }
