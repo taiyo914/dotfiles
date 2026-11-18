@@ -1,4 +1,6 @@
 import { ifExpression, ifVar, map, rule, toKey, type ToEvent } from 'karabiner.ts'
+import { ifAppleKeyboards } from '../conditions.ts'
+import { beforeCustomUsLayout } from './apple-keyboards-custom-us-layout.ts'
 import { unlessImeComposing } from './ime-composing.ts'
 
 const layerActive = 'space_layer'
@@ -58,11 +60,15 @@ export default rule('space-layer').manipulators([
     .to([...tapEvents, setVar(layerActive, 0), setVar(layerUsed, 1), { from_event: true }])
     .condition(ifVar(layerActive, 1), ifExpression(`system.now.milliseconds - ${pressedAt} < 125`)),
 
-  ...Object.entries(layerKeys).map(([key, event]) =>
+  // 内蔵と Magic Keyboard では、数字の段をずらす下の段のルールを通ったあとに同じ数字になるキーを出す
+  ...Object.entries(layerKeys).flatMap(([key, event]) => [
+    map(key as 'e', null, 'any')
+      .to([setVar(layerUsed, 1), beforeCustomUsLayout(event)])
+      .condition(ifVar(layerActive, 1), ifAppleKeyboards),
     map(key as 'e', null, 'any')
       .to([setVar(layerUsed, 1), event])
       .condition(ifVar(layerActive, 1)),
-  ),
+  ]),
 
   map({ any: 'key_code', modifiers: { optional: ['any'] } })
     .to([setVar(layerUsed, 1), { from_event: true }])

@@ -267,7 +267,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "caps_lock"
@@ -347,7 +347,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "mandatory": [
                       "shift"
@@ -433,7 +433,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -481,6 +481,1568 @@
                   },
                   {
                     "key_code": "semicolon"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "equal_sign",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "equal_sign"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "grave_accent_and_tilde"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "0"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - space_down_ms < 125"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "hyphen",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar"
+                  },
+                  {
+                    "key_code": "japanese_eisuu",
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    },
+                    "conditions": [
+                      {
+                        "type": "variable_if",
+                        "name": "ime_composing",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "0"
                   }
                 ],
                 "conditions": [
@@ -705,7 +2267,7 @@
                     }
                   },
                   {
-                    "key_code": "grave_accent_and_tilde"
+                    "key_code": "equal_sign"
                   }
                 ],
                 "conditions": [
@@ -6970,6 +8532,98 @@
                     "value": 1
                   },
                   {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "e",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "up_arrow"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "e",
+                  "modifiers": {
+                    "mandatory": [
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "tab",
+                    "modifiers": [
+                      "control",
+                      "shift"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
                     "type": "frontmost_application_if",
                     "bundle_identifiers": [
                       "^com\\.google\\.Chrome$"
@@ -7032,6 +8686,138 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "s",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "left_arrow"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "mandatory": [
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "tab",
+                    "modifiers": [
+                      "control"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "down_arrow"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7128,6 +8914,91 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "f",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "right_arrow"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "a",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": [
+                      "left_command"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7192,6 +9063,94 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "g",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": [
+                      "left_command"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "w",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": [
+                      "left_option"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7256,6 +9215,94 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "r",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": [
+                      "left_option"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "q",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "delete_or_backspace",
+                    "modifiers": [
+                      "left_option"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7317,6 +9364,88 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "t",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "delete_forward"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "h",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "0"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7375,6 +9504,88 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "j",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7433,6 +9644,88 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "semicolon",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7491,6 +9784,88 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "y",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "u",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7549,6 +9924,88 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "i",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "o",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
@@ -7607,13 +10064,54 @@
                     "type": "variable_if",
                     "name": "space_layer",
                     "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
                   }
                 ]
               },
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "p",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "caps_lock"
@@ -7657,7 +10155,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "mandatory": [
                       "shift"
@@ -7701,7 +10199,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -7717,6 +10215,776 @@
                   },
                   {
                     "key_code": "semicolon"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "equal_sign",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "equal_sign"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "grave_accent_and_tilde"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "0"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "space_layer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "hyphen",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "space_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "0"
                   }
                 ],
                 "conditions": [
@@ -7825,7 +11093,7 @@
                     }
                   },
                   {
-                    "key_code": "grave_accent_and_tilde"
+                    "key_code": "equal_sign"
                   }
                 ],
                 "conditions": [
@@ -9077,7 +12345,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "caps_lock"
@@ -9140,7 +12408,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "mandatory": [
                       "shift"
@@ -9206,7 +12474,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -9266,7 +12534,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "international3",
+                  "key_code": "1",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -9297,6 +12565,666 @@
                   },
                   {
                     "key_code": "grave_accent_and_tilde"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "hyphen",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "0"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "expression_if",
+                    "expression": "system.now.milliseconds - kana_down_ms < 125"
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "international3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "japanese_kana"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "ime_composing",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_layer",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "equal_sign"
                   }
                 ],
                 "conditions": [
@@ -15762,7 +19690,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "caps_lock"
@@ -15806,7 +19734,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "mandatory": [
                       "shift"
@@ -15850,7 +19778,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -15891,7 +19819,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "international3",
+                  "key_code": "1",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -15907,6 +19835,457 @@
                   },
                   {
                     "key_code": "grave_accent_and_tilde"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "hyphen",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "0"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "kana_layer",
+                    "value": 1
+                  },
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "international3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "kana_used",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "equal_sign"
                   }
                 ],
                 "conditions": [
@@ -17501,7 +21880,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "optional": [
                       "caps_lock"
@@ -17534,13 +21913,373 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "hyphen",
+                  "key_code": "equal_sign",
                   "modifiers": {
                     "mandatory": [
                       "shift"
                     ],
                     "optional": [
                       "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "semicolon"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "grave_accent_and_tilde"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "hyphen",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "0"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "is_built_in_keyboard": true
+                      },
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 666
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "equal_sign",
+                  "modifiers": {
+                    "optional": [
+                      "any"
                     ]
                   }
                 },
@@ -17576,7 +22315,7 @@
                 },
                 "to": [
                   {
-                    "key_code": "grave_accent_and_tilde"
+                    "key_code": "equal_sign"
                   }
                 ],
                 "conditions": [
@@ -17607,36 +22346,6 @@
                 "to": [
                   {
                     "key_code": "backslash"
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "device_if",
-                    "identifiers": [
-                      {
-                        "is_built_in_keyboard": true
-                      },
-                      {
-                        "vendor_id": 1452,
-                        "product_id": 666
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "hyphen",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "semicolon"
                   }
                 ],
                 "conditions": [

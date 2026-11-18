@@ -1,5 +1,6 @@
 import { ifExpression, ifVar, map, rule, toKey, type ToEvent } from 'karabiner.ts'
 import { ifAppleKeyboards } from '../conditions.ts'
+import { beforeCustomUsLayout } from './apple-keyboards-custom-us-layout.ts'
 
 const layerActive = 'kana_layer'
 const layerUsed = 'kana_used'
@@ -23,8 +24,8 @@ const layerKeys: Record<string, ToEvent> = {
   j: toKey('open_bracket'), // [
   k: toKey('close_bracket'), // ]
   x: toKey('1', 'left_shift'), // !
-  // : / ; のキー。semicolon ではなく hyphen を出すのは、下の段の apple-keyboards-custom-us-layout が hyphen を「単独なら :、Shift と一緒なら ;」に変えるため
-  c: toKey('hyphen'),
+  // : / ; のキー。Shift なしで : になるのは、下の段の apple-keyboards-custom-us-layout が「単独なら :、Shift と一緒なら ;」にするため
+  c: toKey('semicolon'),
   v: toKey('backslash', 'left_shift'), // |
   b: toKey('backslash'), // \
   n: toKey('7', 'left_shift'), // &
@@ -50,7 +51,7 @@ export default rule('apple-keyboards-kana-symbol-layer', ifAppleKeyboards).manip
 
   ...Object.entries(layerKeys).map(([key, event]) =>
     map(key as 'q', null, 'any')
-      .to([setVar(layerUsed, 1), event])
+      .to([setVar(layerUsed, 1), beforeCustomUsLayout(event)])
       .condition(ifVar(layerActive, 1)),
   ),
 
