@@ -53,10 +53,10 @@ export default rule('space-layer').manipulators([
       { ...setNow(tappedAt), conditions: [ifLayerUnused] },
     ]),
 
-  // Space を押してから 0.1 秒以内にほかのキーを押したら、文章を速く打っているとみなして Space とそのキーを順番に出す
+  // Space を押してから 0.125 秒以内にほかのキーを押したら、文章を速く打っているとみなして Space とそのキーを順番に出す
   map({ any: 'key_code', modifiers: { optional: ['any'] } })
     .to([...tapEvents, setVar(layerActive, 0), setVar(layerUsed, 1), { from_event: true }])
-    .condition(ifVar(layerActive, 1), ifExpression(`system.now.milliseconds - ${pressedAt} < 100`)),
+    .condition(ifVar(layerActive, 1), ifExpression(`system.now.milliseconds - ${pressedAt} < 125`)),
 
   ...Object.entries(layerKeys).map(([key, event]) =>
     map(key as 'e', null, 'any')

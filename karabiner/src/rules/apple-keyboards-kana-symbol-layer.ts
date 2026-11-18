@@ -43,10 +43,10 @@ export default rule('apple-keyboards-kana-symbol-layer', ifAppleKeyboards).manip
     .to([setVar(layerActive, 1), setVar(layerUsed, 0), setNow(pressedAt)])
     .toAfterKeyUp([setVar(layerActive, 0), { ...tapEvent, conditions: [ifLayerUnused] }]),
 
-  // かなキーを押してから 0.1 秒以内にほかのキーを押したら、文章を速く打っているとみなして、かなとそのキーを順番に出す
+  // かなキーを押してから 0.125 秒以内にほかのキーを押したら、文章を速く打っているとみなして、かなとそのキーを順番に出す
   map({ any: 'key_code', modifiers: { optional: ['any'] } })
     .to([tapEvent, setVar(layerActive, 0), setVar(layerUsed, 1), { from_event: true }])
-    .condition(ifVar(layerActive, 1), ifExpression(`system.now.milliseconds - ${pressedAt} < 100`)),
+    .condition(ifVar(layerActive, 1), ifExpression(`system.now.milliseconds - ${pressedAt} < 125`)),
 
   ...Object.entries(layerKeys).map(([key, event]) =>
     map(key as 'q', null, 'any')

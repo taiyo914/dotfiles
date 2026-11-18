@@ -170,8 +170,8 @@ test('今の設定で、pipe() の結果が段ごとに順番に通した結果�
   const checked = checkSameAsStages(stages, [
     ...worldsFor([
       'system.now.milliseconds - space_tap_ms < 200',
-      'system.now.milliseconds - space_down_ms < 100',
-      'system.now.milliseconds - kana_down_ms < 100',
+      'system.now.milliseconds - space_down_ms < 125',
+      'system.now.milliseconds - kana_down_ms < 125',
     ]),
   ])
   assert.ok(checked > 0)
