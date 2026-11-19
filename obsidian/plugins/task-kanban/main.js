@@ -21,11 +21,15 @@ const {
   moment
 } = require("obsidian");
 
-// タスクのノートを置くフォルダ
-const TASK_FOLDER = "tasks";
+// タスクのノートを作るフォルダ。タスク以外のノートと同じフォルダに置く
+const TASK_FOLDER = "notes";
+
+// ファイル名にこの文字が入っているノートをタスクとして扱う（例: 261108_TASK_タイトル.md）。
+// フォルダでは見分けない。TASKS.base の絞り込み（file.name.contains("_TASK_")）とそろえている
+const TASK_MARK = "_TASK_";
 
 // タスクボードの .base ファイルの場所と、無いときに作るひな形（このプラグインのフォルダの中）
-const BOARD_PATH = "tasks.base";
+const BOARD_PATH = "notes/TASKS.base";
 const BOARD_TEMPLATE_FILE = "template.base";
 
 // status の一覧。メニューや選択肢はこの順番で並べる。WANT は「やりたいが TODO ほど急がない」カード
@@ -46,10 +50,10 @@ const STALE_DONE_DAYS = 7;
 // この status のカードは KANBAN に表示しない（記録として残すだけの片付け済みのカード）
 const HIDDEN_STATUS = "ARCHIVE";
 
-// ファイル名の先頭に付ける日付。カードには表示しない。
+// ファイル名の先頭に付ける日付と TASK の印。カードには表示しない。
 // 以前は時刻も付けていた（261109-0340_）ので、その形のファイル名からも取り除けるようにしている。
 const PREFIX_FORMAT = "YYMMDD";
-const PREFIX_PATTERN = /^\d{6}(-\d{4})?_/;
+const PREFIX_PATTERN = /^\d{6}(-\d{4})?_TASK_/;
 
 // 依存関係を書くプロパティと、その逆向きのプロパティ
 const LINK_KEYS = ["blocked_by", "blocking"];
@@ -109,7 +113,7 @@ function isTaskFile(file) {
   return (
     file instanceof TFile &&
     file.extension === "md" &&
-    file.path.startsWith(TASK_FOLDER + "/")
+    file.basename.includes(TASK_MARK)
   );
 }
 
@@ -2015,7 +2019,7 @@ module.exports = class TaskKanbanPlugin extends Plugin {
     }).open();
   }
 
-  // vault の tasks.base を開く。無いときは、このプラグインのフォルダのひな形から作ってから開く
+  // vault の notes/TASKS.base を開く。無いときは、このプラグインのフォルダのひな形から作ってから開く
   async openBoard() {
     let board = this.app.vault.getFileByPath(BOARD_PATH);
     if (!board) {
@@ -2040,7 +2044,7 @@ module.exports = class TaskKanbanPlugin extends Plugin {
       await this.app.vault.createFolder(TASK_FOLDER);
     }
 
-    const base = `${moment().format(PREFIX_FORMAT)}_${sanitizeFileName(title)}`;
+    const base = `${moment().format(PREFIX_FORMAT)}${TASK_MARK}${sanitizeFileName(title)}`;
     let path = `${TASK_FOLDER}/${base}.md`;
     for (let n = 2; this.app.vault.getAbstractFileByPath(path); n++) {
       path = `${TASK_FOLDER}/${base} ${n}.md`;
