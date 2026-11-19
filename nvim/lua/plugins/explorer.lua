@@ -7,6 +7,8 @@ return {
           explorer = {
             -- . から始まるファイルとフォルダも表示する
             hidden = true,
+            -- .gitignore に書かれたファイルと .git フォルダも表示する
+            ignored = true,
             -- ファイルツリーの幅（文字数）。snacks.nvim の初期値は 40
             layout = { layout = { width = 25 } },
           },
