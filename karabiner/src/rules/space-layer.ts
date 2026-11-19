@@ -60,7 +60,7 @@ export default rule('space-layer').manipulators([
     .to([...tapEvents, setVar(layerActive, 0), setVar(layerUsed, 1), { from_event: true }])
     .condition(ifVar(layerActive, 1), ifExpression(`system.now.milliseconds - ${pressedAt} < 125`)),
 
-  // 内蔵と Magic Keyboard では、数字の段をずらす下の段のルールを通ったあとに同じ数字になるキーを出す
+  // 内蔵と Magic Keyboard では、キーを入れ替える下の段のルールを通ったあとに表のとおりのキーになるキーを出す
   ...Object.entries(layerKeys).flatMap(([key, event]) => [
     map(key as 'e', null, 'any')
       .to([setVar(layerUsed, 1), beforeCustomUsLayout(event)])
