@@ -79,6 +79,7 @@ Karabiner-Elements は、あるルールが出したキーをほかのルール�
 | `chrome-new-tab-in-group` | Chrome で `Cmd+T` / `Cmd+Ctrl+T` → タブグループの中 / 外に新しいタブ |
 | `apple-keyboards-custom-us-layout` | 内蔵と Magic Keyboard の JIS キーボードを、少し手を加えた US 配列として使う |
 | `slack-disable-esc` | Slack で Esc を無効にする |
+| `slack-arrow-channel-switch` | Slack で `Cmd+↓` / `Cmd+↑` → 次 / 前のチャンネル。Shift も押すと未読のチャンネルだけ |
 | `shift-backspace-to-delete` | `Shift+Backspace` → Delete forward |
 | `ctrl-emacs` | Ctrl + H/D/F/B/N/P/A/E/U → Emacs 風の移動・削除 |
 | `ime-composing` | 日本語の入力途中かどうかを変数 `ime_composing` に記録する |
@@ -306,3 +307,16 @@ Esc を押すと `ime_composing` を 0 に戻すので、続けてもう一度 E
 注意: かなキーを押してから 0.125 秒以内にほかのキーを押すと、文章を速く打っているとみなして、かなとそのキーを順番に入力する（`space-layer` と同じ）。
 
 注意: 表にないキーを押したときは、そのキーをそのまま出す。
+
+### 3-19. `slack-arrow-channel-switch`
+
+Slack でサイドバーのチャンネルや DM を `Cmd+↓` / `Cmd+↑` で移る。herdr でスペースを移るキー（`Cmd+↓` / `Cmd+↑`）や `chrome-arrow-tab-switch` とそろえるため。Slack でのみ適用。
+
+| 操作 | 結果 | Slack に送るキー |
+| - | - | - |
+| `Cmd+↓` / `Cmd+↑` | 次 / 前のチャンネルや DM | `Option+↓` / `Option+↑` |
+| `Cmd+Shift+↓` / `Cmd+Shift+↑` | 次 / 前の未読のチャンネルや DM | `Option+Shift+↓` / `Option+Shift+↑` |
+
+Space レイヤーの `Cmd+Space+D` / `Cmd+Space+E` でも同じようにチャンネルを移る。`space-layer` が出した `Cmd+↓` / `Cmd+↑` がこのルールに渡るため。
+
+注意: Slack のメッセージ入力欄での本来の `Cmd+↓` / `Cmd+↑`（文章の末尾 / 先頭にカーソルを移す）と、`Cmd+Shift+↓` / `Cmd+Shift+↑`（末尾 / 先頭まで選択する）は使えなくなる。

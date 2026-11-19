@@ -15,6 +15,7 @@ import imeDisableEsc from './rules/ime-disable-esc.ts'
 import macbookKeyboardDisabled from './rules/macbook-keyboard-disabled.ts'
 import magicKeyboardDisabled from './rules/magic-keyboard-disabled.ts'
 import shiftBackspaceToDelete from './rules/shift-backspace-to-delete.ts'
+import slackArrowChannelSwitch from './rules/slack-arrow-channel-switch.ts'
 import slackDisableEsc from './rules/slack-disable-esc.ts'
 import spaceLayer from './rules/space-layer.ts'
 
@@ -34,7 +35,7 @@ export const stages: Stage[] = [
   ],
   appleKeyboardsCustomUsLayout,
   [ctrlEmacs, shiftBackspaceToDelete],
-  [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn, chromeNewTabInGroup],
+  [chromeArrowTabSwitch, chromeSplitView, chromeZoomIn, chromeNewTabInGroup, slackArrowChannelSwitch],
   [slackDisableEsc, imeDisableEsc],
   imeComposing,
 ]
