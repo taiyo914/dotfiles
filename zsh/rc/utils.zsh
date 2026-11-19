@@ -20,18 +20,15 @@ rg-app() {
   command rg -P -g '!spec/**' "$@"
 }
 
-# eza はデフォルトでアイコンをつける
+# eza はアイコン付きのツリー表示にする。eza 2 のように階層を指定できる（デフォルトは1）
 # hint: --icons=auto は出力がターミナルのときだけアイコンを付ける設定
-eza() { command eza --icons=auto "$@"; }
-
-# eza-tree 2 のように階層を指定できる（デフォルトは1）
-eza-tree() {
+eza() {
   local level=1
   if [[ "$1" == <-> ]]; then
     level=$1
     shift
   fi
-  eza -T -L "$level" "$@"
+  command eza --icons=auto -T -L "$level" "$@"
 }
 
 # よく使うディレクトリへのcdエイリアス
