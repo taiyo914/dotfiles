@@ -951,6 +951,7 @@ class TaskPreview extends Component {
   constructor(view, splitEl) {
     super();
     this.app = view.app;
+    this.plugin = view.plugin;
     this.file = null;
     this.content = null;
 
@@ -967,6 +968,10 @@ class TaskPreview extends Component {
 
   // 開いているノートが消えたときや、ゴミ箱（.trash）に移って tasks フォルダから出たときは閉じる
   onload() {
+    // プラグインが「戻る」と「タブを閉じる」を受け取ったときに、このプレビューを探せるようにする
+    this.plugin.previews.add(this);
+    this.register(() => this.plugin.previews.delete(this));
+
     this.registerEvent(
       this.app.vault.on("delete", (file) => {
         if (file === this.file) this.close();
@@ -1815,6 +1820,7 @@ class TaskTableView extends BasesView {
 module.exports = class TaskKanbanPlugin extends Plugin {
   async onload() {
     this.sync = new LinkSync(this.app);
+    this.previews = new Set();
 
     this.registerBasesView(KANBAN_VIEW_TYPE, {
       name: "Kanban",
@@ -1883,6 +1889,7 @@ module.exports = class TaskKanbanPlugin extends Plugin {
 
     // 起動時に読み込まれるノートで同期が走らないように、起動が終わってから同期を始める
     this.app.workspace.onLayoutReady(async () => {
+      this.closePreviewOnBackOrClose();
       await this.fillMissingDoneDates();
       await this.sync.reconcileAll();
       this.registerEvent(this.app.metadataCache.on("changed", (file) => this.sync.onChanged(file)));
@@ -1890,6 +1897,53 @@ module.exports = class TaskKanbanPlugin extends Plugin {
       this.registerEvent(this.app.vault.on("delete", (file) => this.sync.onDelete(file)));
       this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.sync.onRename(file, oldPath)));
     });
+  }
+
+  // プレビューを開いているタブでは、「戻る」と「タブを閉じる」（cmd + w）でプレビューだけを閉じる。
+  // プレビューを開いていないときは、本体のとおりに戻ったりタブを閉じたりする
+  closePreviewOnBackOrClose() {
+    const plugin = this;
+
+    // 戻るは、コマンドもマウスの戻るボタンもトラックパッドのスワイプも、最後は公開 API ではない leaf.history.back() を呼ぶので、そこを書き換える
+    const history = this.app.workspace.getMostRecentLeaf()?.history;
+    const historyProto = history && Object.getPrototypeOf(history);
+    if (typeof historyProto?.back === "function") {
+      const originalBack = historyProto.back;
+      historyProto.back = function (...args) {
+        const preview = plugin.findOpenPreview(this.owner);
+        if (!preview) return originalBack.apply(this, args);
+        preview.close();
+        return Promise.resolve();
+      };
+      this.register(() => {
+        historyProto.back = originalBack;
+      });
+    }
+
+    // タブを閉じるのは、本体のコマンド「workspace:close」の checkCallback を書き換える
+    const closeCommand = this.app.commands?.findCommand?.("workspace:close");
+    if (typeof closeCommand?.checkCallback === "function") {
+      const originalCheckCallback = closeCommand.checkCallback;
+      closeCommand.checkCallback = (checking) => {
+        const preview = this.findOpenPreview(this.app.workspace.activeLeaf);
+        if (!preview) return originalCheckCallback(checking);
+        if (!checking) preview.close();
+        return true;
+      };
+      this.register(() => {
+        closeCommand.checkCallback = originalCheckCallback;
+      });
+    }
+  }
+
+  // そのタブの中でノートを表示しているプレビューを返す。無ければ null を返す
+  findOpenPreview(leaf) {
+    const tabEl = leaf?.view?.containerEl;
+    if (!tabEl) return null;
+    for (const preview of this.previews) {
+      if (preview.file && tabEl.contains(preview.paneEl)) return preview;
+    }
+    return null;
   }
 
   // Obsidian を閉じている間に終わったカードや、done_at を書く前から終わっていたカードは、いつ終わったかわからない。
