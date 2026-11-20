@@ -24,9 +24,14 @@ const {
 // タスクのノートを作るフォルダ。タスク以外のノートと同じフォルダに置く
 const TASK_FOLDER = "notes";
 
-// ファイル名にこの文字が入っているノートをタスクとして扱う（例: 261108_TASK_タイトル.md）。
-// フォルダでは見分けない。TASKS.base の絞り込み（file.name.contains("_TASK_")）とそろえている
+// ファイル名にこのどちらかの文字が入っているノートをタスクとして扱う（例: 261108_TASK_タイトル.md）。
+// _TASK_ は Confluence に同期するタスク、_WANT_ は同期しないタスク。status とは関係なく、ファイル名だけで分ける。
+// フォルダでは見分けない。TASKS.base の絞り込み（file.name.contains("_TASK_") か file.name.contains("_WANT_")）とそろえている
 const TASK_MARK = "_TASK_";
+const WANT_MARK = "_WANT_";
+
+// WANT の列の「追加」で作るタスクだけ、ファイル名を _WANT_ にする。作った後に status を変えても、ファイル名は変えない
+const WANT_STATUS = "WANT";
 
 // タスクボードの .base ファイルの場所と、無いときに作るひな形（このプラグインのフォルダの中）
 const BOARD_PATH = "notes/TASKS.base";
@@ -50,10 +55,10 @@ const STALE_DONE_DAYS = 7;
 // この status のカードは KANBAN に表示しない（記録として残すだけの片付け済みのカード）
 const HIDDEN_STATUS = "ARCHIVE";
 
-// ファイル名の先頭に付ける日付と TASK の印。カードには表示しない。
+// ファイル名の先頭に付ける日付と TASK / WANT の印。カードには表示しない。
 // 以前は時刻も付けていた（261109-0340_）ので、その形のファイル名からも取り除けるようにしている。
 const PREFIX_FORMAT = "YYMMDD";
-const PREFIX_PATTERN = /^\d{6}(-\d{4})?_TASK_/;
+const PREFIX_PATTERN = /^\d{6}(-\d{4})?_(TASK|WANT)_/;
 
 // 依存関係を書くプロパティと、その逆向きのプロパティ
 const LINK_KEYS = ["blocked_by", "blocking"];
@@ -113,7 +118,7 @@ function isTaskFile(file) {
   return (
     file instanceof TFile &&
     file.extension === "md" &&
-    file.basename.includes(TASK_MARK)
+    (file.basename.includes(TASK_MARK) || file.basename.includes(WANT_MARK))
   );
 }
 
@@ -2069,7 +2074,8 @@ module.exports = class TaskKanbanPlugin extends Plugin {
       await this.app.vault.createFolder(TASK_FOLDER);
     }
 
-    const base = `${moment().format(PREFIX_FORMAT)}${TASK_MARK}${sanitizeFileName(title)}`;
+    const mark = status === WANT_STATUS ? WANT_MARK : TASK_MARK;
+    const base = `${moment().format(PREFIX_FORMAT)}${mark}${sanitizeFileName(title)}`;
     let path = `${TASK_FOLDER}/${base}.md`;
     for (let n = 2; this.app.vault.getAbstractFileByPath(path); n++) {
       path = `${TASK_FOLDER}/${base} ${n}.md`;

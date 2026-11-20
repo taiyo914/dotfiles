@@ -1,6 +1,7 @@
 filters:
-  and:
+  or:
     - file.name.contains("_TASK_")
+    - file.name.contains("_WANT_")
 formulas:
   ready: if(blocked_by, blocked_by.filter(!["DONE", "ARCHIVE"].contains(value.asFile().properties.status)).isEmpty(), true)
 properties:
