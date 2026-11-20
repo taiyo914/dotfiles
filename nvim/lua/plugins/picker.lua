@@ -112,6 +112,8 @@ return {
           files = {
             matcher = { sort_empty = true },
             sort = { fields = { "score:desc", "file", "idx" } },
+            -- ファイル検索も、文字列検索と同じくプレビューを一覧の下に出す
+            layout = preview_below_layout,
           },
           grep = {
             -- 一覧を、一致度が同じものどうしはファイルパスのアルファベット順に並べる。同じファイルの中は rg が出した行の順番のままにする。
