@@ -1067,7 +1067,32 @@ class TaskPreview extends Component {
     containerEl.addEventListener("focusin", () => {
       this.app.workspace.activeEditor = embed;
     });
+    this.keepEditableOnEscape(embed, containerEl);
     return embed;
+  }
+
+  // 本体のノートの埋め込みは、Esc を押すと読むだけの表示に切り替わる（embed.showPreview を呼ぶ）。
+  // ふつうのノートの画面と同じく、Esc を押しても書き続けられるように、Esc を押したときの切り替えだけを止める。
+  // Esc のキーの処理そのものは止めないので、リンクの候補の一覧などは今までどおり Esc で閉じる
+  keepEditableOnEscape(embed, containerEl) {
+    let escapePressed = false;
+    containerEl.addEventListener(
+      "keydown",
+      (evt) => {
+        if (evt.key !== "Escape") return;
+        escapePressed = true;
+        // 本体の Esc の処理は、このキーの処理がすべて終わるまでに動くので、それが終わってから元に戻す
+        window.setTimeout(() => {
+          escapePressed = false;
+        }, 0);
+      },
+      true
+    );
+    const originalShowPreview = embed.showPreview;
+    embed.showPreview = function (...args) {
+      if (escapePressed) return;
+      return originalShowPreview.apply(this, args);
+    };
   }
 
   loadReadOnlyNote(file, containerEl) {
