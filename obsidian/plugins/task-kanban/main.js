@@ -122,6 +122,10 @@ function isTaskFile(file) {
   );
 }
 
+function isWantFile(file) {
+  return file.basename.includes(WANT_MARK);
+}
+
 function taskTitle(file) {
   return file.basename.replace(PREFIX_PATTERN, "");
 }
@@ -1253,6 +1257,7 @@ class TaskKanbanView extends BasesView {
   renderCard(columnEl, task, index) {
     const cardEl = columnEl.createDiv({ cls: "task-kanban-card" });
     cardEl.dataset.path = task.file.path;
+    cardEl.toggleClass("is-want", isWantFile(task.file));
     cardEl.toggleClass("is-waiting", unfinishedBlockers(task, index).length > 0);
     cardEl.toggleClass("is-stale", isStaleDone(task));
     cardEl.draggable = true;
@@ -1560,6 +1565,7 @@ class TaskDependencyView extends BasesView {
   renderNode(groupEl, task, index) {
     const cardEl = groupEl.createDiv({ cls: "task-kanban-card task-kanban-graph-card" });
     cardEl.style.width = `${GRAPH_CARD_WIDTH}px`;
+    cardEl.toggleClass("is-want", isWantFile(task.file));
     cardEl.toggleClass("is-waiting", unfinishedBlockers(task, index).length > 0);
     cardEl.toggleClass("is-finished", isFinished(task));
 

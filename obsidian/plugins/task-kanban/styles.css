@@ -1,10 +1,31 @@
+/* WANT の色（紫がかったグレー）。WANT 列の色と、_WANT_ のカードの左端の線の色に使う */
+body {
+  --task-kanban-want-color: color-mix(
+    in srgb,
+    var(--text-muted) 50%,
+    var(--color-purple)
+  );
+}
+
 /* 列ごとの色。BLOCKED はオレンジ、TODO はグレー、WANT は紫がかったグレー、WIP は青、DONE は緑、ARCHIVE は赤 */
-[data-status="BLOCKED"] { --tb-color: var(--color-orange); }
-[data-status="WANT"] { --tb-color: color-mix(in srgb, var(--text-muted) 50%, var(--color-purple)); }
-[data-status="TODO"] { --tb-color: var(--text-muted); }
-[data-status="WIP"] { --tb-color: var(--color-blue); }
-[data-status="DONE"] { --tb-color: var(--color-green); }
-[data-status="ARCHIVE"] { --tb-color: var(--color-red); }
+[data-status="BLOCKED"] {
+  --tb-color: var(--color-orange);
+}
+[data-status="WANT"] {
+  --tb-color: var(--task-kanban-want-color);
+}
+[data-status="TODO"] {
+  --tb-color: var(--text-muted);
+}
+[data-status="WIP"] {
+  --tb-color: var(--color-blue);
+}
+[data-status="DONE"] {
+  --tb-color: var(--color-green);
+}
+[data-status="ARCHIVE"] {
+  --tb-color: var(--color-red);
+}
 
 /* ノートのプロパティ欄で order を表示しない。order はドラッグで自動で書き換わるので、手で触らないようにする */
 .metadata-property[data-property-key="order"] {
@@ -242,15 +263,44 @@
 }
 
 .task-kanban-card.is-waiting {
-  background: color-mix(in srgb, var(--color-red) 8%, var(--background-primary));
+  background: color-mix(
+    in srgb,
+    var(--color-red) 8%,
+    var(--background-primary)
+  );
 }
 
 /* DONE になってから7日たったカード（アーカイブし忘れ）。BLOCKED の薄い赤と見分けられるように、枠も赤くする */
 .task-kanban-card.is-stale {
-  background: color-mix(in srgb, var(--color-red) 10%, var(--background-primary));
-  border-color: color-mix(in srgb, var(--color-red) 35%, var(--background-modifier-border));
+  background: color-mix(
+    in srgb,
+    var(--color-red) 10%,
+    var(--background-primary)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--color-red) 35%,
+    var(--background-modifier-border)
+  );
 }
 
+/* ファイル名が _WANT_ のカードの左端に WANT の色を背景色と半分ずつ混ぜて薄くした線を引いて、_TASK_ のカードと見分けられるようにする。
+   border-left で引くと線の内側がカードの角に合わせて丸くなるので、内側がまっすぐになるように背景の画像で引く。
+   is-waiting と is-stale の background で線が消えないように、その2つより後に書く */
+.task-kanban-card.is-want {
+  border-left-color: transparent;
+  background-image: linear-gradient(
+    to right,
+    color-mix(
+        in srgb,
+        var(--task-kanban-want-color) 50%,
+        var(--background-primary)
+      )
+      3px,
+    transparent 3px
+  );
+  background-origin: border-box;
+}
 
 .task-kanban-card.is-dragging {
   opacity: 0.4;
@@ -367,7 +417,8 @@
 
 /* 「絵文字を1つ入力してください」などのエラーの案内を赤くする */
 .task-kanban-emoji-suggestion.is-message.is-error,
-.task-kanban-emoji-suggestion.is-message.is-error .task-kanban-emoji-suggestion-name {
+.task-kanban-emoji-suggestion.is-message.is-error
+  .task-kanban-emoji-suggestion-name {
   color: var(--text-error);
 }
 
@@ -569,8 +620,12 @@
   stroke-dasharray: 4 3;
 }
 
-.task-kanban-arrowhead path { fill: var(--color-orange); }
-.task-kanban-arrowhead-finished path { fill: var(--text-faint); }
+.task-kanban-arrowhead path {
+  fill: var(--color-orange);
+}
+.task-kanban-arrowhead-finished path {
+  fill: var(--text-faint);
+}
 
 .task-kanban-graph-card {
   position: absolute;
@@ -753,7 +808,10 @@
 
 /* リンクを追加するための入力欄は、リンクがあるセルでは入力中だけ表示する。
    display: none にするとセルをクリックしても入力欄にフォーカスが移らないので、見えない大きさにして残す */
-.task-kanban-table .task-kanban-table-editor .multi-select-container:has(.multi-select-pill):not(:focus-within) .multi-select-input {
+.task-kanban-table
+  .task-kanban-table-editor
+  .multi-select-container:has(.multi-select-pill):not(:focus-within)
+  .multi-select-input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -792,7 +850,8 @@
 
 /* status と、日付などの1つの値の入力欄は、行の縦の真ん中に置く。リンクの一覧と文字のセルは上にそろえたまま */
 .task-kanban-table td.is-compact,
-.task-kanban-table td:has(.task-kanban-table-editor):not(:has(.multi-select-container)),
+.task-kanban-table
+  td:has(.task-kanban-table-editor):not(:has(.multi-select-container)),
 .task-kanban-table td:has(input[type="checkbox"]) {
   vertical-align: middle;
 }
