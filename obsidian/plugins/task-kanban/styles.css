@@ -96,6 +96,11 @@
   padding: 0 32px;
 }
 
+/* 本文の左の行番号と git-gutter の印を、左の余白の中に寄せて、本文を左に広げる。タイトルとプロパティの位置は変えない */
+.task-kanban-preview-body .markdown-embed .cm-gutters {
+  margin-inline-start: -12px;
+}
+
 /* ノートの最後の下に、画面の高さの半分の余白を付ける。本文が短くても下にスクロールでき、最後の行を画面の真ん中まで上げられる */
 .task-kanban-preview-body .markdown-embed .cm-sizer,
 .task-kanban-preview-body .markdown-embed .markdown-preview-sizer {

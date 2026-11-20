@@ -2,7 +2,7 @@ const obsidian = require("obsidian");
 const path = require("path");
 const { execFile } = require("child_process");
 const { promisify } = require("util");
-const { gutter, GutterMarker, EditorView } = require("@codemirror/view");
+const { gutter, GutterMarker, EditorView, ViewPlugin } = require("@codemirror/view");
 const { StateField, StateEffect, RangeSetBuilder, RangeSet } = require("@codemirror/state");
 
 const execFileAsync = promisify(execFile);
@@ -185,7 +185,8 @@ module.exports = class GitGutterPlugin extends obsidian.Plugin {
   gitRoot = null;
   basePath = null;
   refreshTimer = null;
-  requestSeq = 0;
+  // エディタごとの、最後に始めた差分の計算の番号。後から始めた計算の結果を、先に始めた計算の結果で上書きしないようにする
+  requestSeqs = new WeakMap();
 
   async onload() {
     // エディタ内をクリックしたとき(≒そのノートを見に来たとき)にも再計算する
@@ -195,7 +196,12 @@ module.exports = class GitGutterPlugin extends obsidian.Plugin {
         return false;
       },
     });
-    this.registerEditorExtension([gitGutterField, gitGutterExtension, clickRefreshExtension]);
+    // エディタが作られたときに、そのエディタの分を計算する。task-kanban のプレビューのような埋め込みのエディタは file-open が起きないため
+    const createRefreshExtension = ViewPlugin.define((cm) => {
+      setTimeout(() => this.refreshEditor(cm), 0);
+      return {};
+    });
+    this.registerEditorExtension([gitGutterField, gitGutterExtension, clickRefreshExtension, createRefreshExtension]);
 
     if (!(this.app.vault.adapter instanceof obsidian.FileSystemAdapter)) {
       console.warn("[git-gutter] デスクトップ版のみ対応しています");
@@ -234,24 +240,30 @@ module.exports = class GitGutterPlugin extends obsidian.Plugin {
     this.refreshTimer = setTimeout(() => this.refresh(), delay);
   }
 
+  // activeEditor は、ふつうのノートの画面のほかに、task-kanban のプレビューのような埋め込みのエディタも指す
   async refresh() {
+    const cm = this.app.workspace.activeEditor?.editor?.cm;
+    if (cm) await this.refreshEditor(cm);
+  }
+
+  async refreshEditor(cm) {
     if (!this.gitRoot) return;
-    const view = this.app.workspace.getActiveViewOfType(obsidian.MarkdownView);
-    if (!view || !view.file) return;
-    const cm = view.editor?.cm;
-    if (!cm) return;
+    const file = cm.state.field(obsidian.editorInfoField, false)?.file;
+    if (!file) return;
 
     const relPath = path
-      .relative(this.gitRoot, path.join(this.basePath, view.file.path))
+      .relative(this.gitRoot, path.join(this.basePath, file.path))
       .split(path.sep)
       .join("/");
 
-    const seq = ++this.requestSeq;
+    const seq = (this.requestSeqs.get(cm) ?? 0) + 1;
+    this.requestSeqs.set(cm, seq);
+    // 計算の途中で、同じエディタの計算がもう一度始まったり、エディタに別のファイルが開かれたりしたら、結果を捨てる
+    const isStale = () =>
+      seq !== this.requestSeqs.get(cm) || cm.state.field(obsidian.editorInfoField, false)?.file !== file;
 
     if (await isGitIgnored(this.gitRoot, relPath)) {
-      if (seq !== this.requestSeq) return;
-      const currentView = this.app.workspace.getActiveViewOfType(obsidian.MarkdownView);
-      if (currentView?.editor?.cm !== cm) return;
+      if (isStale()) return;
       cm.dispatch({ effects: setGitGutterMarkers.of(RangeSet.empty) });
       return;
     }
@@ -264,10 +276,7 @@ module.exports = class GitGutterPlugin extends obsidian.Plugin {
       oldContent = "";
     }
 
-    // 差分取得中にファイル切り替えが起きていたら破棄する
-    if (seq !== this.requestSeq) return;
-    const currentView = this.app.workspace.getActiveViewOfType(obsidian.MarkdownView);
-    if (currentView?.editor?.cm !== cm) return;
+    if (isStale()) return;
 
     const newContent = cm.state.doc.toString();
     const oldLines = oldContent.length ? oldContent.split("\n") : [];
