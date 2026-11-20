@@ -77,10 +77,10 @@ local preview_below_layout = {
 return {
   {
     "folke/snacks.nvim",
-    -- <leader>j で文字列検索、<leader>k でファイル検索、<leader><leader> で lazygit を開く（<leader>gg と同じ動作）。LazyVim の <leader>/ は消す
+    -- <leader>j でファイル検索、<leader>k で文字列検索、<leader><leader> で lazygit を開く（<leader>gg と同じ動作）。LazyVim の <leader>/ は消す
     keys = {
-      { "<leader>j", LazyVim.pick("grep"), desc = "Grep (Root Dir)" },
-      { "<leader>k", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+      { "<leader>j", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+      { "<leader>k", LazyVim.pick("grep"), desc = "Grep (Root Dir)" },
       { "<leader><space>", function() Snacks.lazygit({ cwd = LazyVim.root.git() }) end, desc = "Lazygit (Root Dir)" },
       { "<leader>/", false },
     },
