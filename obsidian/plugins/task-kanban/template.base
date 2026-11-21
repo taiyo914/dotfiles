@@ -22,7 +22,7 @@ views:
       - blocking
       - formula.ready
       - status
-      - date
+      - done_at
     sort:
       - property: file.name
         direction: DESC
