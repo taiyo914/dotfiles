@@ -3,12 +3,12 @@ import { ifAppleKeyboards } from '../conditions.ts'
 
 // JIS キーボードのキーを、US 配列のどのキーとして扱うか。ここに書いていないキーは US 配列の同じ位置のキーのまま
 const keys: Array<[FromKeyCode, ToKeyCode]> = [
-  // JIS の - のキーを = / + にする
-  ['hyphen', 'equal_sign'],
-  // JIS の ^ のキーを ' / " にする
-  ['equal_sign', 'quote'],
-  // JIS の ¥ のキーを ` / ~ にする
-  ['international3', 'grave_accent_and_tilde'],
+  // JIS の - のキーを ' / " にする。JIS の ^ のキーは US 配列と同じ = / + のまま
+  ['hyphen', 'quote'],
+  // JIS の ¥ のキーを \ / | にする
+  ['international3', 'backslash'],
+  // JIS の ] のキーを ` / ~ にする
+  ['backslash', 'grave_accent_and_tilde'],
   // ; / + のキーを - / _ にする
   ['semicolon', 'hyphen'],
   // : / * のキーを : / ; にする。単独で : になるのは下の colonFirst による
